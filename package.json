@@ -32,7 +32,7 @@
     "async-mqtt": "^2.6.3",
     "axios": "^1.7.8",
     "convert-units": "^2.3.4",
-    "dotenv": "^16.4.6",
+    "dotenv": "^16.4.7",
     "jsonwebtoken": "^9.0.2",
     "lodash": "^4.17.21",
     "onstarjs2": "^2.6.0",

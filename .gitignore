@@ -1,9 +1,20 @@
-.idea/
-.nyc_output/
+# Dependencies
 node_modules/
+
+# IDE and editor files
+.idea/
+
+# Build outputs and temporary files
 .tmp
+.nyc_output/
+coverage/
+
+# Environment variables and secrets
+.env
+.env.local
+.env.*.local
+.env.docker
+.env.test
 onstar2mqtt.env
-*.env*
-coverage
 *tokens.json
 .secrets

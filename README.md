@@ -120,13 +120,16 @@ docker run \
   --env ONSTAR_PASSWORD= \
   --env ONSTAR_TOTP= \
   --env ONSTAR_PIN= \
-  --env TOKEN_LOCATION \ ## NOTE: Optional, but STRONGLY RECOMMENDED and allows you to save/read tokens from persistent storage
+  --env TOKEN_LOCATION=/app/tokens \
   --env MQTT_HOST= \
   --env MQTT_USERNAME \
   --env MQTT_PASSWORD \
   --env MQTT_ONSTAR_POLLING_STATUS_TOPIC \
+  -v ~/onstar2mqtt-tokens:/app/tokens \
   bigthundersr/onstar2mqtt:latest
 ```
+
+**NOTE:** TOKEN_LOCATION is optional, but STRONGLY RECOMMENDED and allows you to save/read tokens from persistent storage
 
 [GitHub Container Registry](https://github.com/BigThunderSR/onstar2mqtt/pkgs/container/onstar2mqtt)
 
@@ -138,11 +141,12 @@ docker run \
   --env ONSTAR_PASSWORD= \
   --env ONSTAR_TOTP= \
   --env ONSTAR_PIN= \
-  --env TOKEN_LOCATION \ ## NOTE: Optional, but STRONGLY RECOMMENDED and allows you to save/read tokens from persistent storage
+  --env TOKEN_LOCATION=/app/tokens \
   --env MQTT_HOST= \
   --env MQTT_USERNAME \
   --env MQTT_PASSWORD \
   --env MQTT_ONSTAR_POLLING_STATUS_TOPIC \
+  -v ~/onstar2mqtt-tokens:/app/tokens \
   ghcr.io/bigthundersr/onstar2mqtt:latest
 ```
 
@@ -161,6 +165,8 @@ onstar2mqtt:
     - ONSTAR_DEVICEID=
     - ONSTAR_VIN=
     - MQTT_HOST=
+  volumes:
+    - ~/onstar2mqtt-tokens:/app/tokens
 ```
 
 [GitHub Container Registry](https://github.com/BigThunderSR/onstar2mqtt/pkgs/container/onstar2mqtt)
@@ -176,6 +182,8 @@ onstar2mqtt:
     - ONSTAR_DEVICEID=
     - ONSTAR_VIN=
     - MQTT_HOST=
+  volumes:
+    - ~/onstar2mqtt-tokens:/app/tokens
 ```
 
 onstar2mqtt.env:
@@ -185,7 +193,7 @@ ONSTAR_USERNAME=
 ONSTAR_PASSWORD=
 ONSTAR_TOTP=
 ONSTAR_PIN=
-TOKEN_LOCATION=  # (NOTE: This is optional and allows you to save/read tokens from persistent storage)
+TOKEN_LOCATION=/app/tokens  # (NOTE: This is optional and allows you to save/read tokens from persistent storage)
 MQTT_USERNAME=
 MQTT_PASSWORD=
 MQTT_ONSTAR_POLLING_STATUS_TOPIC=

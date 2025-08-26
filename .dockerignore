@@ -1,3 +1,12 @@
 .nyc_output
 test
-node_modules
+
+# Environment files with secrets
+.env
+.env.local
+.env.*.local
+.env.development
+.env.production
+
+# Token files
+*tokens.json

@@ -6,6 +6,7 @@ test
 .env.local
 .env.*.local
 .env.docker
+.env.test
 .env.development
 .env.production
 

@@ -153,6 +153,19 @@ const connectMQTT = async availabilityTopic => {
     return client;
 }
 
+// Helper function to publish with Promise support (maintaining async-mqtt behavior)
+const publishAsync = (client, topic, payload, options = {}) => {
+    return new Promise((resolve, reject) => {
+        client.publish(topic, payload, options, (error) => {
+            if (error) {
+                reject(error);
+            } else {
+                resolve();
+            }
+        });
+    });
+};
+
 const configureMQTT = async (commands, client, mqttHA) => {
     if (!onstarConfig.allowCommands)
         return;
@@ -239,7 +252,7 @@ const configureMQTT = async (commands, client, mqttHA) => {
                 for (let [topic, state] of states) {
                     logger.info('Publishing message:', { topic, state });
                     publishes.push(
-                        client.publish(topic, JSON.stringify(state), { retain: true })
+                        publishAsync(client, topic, JSON.stringify(state), { retain: true })
                     );
                 }
                 await Promise.all(publishes);
@@ -715,7 +728,7 @@ logger.info('!-- Starting OnStar2MQTT Polling --!');
                     const { payload } = config;
                     logger.info('Publishing message:', { topic, payload });
                     publishes.push(
-                        client.publish(topic, JSON.stringify(payload), { retain: true })
+                        publishAsync(client, topic, JSON.stringify(payload), { retain: true })
                     );
                 }
             }
@@ -723,7 +736,7 @@ logger.info('!-- Starting OnStar2MQTT Polling --!');
             for (let [topic, state] of states) {
                 logger.info('Publishing message:', { topic, state });
                 publishes.push(
-                    client.publish(topic, JSON.stringify(state), { retain: true })
+                    publishAsync(client, topic, JSON.stringify(state), { retain: true })
                 );
             }
 

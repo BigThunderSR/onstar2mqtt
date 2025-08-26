@@ -5,6 +5,9 @@ test
 .env
 .env.local
 .env.*.local
+.env.docker
+.env.development
+.env.production
 
 # Token files
 *tokens.json

@@ -13,6 +13,7 @@ coverage/
 .env
 .env.local
 .env.*.local
+.env.docker
 onstar2mqtt.env
 *tokens.json
 .secrets

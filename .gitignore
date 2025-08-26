@@ -5,15 +5,13 @@ node_modules/
 .idea/
 
 # Build outputs and temporary files
-.tmp
+.tmp/
 coverage/
 
 # Environment variables and secrets
-.env
-.env.local
-.env.*.local
-.env.docker
-.env.test
+.env*
+!.env.example
+*.env
 onstar2mqtt.env
 *tokens.json
 .secrets

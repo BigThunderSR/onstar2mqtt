@@ -2,13 +2,11 @@ coverage
 test
 
 # Environment files with secrets
-.env
-.env.local
-.env.*.local
-.env.docker
-.env.test
-.env.development
-.env.production
+.env*
+!.env.example
+*.env
+onstar2mqtt.env
 
 # Token files
 *tokens.json
+.secrets

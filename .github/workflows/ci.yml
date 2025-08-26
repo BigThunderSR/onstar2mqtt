@@ -51,7 +51,7 @@ jobs:
       - run: npm run build --if-present
       - run: npm run lint
       - run: npm test
-      - run: npx nyc --reporter=lcov npm test
+      - run: npx c8 --reporter=lcov npm test
       - run: bash <(curl -Ls https://coverage.codacy.com/get.sh) report --project-token ${{ secrets.CODACY_PROJECT_TOKEN }}
 
       - name: Set up QEMU

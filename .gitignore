@@ -6,7 +6,6 @@ node_modules/
 
 # Build outputs and temporary files
 .tmp
-.nyc_output/
 coverage/
 
 # Environment variables and secrets

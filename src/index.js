@@ -135,8 +135,21 @@ const connectMQTT = async availabilityTopic => {
     };
     logger.info('Connecting to MQTT:', { url, config: _.omit(config, 'password', 'ca', 'cert', 'key') });
 
-    const client = await mqtt.connectAsync(url, config);
-    logger.info('Connected to MQTT!');
+    // Use Promise wrapper for regular mqtt.connect()
+    const client = await new Promise((resolve, reject) => {
+        const mqttClient = mqtt.connect(url, config);
+        
+        mqttClient.on('connect', () => {
+            logger.info('Connected to MQTT!');
+            resolve(mqttClient);
+        });
+        
+        mqttClient.on('error', (error) => {
+            logger.error('MQTT connection error:', error);
+            reject(error);
+        });
+    });
+    
     return client;
 }
 
@@ -481,14 +494,12 @@ const configureMQTT = async (commands, client, mqttHA) => {
 
                             logger.debug(vehicle)
 
-                            client.publish(topic, JSON.stringify(locationData), { retain: true })
+                            client.publish(topic, JSON.stringify(locationData), { retain: true });
 
-                            client.publish(deviceTrackerConfigTopic, JSON.stringify(deviceTrackerConfig), { retain: true })
-                                .then(() => {
-                                    logger.warn(`Published device_tracker config to topic: ${deviceTrackerConfigTopic}`);
-                                    logger.warn(`Published location to topic: ${topic}`);
-                                    logger.debug("Device Tracker Config:", deviceTrackerConfig);
-                                })
+                            client.publish(deviceTrackerConfigTopic, JSON.stringify(deviceTrackerConfig), { retain: true });
+                            logger.warn(`Published device_tracker config to topic: ${deviceTrackerConfigTopic}`);
+                            logger.warn(`Published location to topic: ${topic}`);
+                            logger.debug("Device Tracker Config:", deviceTrackerConfig);
                         }
                     }
                 })
@@ -528,7 +539,19 @@ const configureMQTT = async (commands, client, mqttHA) => {
     });
     const topic = mqttHA.getCommandTopic();
     logger.info(`Subscribed to command topic: ${topic}`);
-    await client.subscribe(topic);
+    
+    // Use Promise wrapper for regular mqtt.subscribe()
+    await new Promise((resolve, reject) => {
+        client.subscribe(topic, (error, granted) => {
+            if (error) {
+                logger.error('MQTT subscription error:', error);
+                reject(error);
+            } else {
+                logger.debug('MQTT subscription successful:', granted);
+                resolve();
+            }
+        });
+    });
 
 };
 
@@ -541,8 +564,8 @@ logger.info('!-- Starting OnStar2MQTT Polling --!');
         const mqttHA = new MQTT(vehicle, mqttConfig.prefix, mqttConfig.namePrefix);
         const availTopic = mqttHA.getAvailabilityTopic();
         const client = await connectMQTT(availTopic);
-        client.publish(availTopic, 'true', { retain: true })
-            .then(() => logger.debug('Published availability'));
+        client.publish(availTopic, 'true', { retain: true });
+        logger.debug('Published availability');
         await configureMQTT(commands, client, mqttHA);
 
         const configurations = new Map();
@@ -723,10 +746,15 @@ logger.info('!-- Starting OnStar2MQTT Polling --!');
             client.publish(pollingStatusTopicTF, "true", { retain: true });
         };
 
-        const main = async () => run()
-
-            .then(() => logger.info('Updates complete, sleeping.'))
-            .catch((e) => {
+        const main = async () => {
+            try {
+                logger.debug('Starting main function run()');
+                await run();
+                logger.debug('Main function run() completed successfully');
+                logger.info('Updates complete, sleeping.');
+            } catch (e) {
+                logger.error('Error in main function run():', e);
+                
                 let topicArray;
                 if (!mqttConfig.pollingStatusTopic) {
                     topicArray = _.concat(mqttHA.getPollingStatusTopic(), '/', 'state');
@@ -783,7 +811,8 @@ logger.info('!-- Starting OnStar2MQTT Polling --!');
                     logger.error('Error Polling Data:', { error: e });
                     client.publish(pollingStatusTopicTF, "false", { retain: true })
                 }
-            });
+            }
+        };
 
         await main();
 
@@ -822,6 +851,14 @@ logger.info('!-- Starting OnStar2MQTT Polling --!');
         });
 
     } catch (e) {
-        logger.error('Main function error:', { error: e });
+        logger.error('Main function error:', { 
+            error: e,
+            message: e?.message,
+            stack: e?.stack,
+            name: e?.name,
+            errorType: typeof e,
+            errorKeys: Object.keys(e || {})
+        });
+        process.exit(1);
     }
 })();

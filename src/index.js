@@ -1,6 +1,6 @@
 //const OnStar = require('./deps/index.cjs');
 const OnStar = require('onstarjs2');
-const mqtt = require('async-mqtt');
+const mqtt = require('mqtt');
 const uuidv4 = require('uuid').v4;
 const _ = require('lodash');
 const Vehicle = require('./vehicle');

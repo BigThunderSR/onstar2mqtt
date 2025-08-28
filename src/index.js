@@ -24,7 +24,7 @@ const onstarConfig = {
     checkRequestStatus: _.get(process.env, 'ONSTAR_SYNC', 'true') === 'true',
     refreshInterval: parseInt(process.env.ONSTAR_REFRESH) || (30 * 60 * 1000), // 30 min
     requestPollingIntervalSeconds: parseInt(process.env.ONSTAR_POLL_INTERVAL) || 6, // 6 sec default
-    requestPollingTimeoutSeconds: parseInt(process.env.ONSTAR_POLL_TIMEOUT) || 90, // 60 sec default
+    requestPollingTimeoutSeconds: parseInt(process.env.ONSTAR_POLL_TIMEOUT) || 90, // 90 sec default
     allowCommands: _.get(process.env, 'ONSTAR_ALLOW_COMMANDS', 'true') === 'true'
 };
 
@@ -135,16 +135,22 @@ const connectMQTT = async availabilityTopic => {
     };
     logger.info('Connecting to MQTT:', { url, config: _.omit(config, 'password', 'ca', 'cert', 'key') });
 
-    // Use Promise wrapper for regular mqtt.connect()
+    // Use Promise wrapper for regular mqtt.connect() with timeout
     const client = await new Promise((resolve, reject) => {
+        const timeout = global.setTimeout(() => {
+            reject(new Error('MQTT connection timeout'));
+        }, 30000); // 30 second timeout
+        
         const mqttClient = mqtt.connect(url, config);
         
         mqttClient.on('connect', () => {
+            global.clearTimeout(timeout);
             logger.info('Connected to MQTT!');
             resolve(mqttClient);
         });
         
         mqttClient.on('error', (error) => {
+            global.clearTimeout(timeout);
             logger.error('MQTT connection error:', error);
             reject(error);
         });
@@ -153,10 +159,15 @@ const connectMQTT = async availabilityTopic => {
     return client;
 }
 
-// Helper function to publish with Promise support (maintaining async-mqtt behavior)
+// Helper function to publish with Promise support and timeout (maintaining async-mqtt behavior)
 const publishAsync = (client, topic, payload, options = {}) => {
     return new Promise((resolve, reject) => {
+        const timeout = global.setTimeout(() => {
+            reject(new Error('MQTT publish timeout'));
+        }, 10000); // 10 second timeout
+        
         client.publish(topic, payload, options, (error) => {
+            global.clearTimeout(timeout);
             if (error) {
                 reject(error);
             } else {
@@ -553,9 +564,14 @@ const configureMQTT = async (commands, client, mqttHA) => {
     const topic = mqttHA.getCommandTopic();
     logger.info(`Subscribed to command topic: ${topic}`);
     
-    // Use Promise wrapper for regular mqtt.subscribe()
+    // Use Promise wrapper for regular mqtt.subscribe() with timeout
     await new Promise((resolve, reject) => {
+        const timeout = global.setTimeout(() => {
+            reject(new Error('MQTT subscription timeout'));
+        }, 10000); // 10 second timeout
+        
         client.subscribe(topic, (error, granted) => {
+            global.clearTimeout(timeout);
             if (error) {
                 logger.error('MQTT subscription error:', error);
                 reject(error);
@@ -759,7 +775,14 @@ logger.info('!-- Starting OnStar2MQTT Polling --!');
             client.publish(pollingStatusTopicTF, "true", { retain: true });
         };
 
+        let isRunning = false;
         const main = async () => {
+            if (isRunning) {
+                logger.warn('Previous polling operation still running, skipping this interval');
+                return;
+            }
+            
+            isRunning = true;
             try {
                 logger.debug('Starting main function run()');
                 await run();
@@ -824,10 +847,15 @@ logger.info('!-- Starting OnStar2MQTT Polling --!');
                     logger.error('Error Polling Data:', { error: e });
                     client.publish(pollingStatusTopicTF, "false", { retain: true })
                 }
+            } finally {
+                isRunning = false;
             }
         };
 
-        await main();
+        // Run initial poll after a short delay to avoid overlapping with setup
+        global.setTimeout(() => {
+            main();
+        }, 5000);
 
         let refreshInterval;
         const refreshIntervalTopic = mqttHA.getRefreshIntervalTopic();

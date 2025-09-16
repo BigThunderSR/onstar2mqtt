@@ -21,6 +21,15 @@
             ]
         },
         {
+            "matchPackageNames": ["onstarjs2"],
+            "postUpgradeTasks": {
+                "commands": ["npm run sync-patchright"],
+                "fileFilters": ["package.json"],
+                "executionMode": "update"
+            },
+            "addLabels": ["patchright-sync", "onstarjs2-dependency"]
+        },
+        {
             "matchCategories": [
                 "js"
             ],

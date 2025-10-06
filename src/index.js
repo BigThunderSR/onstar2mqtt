@@ -1,5 +1,5 @@
-//const OnStar = require('./deps/index.cjs');
-const OnStar = require('onstarjs2');
+const OnStar = require('./deps/index.cjs');
+//const OnStar = require('onstarjs2');
 const mqtt = require('async-mqtt');
 const uuidv4 = require('uuid').v4;
 const _ = require('lodash');
@@ -98,11 +98,13 @@ const getVehicles = async commands => {
     logger.info('Requesting vehicles');
     const vehiclesRes = await commands.getAccountVehicles();
     logger.info('Vehicle request status:', { status: _.get(vehiclesRes, 'status') });
+    // DEBUG: Log the full response to see the actual structure
+    logger.debug('Full vehicles response:', { vehiclesRes });
     // API CHANGE: New API format returns vehicles directly in data.vehicles array
     // Old path: response.data.vehicles.vehicle (nested structure)
-    // New path: response.data.vehicles (direct array)
+    // New path: data.vehicles (direct array, no response wrapper in new API)
     const vehicles = _.map(
-        _.get(vehiclesRes, 'response.data.vehicles'),
+        _.get(vehiclesRes, 'data.vehicles') || _.get(vehiclesRes, 'response.data.vehicles'),
         v => new Vehicle(v)
     );
     logger.debug('Vehicle request response:', { vehicles: _.map(vehicles, v => v.toString()) });

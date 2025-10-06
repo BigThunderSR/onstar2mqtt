@@ -98,8 +98,11 @@ const getVehicles = async commands => {
     logger.info('Requesting vehicles');
     const vehiclesRes = await commands.getAccountVehicles();
     logger.info('Vehicle request status:', { status: _.get(vehiclesRes, 'status') });
+    // API CHANGE: New API format returns vehicles directly in data.vehicles array
+    // Old path: response.data.vehicles.vehicle (nested structure)
+    // New path: response.data.vehicles (direct array)
     const vehicles = _.map(
-        _.get(vehiclesRes, 'response.data.vehicles.vehicle'),
+        _.get(vehiclesRes, 'response.data.vehicles'),
         v => new Vehicle(v)
     );
     logger.debug('Vehicle request response:', { vehicles: _.map(vehicles, v => v.toString()) });
@@ -199,9 +202,21 @@ const configureMQTT = async (commands, client, mqttHA) => {
                 const statsRes = await commands[command]({ diagnosticItem });
                 //logger.debug({ statsRes });
                 logger.info('Diagnostic request status', { status: _.get(statsRes, 'status') });
-                logger.debug('Diagnostic Response Body from Command', statsRes.response.data.commandResponse.body.diagnosticResponse);
+                
+                // API CHANGE: New API format changes diagnostic response structure
+                // Old path: response.data.commandResponse.body.diagnosticResponse
+                // New path: response.data.diagnostics OR response.diagnostics
+                // Try multiple paths for backward compatibility
+                let diagnosticResponses = _.get(statsRes, 'response.data.commandResponse.body.diagnosticResponse');
+                
+                // If old path doesn't exist, try new API paths
+                if (!diagnosticResponses) {
+                    diagnosticResponses = _.get(statsRes, 'response.data.diagnostics') || 
+                                         _.get(statsRes, 'response.diagnostics');
+                }
+                
+                logger.debug('Diagnostic Response Body from Command', diagnosticResponses);
                 // Make sure the response is always an array
-                const diagnosticResponses = _.get(statsRes, 'response.data.commandResponse.body.diagnosticResponse');
                 const diagArray = Array.isArray(diagnosticResponses) ? diagnosticResponses : [diagnosticResponses];
                 const stats = _.map(
                     diagArray,

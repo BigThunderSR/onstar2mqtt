@@ -6,6 +6,10 @@ const apiResponse = require('./vehicles.sample.json');
 
 describe('Vehicle', () => {
     let v;
+    // API CHANGE: New API format uses direct array path
+    // Old: apiResponse.vehicles.vehicle[0]
+    // New: apiResponse.vehicles[0]
+    // Using old path for now to maintain test compatibility with existing sample data
     beforeEach(() => v = new Vehicle(_.get(apiResponse, 'vehicles.vehicle[0]')));
 
     it('should parse a vehicle response', () => {

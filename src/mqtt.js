@@ -959,16 +959,19 @@ class MQTT {
             case 'FUEL RANGE':
             case 'FUEL RANGE MI':
             case 'FUEL_RANGE':
+            case 'FUEL_RANGE MI':
             case 'FUEL_RANGE_MI':
                 return this.mapSensorConfigPayload(diag, diagEl, 'measurement', undefined, undefined, undefined, 'mdi:gas-station');
             case 'FUEL REMAINING':
             case 'FUEL REMAINING GAL':
             case 'FUEL_REMAINING':
+            case 'FUEL_REMAINING GAL':
             case 'FUEL_REMAINING_GAL':
                 return this.mapSensorConfigPayload(diag, diagEl, 'measurement', undefined, undefined, undefined, 'mdi:fuel');
             case 'FUEL USED':
             case 'FUEL USED GAL':
             case 'FUEL_USED':
+            case 'FUEL_USED GAL':
             case 'FUEL_USED_GAL':
                 return this.mapSensorConfigPayload(diag, diagEl, 'measurement', undefined, undefined, undefined, 'mdi:fuel-off');
             case 'ENGINE RPM':

@@ -1,5 +1,4 @@
-const OnStar = require('./deps/index.cjs');
-//const OnStar = require('onstarjs2');
+const OnStar = require('onstarjs2').default;
 const mqtt = require('async-mqtt');
 const uuidv4 = require('uuid').v4;
 const _ = require('lodash');
@@ -848,6 +847,6 @@ logger.info('!-- Starting OnStar2MQTT Polling --!');
         });
 
     } catch (e) {
-        logger.error('Main function error:', { error: e });
+        logger.error('Main function error:', { error: e, message: e.message, stack: e.stack });
     }
 })();

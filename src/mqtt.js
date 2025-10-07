@@ -940,7 +940,7 @@ class MQTT {
             case 'LIFETIME MPGE':
             case 'LIFETIME EFFICIENCY':
             case 'ELECTRIC ECONOMY':
-                return this.mapSensorConfigPayload(diag, diagEl, 'measurement', undefined, undefined, undefined, 'mdi:leaf');
+                return this.mapSensorConfigPayload(diag, diagEl, 'measurement', undefined, undefined, undefined, 'mdi:leaf-circle');
             case 'AVERAGE FUEL ECONOMY':
             case 'AVERAGE FUEL ECONOMY MPG':
             case 'AVERAGE_FUEL_ECONOMY':
@@ -952,7 +952,7 @@ class MQTT {
             case 'LIFETIME FUEL ECON MPG':
             case 'LIFETIME_FUEL_ECONOMY':
             case 'LIFETIME_FUEL_ECONOMY MPG':
-                return this.mapSensorConfigPayload(diag, diagEl, 'measurement', undefined, undefined, undefined, 'mdi:counter');
+                return this.mapSensorConfigPayload(diag, diagEl, 'measurement', undefined, undefined, undefined, 'mdi:leaf-circle');
             case 'FUEL LEVEL':
             case 'FUEL_LEVEL':
                 return this.mapSensorConfigPayload(diag, diagEl, 'measurement', undefined, undefined, undefined, 'mdi:fuel');
@@ -967,13 +967,13 @@ class MQTT {
             case 'FUEL_REMAINING':
             case 'FUEL_REMAINING GAL':
             case 'FUEL_REMAINING_GAL':
-                return this.mapSensorConfigPayload(diag, diagEl, 'measurement', undefined, undefined, undefined, 'mdi:fuel');
+                return this.mapSensorConfigPayload(diag, diagEl, 'measurement', undefined, undefined, undefined, 'mdi:gas-station');
             case 'FUEL USED':
             case 'FUEL USED GAL':
             case 'FUEL_USED':
             case 'FUEL_USED GAL':
             case 'FUEL_USED_GAL':
-                return this.mapSensorConfigPayload(diag, diagEl, 'measurement', undefined, undefined, undefined, 'mdi:fuel-off');
+                return this.mapSensorConfigPayload(diag, diagEl, 'measurement', undefined, undefined, undefined, 'mdi:gas-station');
             case 'ENGINE RPM':
             case 'ENGINE_RPM':
                 return this.mapSensorConfigPayload(diag, diagEl, 'measurement', undefined, undefined, undefined, 'mdi:engine');

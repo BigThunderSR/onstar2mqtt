@@ -18,6 +18,26 @@ A service that utilizes the [OnStarJS](https://github.com/BigThunderSR/OnStarJS)
 
 There is no affiliation with this project and GM, Chevrolet nor OnStar. In fact, it would be nice if they'd even respond to development requests so we wouldn't have to reverse engineer their API.
 
+## What's New in v2.0.0
+
+⚠️ **Important Update**: This version includes OnStar API v3 changes that may affect some sensors.
+
+**New Features:**
+
+- **OnStar API v3 Support** - Updated to OnStarJS 2.10.0 with full API v3 compatibility
+- **Enhanced Reliability** - Improved handling of OnStar API field naming variations
+
+**What This Means for You:**
+
+- Some sensors that worked with older OnStar API versions may no longer be available or may have different names
+- Sensor entity IDs and names may change in Home Assistant
+- You may need to update Home Assistant automations/dashboards that reference changed sensors
+- Review your dashboards for any broken sensor references after upgrading
+
+**Recommendation:** Test in a sandbox/test environment first if possible, or be prepared to update your Home Assistant configurations after upgrading.
+
+For technical details, see [docs/API_MIGRATION_CHANGES.md](docs/API_MIGRATION_CHANGES.md)
+
 ## Running
 
 Collect the following minimum information:

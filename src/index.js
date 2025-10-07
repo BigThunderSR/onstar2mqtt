@@ -474,19 +474,19 @@ const configureMQTT = async (commands, client, mqttHA) => {
                     const responseData = _.get(data, 'response.data');
                     if (responseData) {
                         logger.warn('Command response data:', { responseData });
-                        const location = _.get(data, 'response.data.commandResponse.body.location');
-                        const speed = _.get(data, 'response.data.commandResponse.body.speed');
-                        const direction = _.get(data, 'response.data.commandResponse.body.direction');
-                        if (location) {
+                        // API v3 uses telemetry.data.position and telemetry.data.velocity
+                        const position = _.get(responseData, 'telemetry.data.position');
+                        const velocity = _.get(responseData, 'telemetry.data.velocity');
+                        if (position && position.lat && position.lng) {
                             const topic = mqttHA.getStateTopic({ name: command });
                             const deviceTrackerConfigTopic = mqttHA.getDeviceTrackerConfigTopic();
                             const vehicle = mqttHA.vehicle.toString();
 
                             const locationData = {
-                                latitude: parseFloat(location.lat),
-                                longitude: parseFloat(location.long),
-                                speed: parseFloat(speed.value),
-                                direction: parseFloat(direction.value)
+                                latitude: parseFloat(position.lat),
+                                longitude: parseFloat(position.lng),
+                                speed: velocity && velocity.spdInKph ? parseFloat(velocity.spdInKph) : 0,
+                                direction: velocity && velocity.dir ? parseFloat(velocity.dir) : 0
                             };
 
                             const deviceTrackerConfig = {

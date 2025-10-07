@@ -2742,6 +2742,7 @@ describe('MQTT', () => {
             const config = mqtt.getConfigPayload(d, d.diagnosticElements[0]);
             assert.strictEqual(config.icon, 'mdi:gas-station');
             assert.strictEqual(config.state_class, 'measurement');
+            assert.strictEqual(config.device_class, 'distance');
         });
 
         it('should map FUEL REMAINING GAL correctly', () => {
@@ -2753,6 +2754,7 @@ describe('MQTT', () => {
             const config = mqtt.getConfigPayload(d, d.diagnosticElements[0]);
             assert.strictEqual(config.icon, 'mdi:gas-station');
             assert.strictEqual(config.state_class, 'measurement');
+            assert.strictEqual(config.device_class, 'volume');
         });
 
         it('should map FUEL USED GAL correctly', () => {
@@ -2764,6 +2766,7 @@ describe('MQTT', () => {
             const config = mqtt.getConfigPayload(d, d.diagnosticElements[0]);
             assert.strictEqual(config.icon, 'mdi:gas-station');
             assert.strictEqual(config.state_class, 'measurement');
+            assert.strictEqual(config.device_class, 'volume');
         });
 
         it('should map BATT SAVER MODE COUNTER correctly', () => {
@@ -2808,6 +2811,7 @@ describe('MQTT', () => {
             const config = mqtt.getConfigPayload(d, d.diagnosticElements[0]);
             assert.strictEqual(config.icon, 'mdi:counter');
             assert.strictEqual(config.state_class, 'measurement');
+            assert.strictEqual(config.device_class, 'distance');
         });
 
         it('should map TRIP A ODO MI correctly', () => {
@@ -2819,6 +2823,7 @@ describe('MQTT', () => {
             const config = mqtt.getConfigPayload(d, d.diagnosticElements[0]);
             assert.strictEqual(config.icon, 'mdi:map-marker-distance');
             assert.strictEqual(config.state_class, 'measurement');
+            assert.strictEqual(config.device_class, 'distance');
         });
 
         it('should map LEFT FRONT TIRE PRESSURE PSI correctly', () => {

@@ -1051,7 +1051,7 @@ class MQTT {
                 return this.mapSensorConfigPayload(diag, diagEl, 'total_increasing', 'volume', undefined, undefined, 'mdi:gas-station');
             case 'FUEL AMOUNT':
             case 'FUEL AMOUNT GAL':
-                return this.mapSensorConfigPayload(diag, diagEl, 'measurement', 'volume_storage', undefined, undefined, 'mdi:fuel');
+                return this.mapSensorConfigPayload(diag, diagEl, 'measurement', 'volume_storage', undefined, undefined, 'mdi:gas-station');
             case 'FUEL CAPACITY':
             case 'FUEL CAPACITY GAL':
             case 'FUEL_CAPACITY':
@@ -1084,7 +1084,7 @@ class MQTT {
             case 'FUEL LEVEL':
             case 'FUEL_LEVEL':
                 // API v3: Include status and statusColor as attributes
-                return this.mapSensorConfigPayload(diag, diagEl, 'measurement', undefined, undefined, `{{ {'status': value_json.${MQTT.convertName(diagEl.name)}_status, 'status_color': value_json.${MQTT.convertName(diagEl.name)}_status_color} | tojson }}`, 'mdi:fuel');
+                return this.mapSensorConfigPayload(diag, diagEl, 'measurement', undefined, undefined, `{{ {'status': value_json.${MQTT.convertName(diagEl.name)}_status, 'status_color': value_json.${MQTT.convertName(diagEl.name)}_status_color} | tojson }}`, 'mdi:gas-station');
             case 'FUEL RANGE':
             case 'FUEL RANGE MI':
             case 'FUEL_RANGE':

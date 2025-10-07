@@ -1083,6 +1083,8 @@ class MQTT {
             case 'LEFT REAR TIRE PRESSURE':
             case 'RIGHT FRONT TIRE PRESSURE':
             case 'RIGHT REAR TIRE PRESSURE':
+                // API v3: Include status and statusColor as attributes
+                return this.mapSensorConfigPayload(diag, diagEl, 'measurement', undefined, undefined, `{{ {'status': value_json.${MQTT.convertName(diagEl.name)}_status, 'status_color': value_json.${MQTT.convertName(diagEl.name)}_status_color} | tojson }}`, 'mdi:car-tire-alert');
             case 'LEFT_FRONT_TIRE_PRESSURE PSI':
             case 'LEFT_REAR_TIRE_PRESSURE PSI':
             case 'RIGHT_FRONT_TIRE_PRESSURE PSI':
@@ -1095,6 +1097,8 @@ class MQTT {
             case 'LEFT_REAR_TIRE_PRESSURE_IN_PSI':
             case 'RIGHT_FRONT_TIRE_PRESSURE_IN_PSI':
             case 'RIGHT_REAR_TIRE_PRESSURE_IN_PSI':
+                // API v3: Include status and statusColor as attributes
+                return this.mapSensorConfigPayload(diag, diagEl, 'measurement', undefined, undefined, `{{ {'status': value_json.${MQTT.convertName(diagEl.name)}_status, 'status_color': value_json.${MQTT.convertName(diagEl.name)}_status_color} | tojson }}`, 'mdi:car-tire-alert');
             case 'LEFT_FRONT_TIRE_PRESSURE_IN_PSI PSI':
             case 'LEFT_REAR_TIRE_PRESSURE_IN_PSI PSI':
             case 'RIGHT_FRONT_TIRE_PRESSURE_IN_PSI PSI':

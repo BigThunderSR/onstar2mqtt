@@ -1059,7 +1059,7 @@ class MQTT {
                 return this.mapSensorConfigPayload(diag, diagEl, 'measurement', 'volume_storage', undefined, undefined, 'mdi:gas-station');
             case 'FUEL LEVEL IN GAL':
             case 'FUEL LEVEL IN GAL GAL':
-                return this.mapSensorConfigPayload(diag, diagEl, 'measurement', 'volume_storage', undefined, undefined, 'mdi:fuel');
+                return this.mapSensorConfigPayload(diag, diagEl, 'measurement', 'volume_storage', undefined, undefined, 'mdi:gas-station');
             // has state_class, no device_class, has message
             case 'OIL LIFE':
                 return this.mapSensorConfigPayload(diag, diagEl, 'measurement', undefined, 'Oil Life', `{{ {'message': value_json.${MQTT.convertName('OIL_LIFE_MESSAGE')}} | tojson }}`, 'mdi:oil');

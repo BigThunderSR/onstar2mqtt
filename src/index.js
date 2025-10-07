@@ -625,10 +625,8 @@ logger.info('!-- Starting OnStar2MQTT Polling --!');
             if (!buttonConfigsPublished) {
                 const sensors = [
                     { name: 'oil_life', component: null, icon: 'mdi:oil-level' },
-                    { name: 'tire_pressure', component: 'tire_pressure_lf_message', icon: 'mdi:car-tire-alert' },
-                    { name: 'tire_pressure', component: 'tire_pressure_lr_message', icon: 'mdi:car-tire-alert' },
-                    { name: 'tire_pressure', component: 'tire_pressure_rf_message', icon: 'mdi:car-tire-alert' },
-                    { name: 'tire_pressure', component: 'tire_pressure_rr_message', icon: 'mdi:car-tire-alert' },
+                    // Tire pressure message sensors removed - OnStar API does not provide tire pressure messages
+                    // Only provides STATUS values (TPM_STATUS_NOMINAL, etc.) which are already captured in tire pressure status sensors
                 ];
 
                 for (let sensor of sensors) {

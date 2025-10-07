@@ -2550,4 +2550,297 @@ describe('MQTT', () => {
             assert.strictEqual(result.payload.icon, undefined);
         });
     });
+
+    describe('additional sensor mappings for coverage', () => {
+        it('should map LEFT_FRONT_TIRE_PRESSURE_STATUS correctly', () => {
+            const diagResponse = {
+                name: 'LEFT_FRONT_TIRE_PRESSURE_STATUS',
+                diagnosticElements: [{ name: 'LEFT_FRONT_TIRE_PRESSURE_STATUS', value: 'TPM_STATUS_NOMINAL', uom: null }]
+            };
+            const d = new Diagnostic(diagResponse);
+            const config = mqtt.getConfigPayload(d, d.diagnosticElements[0]);
+            assert.strictEqual(config.icon, 'mdi:car-tire-alert');
+        });
+
+        it('should map LEFT_REAR_TIRE_PRESSURE_STATUS correctly', () => {
+            const diagResponse = {
+                name: 'LEFT_REAR_TIRE_PRESSURE_STATUS',
+                diagnosticElements: [{ name: 'LEFT_REAR_TIRE_PRESSURE_STATUS', value: 'TPM_STATUS_NOMINAL', uom: null }]
+            };
+            const d = new Diagnostic(diagResponse);
+            const config = mqtt.getConfigPayload(d, d.diagnosticElements[0]);
+            assert.strictEqual(config.icon, 'mdi:car-tire-alert');
+        });
+
+        it('should map RIGHT_FRONT_TIRE_PRESSURE_STATUS correctly', () => {
+            const diagResponse = {
+                name: 'RIGHT_FRONT_TIRE_PRESSURE_STATUS',
+                diagnosticElements: [{ name: 'RIGHT_FRONT_TIRE_PRESSURE_STATUS', value: 'TPM_STATUS_NOMINAL', uom: null }]
+            };
+            const d = new Diagnostic(diagResponse);
+            const config = mqtt.getConfigPayload(d, d.diagnosticElements[0]);
+            assert.strictEqual(config.icon, 'mdi:car-tire-alert');
+        });
+
+        it('should map RIGHT_REAR_TIRE_PRESSURE_STATUS correctly', () => {
+            const diagResponse = {
+                name: 'RIGHT_REAR_TIRE_PRESSURE_STATUS',
+                diagnosticElements: [{ name: 'RIGHT_REAR_TIRE_PRESSURE_STATUS', value: 'TPM_STATUS_NOMINAL', uom: null }]
+            };
+            const d = new Diagnostic(diagResponse);
+            const config = mqtt.getConfigPayload(d, d.diagnosticElements[0]);
+            assert.strictEqual(config.icon, 'mdi:car-tire-alert');
+        });
+
+        it('should map LEFT_FRONT_TIRE_PRESSURE_VALID correctly', () => {
+            const diagResponse = {
+                name: 'LEFT_FRONT_TIRE_PRESSURE_VALID',
+                diagnosticElements: [{ name: 'LEFT_FRONT_TIRE_PRESSURE_VALID', value: '1', uom: null }]
+            };
+            const d = new Diagnostic(diagResponse);
+            const config = mqtt.getConfigPayload(d, d.diagnosticElements[0]);
+            assert.strictEqual(config.icon, 'mdi:check-circle');
+        });
+
+        it('should map LEFT_REAR_TIRE_PRESSURE_VALID correctly', () => {
+            const diagResponse = {
+                name: 'LEFT_REAR_TIRE_PRESSURE_VALID',
+                diagnosticElements: [{ name: 'LEFT_REAR_TIRE_PRESSURE_VALID', value: '1', uom: null }]
+            };
+            const d = new Diagnostic(diagResponse);
+            const config = mqtt.getConfigPayload(d, d.diagnosticElements[0]);
+            assert.strictEqual(config.icon, 'mdi:check-circle');
+        });
+
+        it('should map RIGHT_FRONT_TIRE_PRESSURE_VALID correctly', () => {
+            const diagResponse = {
+                name: 'RIGHT_FRONT_TIRE_PRESSURE_VALID',
+                diagnosticElements: [{ name: 'RIGHT_FRONT_TIRE_PRESSURE_VALID', value: '1', uom: null }]
+            };
+            const d = new Diagnostic(diagResponse);
+            const config = mqtt.getConfigPayload(d, d.diagnosticElements[0]);
+            assert.strictEqual(config.icon, 'mdi:check-circle');
+        });
+
+        it('should map RIGHT_REAR_TIRE_PRESSURE_VALID correctly', () => {
+            const diagResponse = {
+                name: 'RIGHT_REAR_TIRE_PRESSURE_VALID',
+                diagnosticElements: [{ name: 'RIGHT_REAR_TIRE_PRESSURE_VALID', value: '1', uom: null }]
+            };
+            const d = new Diagnostic(diagResponse);
+            const config = mqtt.getConfigPayload(d, d.diagnosticElements[0]);
+            assert.strictEqual(config.icon, 'mdi:check-circle');
+        });
+
+        it('should map GAS RANGE correctly', () => {
+            const diagResponse = {
+                name: 'GAS RANGE',
+                diagnosticElements: [{ name: 'GAS RANGE', value: '450', uom: 'km' }]
+            };
+            const d = new Diagnostic(diagResponse);
+            const config = mqtt.getConfigPayload(d, d.diagnosticElements[0]);
+            assert.strictEqual(config.icon, 'mdi:gas-station');
+            assert.strictEqual(config.state_class, 'measurement');
+            assert.strictEqual(config.device_class, 'distance');
+        });
+
+        it('should map LAST TRIP TOTAL DISTANCE correctly', () => {
+            const diagResponse = {
+                name: 'LAST TRIP TOTAL DISTANCE',
+                diagnosticElements: [{ name: 'LAST TRIP TOTAL DISTANCE', value: '25', uom: 'km' }]
+            };
+            const d = new Diagnostic(diagResponse);
+            const config = mqtt.getConfigPayload(d, d.diagnosticElements[0]);
+            assert.strictEqual(config.icon, 'mdi:map-marker-distance');
+            assert.strictEqual(config.state_class, 'measurement');
+            assert.strictEqual(config.device_class, 'distance');
+        });
+
+        it('should map FUEL CAPACITY correctly', () => {
+            const diagResponse = {
+                name: 'FUEL CAPACITY',
+                diagnosticElements: [{ name: 'FUEL CAPACITY', value: '60', uom: 'L' }]
+            };
+            const d = new Diagnostic(diagResponse);
+            const config = mqtt.getConfigPayload(d, d.diagnosticElements[0]);
+            assert.strictEqual(config.icon, 'mdi:gas-station');
+            assert.strictEqual(config.device_class, 'volume_storage');
+        });
+
+        it('should map AVERAGE FUEL ECONOMY correctly', () => {
+            const diagResponse = {
+                name: 'AVERAGE FUEL ECONOMY',
+                diagnosticElements: [{ name: 'AVERAGE FUEL ECONOMY', value: '7.5', uom: 'km/L' }]
+            };
+            const d = new Diagnostic(diagResponse);
+            const config = mqtt.getConfigPayload(d, d.diagnosticElements[0]);
+            assert.strictEqual(config.icon, 'mdi:gauge');
+            assert.strictEqual(config.state_class, 'measurement');
+        });
+
+        it('should map ENGINE RPM correctly', () => {
+            const diagResponse = {
+                name: 'ENGINE RPM',
+                diagnosticElements: [{ name: 'ENGINE RPM', value: '2500', uom: 'rpm' }]
+            };
+            const d = new Diagnostic(diagResponse);
+            const config = mqtt.getConfigPayload(d, d.diagnosticElements[0]);
+            assert.strictEqual(config.icon, 'mdi:engine');
+            assert.strictEqual(config.state_class, 'measurement');
+        });
+
+        it('should map TIRE PRESSURE PLACARD FRONT correctly', () => {
+            const diagResponse = {
+                name: 'TIRE PRESSURE PLACARD FRONT',
+                diagnosticElements: [{ name: 'TIRE PRESSURE PLACARD FRONT', value: '240', uom: 'kPa' }]
+            };
+            const d = new Diagnostic(diagResponse);
+            const config = mqtt.getConfigPayload(d, d.diagnosticElements[0]);
+            assert.strictEqual(config.icon, 'mdi:card-text');
+            assert.strictEqual(config.state_class, 'measurement');
+        });
+
+        it('should map TIRE PRESSURE PLACARD REAR correctly', () => {
+            const diagResponse = {
+                name: 'TIRE PRESSURE PLACARD REAR',
+                diagnosticElements: [{ name: 'TIRE PRESSURE PLACARD REAR', value: '240', uom: 'kPa' }]
+            };
+            const d = new Diagnostic(diagResponse);
+            const config = mqtt.getConfigPayload(d, d.diagnosticElements[0]);
+            assert.strictEqual(config.icon, 'mdi:card-text');
+            assert.strictEqual(config.state_class, 'measurement');
+        });
+
+        it('should map TIRE PRESSURE PLACARD FRONT PSI correctly', () => {
+            const diagResponse = {
+                name: 'TIRE PRESSURE PLACARD FRONT PSI',
+                diagnosticElements: [{ name: 'TIRE PRESSURE PLACARD FRONT PSI', value: '35', uom: 'psi' }]
+            };
+            const d = new Diagnostic(diagResponse);
+            const config = mqtt.getConfigPayload(d, d.diagnosticElements[0]);
+            assert.strictEqual(config.icon, 'mdi:card-text');
+            assert.strictEqual(config.state_class, 'measurement');
+        });
+
+        it('should map TIRE PRESSURE PLACARD REAR PSI correctly', () => {
+            const diagResponse = {
+                name: 'TIRE PRESSURE PLACARD REAR PSI',
+                diagnosticElements: [{ name: 'TIRE PRESSURE PLACARD REAR PSI', value: '35', uom: 'psi' }]
+            };
+            const d = new Diagnostic(diagResponse);
+            const config = mqtt.getConfigPayload(d, d.diagnosticElements[0]);
+            assert.strictEqual(config.icon, 'mdi:card-text');
+            assert.strictEqual(config.state_class, 'measurement');
+        });
+
+        it('should map FUEL RANGE MI correctly', () => {
+            const diagResponse = {
+                name: 'FUEL RANGE MI',
+                diagnosticElements: [{ name: 'FUEL RANGE MI', value: '250', uom: 'mi' }]
+            };
+            const d = new Diagnostic(diagResponse);
+            const config = mqtt.getConfigPayload(d, d.diagnosticElements[0]);
+            assert.strictEqual(config.icon, 'mdi:gas-station');
+            assert.strictEqual(config.state_class, 'measurement');
+        });
+
+        it('should map FUEL REMAINING GAL correctly', () => {
+            const diagResponse = {
+                name: 'FUEL REMAINING GAL',
+                diagnosticElements: [{ name: 'FUEL REMAINING GAL', value: '10', uom: 'gal' }]
+            };
+            const d = new Diagnostic(diagResponse);
+            const config = mqtt.getConfigPayload(d, d.diagnosticElements[0]);
+            assert.strictEqual(config.icon, 'mdi:gas-station');
+            assert.strictEqual(config.state_class, 'measurement');
+        });
+
+        it('should map FUEL USED GAL correctly', () => {
+            const diagResponse = {
+                name: 'FUEL USED GAL',
+                diagnosticElements: [{ name: 'FUEL USED GAL', value: '5', uom: 'gal' }]
+            };
+            const d = new Diagnostic(diagResponse);
+            const config = mqtt.getConfigPayload(d, d.diagnosticElements[0]);
+            assert.strictEqual(config.icon, 'mdi:gas-station');
+            assert.strictEqual(config.state_class, 'measurement');
+        });
+
+        it('should map BATT SAVER MODE COUNTER correctly', () => {
+            const diagResponse = {
+                name: 'BATT SAVER MODE COUNTER',
+                diagnosticElements: [{ name: 'BATT SAVER MODE COUNTER', value: '0', uom: null }]
+            };
+            const d = new Diagnostic(diagResponse);
+            const config = mqtt.getConfigPayload(d, d.diagnosticElements[0]);
+            assert.strictEqual(config.icon, 'mdi:battery-arrow-down');
+            assert.strictEqual(config.state_class, 'measurement');
+        });
+
+        it('should map BATT SAVER MODE SEV LVL correctly', () => {
+            const diagResponse = {
+                name: 'BATT SAVER MODE SEV LVL',
+                diagnosticElements: [{ name: 'BATT SAVER MODE SEV LVL', value: '0', uom: null }]
+            };
+            const d = new Diagnostic(diagResponse);
+            const config = mqtt.getConfigPayload(d, d.diagnosticElements[0]);
+            assert.strictEqual(config.icon, 'mdi:battery-alert');
+            assert.strictEqual(config.state_class, 'measurement');
+        });
+
+        it('should map EOL READ correctly', () => {
+            const diagResponse = {
+                name: 'EOL READ',
+                diagnosticElements: [{ name: 'EOL READ', value: '100', uom: '%' }]
+            };
+            const d = new Diagnostic(diagResponse);
+            const config = mqtt.getConfigPayload(d, d.diagnosticElements[0]);
+            assert.strictEqual(config.icon, 'mdi:oil-level');
+            assert.strictEqual(config.state_class, 'measurement');
+        });
+
+        it('should map ODO READ MI correctly', () => {
+            const diagResponse = {
+                name: 'ODO READ MI',
+                diagnosticElements: [{ name: 'ODO READ MI', value: '31000', uom: 'mi' }]
+            };
+            const d = new Diagnostic(diagResponse);
+            const config = mqtt.getConfigPayload(d, d.diagnosticElements[0]);
+            assert.strictEqual(config.icon, 'mdi:counter');
+            assert.strictEqual(config.state_class, 'measurement');
+        });
+
+        it('should map TRIP A ODO MI correctly', () => {
+            const diagResponse = {
+                name: 'TRIP A ODO MI',
+                diagnosticElements: [{ name: 'TRIP A ODO MI', value: '78', uom: 'mi' }]
+            };
+            const d = new Diagnostic(diagResponse);
+            const config = mqtt.getConfigPayload(d, d.diagnosticElements[0]);
+            assert.strictEqual(config.icon, 'mdi:map-marker-distance');
+            assert.strictEqual(config.state_class, 'measurement');
+        });
+
+        it('should map LEFT FRONT TIRE PRESSURE PSI correctly', () => {
+            const diagResponse = {
+                name: 'LEFT FRONT TIRE PRESSURE PSI',
+                diagnosticElements: [{ name: 'LEFT FRONT TIRE PRESSURE PSI', value: '35', uom: 'psi' }]
+            };
+            const d = new Diagnostic(diagResponse);
+            const config = mqtt.getConfigPayload(d, d.diagnosticElements[0]);
+            assert.strictEqual(config.icon, 'mdi:car-tire-alert');
+            assert.strictEqual(config.state_class, 'measurement');
+        });
+
+        it('should map EXHST FL LEVL WARN IND correctly', () => {
+            const diagResponse = {
+                name: 'EXHST FL LEVL WARN IND',
+                diagnosticElements: [{ name: 'EXHST FL LEVL WARN IND', value: '0', uom: null }]
+            };
+            const d = new Diagnostic(diagResponse);
+            const config = mqtt.getConfigPayload(d, d.diagnosticElements[0]);
+            assert.strictEqual(config.icon, 'mdi:gauge');
+            assert.strictEqual(config.state_class, 'measurement');
+        });
+    });
 });

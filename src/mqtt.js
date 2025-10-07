@@ -806,6 +806,14 @@ class MQTT {
             if (e.message !== undefined && e.message !== null && e.message !== '') {
                 state[`${MQTT.convertName(e.name)}_message`] = e.message;
             }
+            // API CHANGE: Add element-level status and statusColor from API v3
+            // These appear on individual diagnostic elements (e.g., LEFT_FRONT_TIRE_PRESSURE)
+            if (e.status !== undefined && e.status !== null) {
+                state[`${MQTT.convertName(e.name)}_status`] = e.status;
+            }
+            if (e.statusColor !== undefined && e.statusColor !== null) {
+                state[`${MQTT.convertName(e.name)}_status_color`] = e.statusColor;
+            }
         });
         return state;
     }

@@ -61,6 +61,8 @@ class DiagnosticElement {
      * @param {string} ele.name
      * @param {string|number} ele.value
      * @param {string} ele.unit (old API) or ele.uom (new API)
+     * @param {string} ele.status (API v3)
+     * @param {string} ele.statusColor (API v3)
      */
     constructor(ele) {
         this._name = ele.name;
@@ -68,6 +70,9 @@ class DiagnosticElement {
         // API CHANGE: Support both 'uom' (new API) and 'unit' (old API) for backward compatibility
         const unitValue = ele.uom || ele.unit;
         this.measurement = new Measurement(ele.value, unitValue);
+        // API CHANGE: Capture element-level status and statusColor from API v3
+        this.status = ele.status;
+        this.statusColor = ele.statusColor;
     }
 
     get name() {

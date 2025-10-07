@@ -943,11 +943,15 @@ class MQTT {
                 return this.mapSensorConfigPayload(diag, diagEl, 'measurement', undefined, undefined, undefined, 'mdi:leaf');
             case 'AVERAGE FUEL ECONOMY':
             case 'AVERAGE FUEL ECONOMY MPG':
+            case 'AVERAGE_FUEL_ECONOMY':
+            case 'AVERAGE_FUEL_ECONOMY MPG':
                 return this.mapSensorConfigPayload(diag, diagEl, 'measurement', undefined, undefined, undefined, 'mdi:gauge');
             case 'LIFETIME FUEL ECONOMY':
             case 'LIFETIME FUEL ECONOMY MPG':
             case 'LIFETIME FUEL ECON':
             case 'LIFETIME FUEL ECON MPG':
+            case 'LIFETIME_FUEL_ECONOMY':
+            case 'LIFETIME_FUEL_ECONOMY MPG':
                 return this.mapSensorConfigPayload(diag, diagEl, 'measurement', undefined, undefined, undefined, 'mdi:counter');
             case 'FUEL LEVEL':
             case 'FUEL_LEVEL':

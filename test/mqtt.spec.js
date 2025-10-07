@@ -2810,7 +2810,7 @@ describe('MQTT', () => {
             const d = new Diagnostic(diagResponse);
             const config = mqtt.getConfigPayload(d, d.diagnosticElements[0]);
             assert.strictEqual(config.icon, 'mdi:counter');
-            assert.strictEqual(config.state_class, 'measurement');
+            assert.strictEqual(config.state_class, 'total_increasing');
             assert.strictEqual(config.device_class, 'distance');
         });
 

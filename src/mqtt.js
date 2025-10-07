@@ -991,7 +991,7 @@ class MQTT {
             case 'ODO_READ':
             case 'ODO_READ MI':
             case 'ODO_READ_MI':
-                return this.mapSensorConfigPayload(diag, diagEl, 'measurement', 'distance', undefined, undefined, 'mdi:counter');
+                return this.mapSensorConfigPayload(diag, diagEl, 'total_increasing', 'distance', undefined, undefined, 'mdi:counter');
             case 'TRIP A ODO':
             case 'TRIP A ODO MI':
             case 'TRIP_A_ODO':

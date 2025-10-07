@@ -732,7 +732,11 @@ class MQTT {
                     break;
             }
             state[MQTT.convertName(e.name)] = value;
-            state[`${MQTT.convertName(e.name)}_message`] = e.message;
+            // Only add _message field if message exists (not undefined/null/empty)
+            // This prevents overwriting legitimate messages with undefined values
+            if (e.message !== undefined && e.message !== null && e.message !== '') {
+                state[`${MQTT.convertName(e.name)}_message`] = e.message;
+            }
         });
         return state;
     }
@@ -850,7 +854,23 @@ class MQTT {
             case 'WEEKDAY END TIME': // 08:00
             case 'CHARGE DAY OF WEEK': // Monday
             case 'EXHST FL LEVL WARN STATUS': // Diesel Exhaust Fluid Level Warning Status
-                return this.mapSensorConfigPayload(diag, diagEl);
+            case 'ENGINE_TYPE': // ICE/EV/HYBRID - Engine type string
+            case 'LAST_OIL_CHANGE_DATE': // Date string like "2025-09-19"
+            case 'ENGINE_AIR_FILTER_DIAGNOSTICS': // Diagnostic status strings like "NO FAULT"
+            case 'ENGINE_AIR_FILTER_MONITOR_STATUS': // Monitor status strings like "OK"
+            case 'INITIALIZATION_STATUS': // Initialization status strings like "INITIALIZED"
+            case 'BRAKE_FLUID_LOW': // String values like "FALSE"/"TRUE"
+            case 'WASHER_FLUID_LOW': // String values like "FALSE"/"TRUE"
+            case 'LEFT_FRONT_TIRE_PRESSURE_STATUS': // Tire pressure status strings like "TPM_STATUS_NOMINAL"
+            case 'LEFT_REAR_TIRE_PRESSURE_STATUS': // Tire pressure status strings
+            case 'RIGHT_FRONT_TIRE_PRESSURE_STATUS': // Tire pressure status strings
+            case 'RIGHT_REAR_TIRE_PRESSURE_STATUS': // Tire pressure status strings
+            case 'LEFT_FRONT_TIRE_PRESSURE_VALID': // Validation status (0/1 but as diagnostic field)
+            case 'LEFT_REAR_TIRE_PRESSURE_VALID': // Validation status
+            case 'RIGHT_FRONT_TIRE_PRESSURE_VALID': // Validation status
+            case 'RIGHT_REAR_TIRE_PRESSURE_VALID': // Validation status
+                // String sensors must NOT have state_class - undefined means no state_class in config
+                return this.mapSensorConfigPayload(diag, diagEl, undefined, undefined);
             // has state_class, new device class, camel case name
             case 'GAS RANGE':
             case 'GAS RANGE MI':

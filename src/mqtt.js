@@ -1039,7 +1039,7 @@ class MQTT {
             case 'TIRE PRESSURE PLACARD REAR':
             case 'TIRE PRESSURE PLACARD FRONT PSI':
             case 'TIRE PRESSURE PLACARD REAR PSI':
-                return this.mapSensorConfigPayload(diag, diagEl, 'measurement', undefined, undefined, undefined, 'mdi:tire');
+                return this.mapSensorConfigPayload(diag, diagEl, 'measurement', undefined, undefined, undefined, 'mdi:card-text');
             case 'EXHST FL LEVL WARN IND': // Diesel Exhaust Fluid Level Warning Indicator
                 return this.mapSensorConfigPayload(diag, diagEl, 'measurement', undefined, undefined, undefined, 'mdi:gauge');
             default:

@@ -23,6 +23,7 @@ There is no affiliation with this project and GM, Chevrolet nor OnStar. In fact,
 **Important Update:** This version includes OnStar API v3 changes that may affect some sensors.
 
 - As this is a major change, some issues may occur. Please report any problems you encounter by opening an issue on GitHub.
+- Most new sensors have been added. Any remaining sensors will be added in future updates. Current ETA is by the end of December 2025.
 
 **New Features:**
 

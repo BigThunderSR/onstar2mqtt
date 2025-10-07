@@ -522,13 +522,13 @@ describe('MQTT', () => {
                     state_class: 'measurement',
                     device_class: undefined,
                     icon: 'mdi:fuel',
-                    json_attributes_template: undefined,
+                    json_attributes_template: "{{ {'status': value_json.fuel_level_status, 'status_color': value_json.fuel_level_status_color} | tojson }}",
                     name: 'Fuel Level',
                     payload_available: 'true',
                     payload_not_available: 'false',
                     state_topic: 'homeassistant/sensor/XXX/fuel_tank_info/state',
                     unique_id: 'xxx-fuel-level',
-                    json_attributes_topic: undefined,
+                    json_attributes_topic: 'homeassistant/sensor/XXX/fuel_tank_info/state',
                     unit_of_measurement: '%',
                     value_template: '{{ value_json.fuel_level }}'
                 });
@@ -2799,6 +2799,7 @@ describe('MQTT', () => {
             const config = mqtt.getConfigPayload(d, d.diagnosticElements[0]);
             assert.strictEqual(config.icon, 'mdi:battery-arrow-down');
             assert.strictEqual(config.state_class, 'measurement');
+            assert.strictEqual(config.json_attributes_template, "{{ {'status': value_json.batt_saver_mode_counter_status, 'status_color': value_json.batt_saver_mode_counter_status_color} | tojson }}");
         });
 
         it('should map BATT SAVER MODE SEV LVL correctly', () => {
@@ -2810,6 +2811,7 @@ describe('MQTT', () => {
             const config = mqtt.getConfigPayload(d, d.diagnosticElements[0]);
             assert.strictEqual(config.icon, 'mdi:battery-alert');
             assert.strictEqual(config.state_class, 'measurement');
+            assert.strictEqual(config.json_attributes_template, "{{ {'status': value_json.batt_saver_mode_sev_lvl_status, 'status_color': value_json.batt_saver_mode_sev_lvl_status_color} | tojson }}");
         });
 
         it('should map EOL READ correctly', () => {
@@ -2821,6 +2823,7 @@ describe('MQTT', () => {
             const config = mqtt.getConfigPayload(d, d.diagnosticElements[0]);
             assert.strictEqual(config.icon, 'mdi:oil-level');
             assert.strictEqual(config.state_class, 'measurement');
+            assert.strictEqual(config.json_attributes_template, "{{ {'status': value_json.eol_read_status, 'status_color': value_json.eol_read_status_color} | tojson }}");
         });
 
         it('should map ODO READ MI correctly', () => {

@@ -5,6 +5,10 @@ const Measurement = require('./measurement');
 class Diagnostic {
     constructor(diagResponse) {
         this.name = diagResponse.name;
+        // API CHANGE: New API v3 includes group-level status information
+        this.displayName = diagResponse.displayName;
+        this.status = diagResponse.status;
+        this.statusColor = diagResponse.statusColor;
         // API CHANGE: New API format changes field names
         // Old: diagnosticElement (singular), unit
         // New: diagnosticElements (plural), uom (unit of measure)

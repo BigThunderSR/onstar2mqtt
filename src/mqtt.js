@@ -667,11 +667,80 @@ class MQTT {
     }
 
     /**
+     * Get config topics and payloads for group-level status fields (API v3)
+     * @param {Diagnostic} diag
+     * @returns {Array} Array of {topic, payload} objects
+     */
+    getStatusFieldConfigs(diag) {
+        const configs = [];
+        const baseSensorType = MQTT.determineSensorType(diag.name);
+        const baseName = MQTT.convertName(diag.name);
+        
+        // Create config for status field if it exists
+        if (diag.status !== undefined && diag.status !== null) {
+            const statusName = `${baseName}_status`;
+            const statusTopic = `${this.getBaseTopic(baseSensorType)}/${statusName}/config`;
+            const statusPayload = {
+                unique_id: `${this.vehicle.vin}-${statusName}`,
+                name: this.addNamePrefix(MQTT.convertFriendlyName(`${diag.name} Status`)),
+                state_topic: this.getStateTopic(diag),
+                value_template: `{{ value_json.${statusName} }}`,
+                icon: 'mdi:information-outline',
+                availability_topic: this.getAvailabilityTopic(),
+                payload_available: 'true',
+                payload_not_available: 'false',
+                device: {
+                    identifiers: [this.vehicle.vin],
+                    manufacturer: this.vehicle.make,
+                    model: this.vehicle.year + ' ' + this.vehicle.model,
+                    name: this.vehicle.toString(),
+                    suggested_area: this.vehicle.toString() + ' Sensors',
+                }
+            };
+            configs.push({ topic: statusTopic, payload: statusPayload });
+        }
+        
+        // Create config for statusColor field if it exists
+        if (diag.statusColor !== undefined && diag.statusColor !== null) {
+            const colorName = `${baseName}_status_color`;
+            const colorTopic = `${this.getBaseTopic(baseSensorType)}/${colorName}/config`;
+            const colorPayload = {
+                unique_id: `${this.vehicle.vin}-${colorName}`,
+                name: this.addNamePrefix(MQTT.convertFriendlyName(`${diag.name} Status Color`)),
+                state_topic: this.getStateTopic(diag),
+                value_template: `{{ value_json.${colorName} }}`,
+                icon: 'mdi:palette',
+                availability_topic: this.getAvailabilityTopic(),
+                payload_available: 'true',
+                payload_not_available: 'false',
+                device: {
+                    identifiers: [this.vehicle.vin],
+                    manufacturer: this.vehicle.make,
+                    model: this.vehicle.year + ' ' + this.vehicle.model,
+                    name: this.vehicle.toString(),
+                    suggested_area: this.vehicle.toString() + ' Sensors',
+                }
+            };
+            configs.push({ topic: colorTopic, payload: colorPayload });
+        }
+        
+        return configs;
+    }
+
+    /**
      * Return the state payload for this diagnostic
      * @param {Diagnostic} diag
      */
     getStatePayload(diag) {
         const state = {};
+        // API CHANGE: Add group-level status and statusColor from API v3
+        // These appear on the diagnostic group itself (e.g., TIRE_PRESSURE)
+        if (diag.status !== undefined && diag.status !== null) {
+            state[`${MQTT.convertName(diag.name)}_status`] = diag.status;
+        }
+        if (diag.statusColor !== undefined && diag.statusColor !== null) {
+            state[`${MQTT.convertName(diag.name)}_status_color`] = diag.statusColor;
+        }
         _.forEach(diag.diagnosticElements, e => {
             // massage the binary_sensor values
             let value;

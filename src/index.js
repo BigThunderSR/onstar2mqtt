@@ -214,16 +214,24 @@ const configureMQTT = async (commands, client, mqttHA) => {
                 // If old path doesn't exist, try new API v3 path
                 if (!diagnosticResponses) {
                     diagnosticResponses = _.get(statsRes, 'response.data.diagnostics');
+                    logger.warn('Using API v3 path: response.data.diagnostics');
+                } else {
+                    logger.warn('Using API v2 path: response.data.commandResponse.body.diagnosticResponse');
                 }
                 
                 logger.info('Diagnostic responses found:', Array.isArray(diagnosticResponses) ? diagnosticResponses.length : 'not an array');
+                if (diagnosticResponses && Array.isArray(diagnosticResponses)) {
+                    logger.warn('Diagnostic group names:', diagnosticResponses.map(d => d.name));
+                }
                 // Make sure the response is always an array
                 const diagArray = Array.isArray(diagnosticResponses) ? diagnosticResponses : [diagnosticResponses];
                 const stats = _.map(
                     diagArray,
                     (d, index) => {
                         logger.debug('Diagnostic Array', { ...d, number: index + 1 });
-                        return new Diagnostic({ ...d, number: index + 1 });
+                        const diag = new Diagnostic({ ...d, number: index + 1 });
+                        logger.warn(`Diagnostic "${diag.name}" has ${diag.diagnosticElements.length} elements`);
+                        return diag;
                     }
                 );
                 logger.debug('stats', stats);
@@ -701,6 +709,12 @@ logger.info('!-- Starting OnStar2MQTT Polling --!');
                 for (const d of s.diagnosticElements) {
                     const topic = mqttHA.getConfigTopic(d)
                     const payload = mqttHA.getConfigPayload(s, d);
+                    configurations.set(topic, { configured: false, payload });
+                }
+                
+                // API CHANGE: Add configs for group-level status fields (API v3)
+                const statusConfigs = mqttHA.getStatusFieldConfigs(s);
+                for (const { topic, payload } of statusConfigs) {
                     configurations.set(topic, { configured: false, payload });
                 }
 

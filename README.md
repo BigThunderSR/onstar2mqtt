@@ -20,7 +20,9 @@ There is no affiliation with this project and GM, Chevrolet nor OnStar. In fact,
 
 ## What's New in v2.0.0
 
-⚠️ **Important Update**: This version includes OnStar API v3 changes that may affect some sensors.
+**Important Update:** This version includes OnStar API v3 changes that may affect some sensors.
+
+- As this is a major change, some issues may occur. Please report any problems you encounter by opening an issue on GitHub.
 
 **New Features:**
 

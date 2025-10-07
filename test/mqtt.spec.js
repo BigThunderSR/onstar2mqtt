@@ -124,6 +124,7 @@ describe('MQTT', () => {
                     //message: 'na',
                     state_class: 'measurement',
                     device_class: 'temperature',
+                    icon: 'mdi:thermometer',
                     json_attributes_template: undefined,
                     name: 'Ambient Air Temperature',
                     payload_available: 'true',
@@ -148,6 +149,7 @@ describe('MQTT', () => {
                     //message: 'na',
                     state_class: 'measurement',
                     device_class: 'temperature',
+                    icon: 'mdi:thermometer',
                     json_attributes_template: undefined,
                     name: 'Ambient Air Temperature F',
                     payload_available: 'true',
@@ -187,6 +189,7 @@ describe('MQTT', () => {
                     },
                     state_class: 'total_increasing',
                     device_class: 'distance',
+                    icon: 'mdi:counter',
                     json_attributes_template: undefined,
                     name: 'Odometer',
                     payload_available: 'true',
@@ -210,6 +213,7 @@ describe('MQTT', () => {
                     },
                     state_class: 'total_increasing',
                     device_class: 'distance',
+                    icon: 'mdi:counter',
                     json_attributes_template: undefined,
                     name: 'Odometer Mi',
                     payload_available: 'true',
@@ -248,6 +252,7 @@ describe('MQTT', () => {
                     //message: 'na',                      
                     state_class: undefined,
                     device_class: undefined,
+                    icon: 'mdi:battery-charging-high',
                     json_attributes_template: undefined,
                     name: 'Priority Charge Indicator',
                     payload_available: 'true',
@@ -321,6 +326,7 @@ describe('MQTT', () => {
 
                     state_class: 'measurement',
                     device_class: 'pressure',
+                    icon: 'mdi:car-tire-alert',
                     json_attributes_template: "{{ {'recommendation': value_json.tire_pressure_placard_front, 'message': value_json.tire_pressure_lf_message} | tojson }}",
                     name: 'Tire Pressure: Left Front',
                     payload_available: 'true',
@@ -347,6 +353,7 @@ describe('MQTT', () => {
 
                     state_class: 'measurement',
                     device_class: 'pressure',
+                    icon: 'mdi:car-tire-alert',
                     json_attributes_template: "{{ {'recommendation': value_json.tire_pressure_placard_front, 'message': value_json.tire_pressure_rf_message} | tojson }}",
                     name: 'Tire Pressure: Right Front',
                     payload_available: 'true',
@@ -373,6 +380,7 @@ describe('MQTT', () => {
 
                     state_class: 'measurement',
                     device_class: 'pressure',
+                    icon: 'mdi:car-tire-alert',
                     json_attributes_template: "{{ {'recommendation': value_json.tire_pressure_placard_rear, 'message': value_json.tire_pressure_lr_message} | tojson }}",
                     name: 'Tire Pressure: Left Rear',
                     payload_available: 'true',
@@ -399,6 +407,7 @@ describe('MQTT', () => {
 
                     state_class: 'measurement',
                     device_class: 'pressure',
+                    icon: 'mdi:car-tire-alert',
                     json_attributes_template: "{{ {'recommendation': value_json.tire_pressure_placard_rear, 'message': value_json.tire_pressure_rr_message} | tojson }}",
                     name: 'Tire Pressure: Right Rear',
                     payload_available: 'true',
@@ -429,6 +438,7 @@ describe('MQTT', () => {
                     //message: 'YELLOW',
                     state_class: 'measurement',
                     device_class: undefined,
+                    icon: 'mdi:oil',
                     json_attributes_template: "{{ {'message': value_json.oil_life_message} | tojson }}",
                     name: 'Oil Life',
                     payload_available: 'true',
@@ -458,6 +468,7 @@ describe('MQTT', () => {
                     },
                     state_class: 'measurement',
                     device_class: 'volume_storage',
+                    icon: 'mdi:fuel',
                     json_attributes_template: undefined,
                     name: 'Fuel Amount',
                     payload_available: 'true',
@@ -481,6 +492,7 @@ describe('MQTT', () => {
                     },
                     state_class: 'measurement',
                     device_class: 'volume_storage',
+                    icon: 'mdi:gas-station',
                     json_attributes_template: undefined,
                     name: 'Fuel Capacity',
                     payload_available: 'true',
@@ -504,6 +516,7 @@ describe('MQTT', () => {
                     },
                     state_class: 'measurement',
                     device_class: undefined,
+                    icon: 'mdi:fuel',
                     json_attributes_template: undefined,
                     name: 'Fuel Level',
                     payload_available: 'true',
@@ -551,6 +564,7 @@ describe('MQTT', () => {
                     },
                     state_class: 'measurement',
                     device_class: undefined,
+                    icon: 'mdi:leaf-circle',
                     json_attributes_template: undefined,
                     name: 'Lifetime Fuel Econ',
                     payload_available: 'true',
@@ -588,6 +602,7 @@ describe('MQTT', () => {
                     },
                     state_class: 'total_increasing',
                     device_class: 'volume',
+                    icon: 'mdi:gas-station',
                     json_attributes_template: undefined,
                     name: 'Lifetime Fuel Used',
                     payload_available: 'true',
@@ -625,6 +640,7 @@ describe('MQTT', () => {
                     },
                     state_class: undefined,
                     device_class: 'plug',
+                    icon: 'mdi:ev-plug-type1',
                     json_attributes_template: undefined,
                     name: 'Ev Plug State',
                     payload_available: 'true',
@@ -661,6 +677,7 @@ describe('MQTT', () => {
                     },
                     state_class: undefined,
                     device_class: undefined,
+                    icon: 'mdi:flash',
                     json_attributes_template: undefined,
                     name: 'Charger Power Level',
                     payload_available: 'true',
@@ -696,6 +713,7 @@ describe('MQTT', () => {
                     },
                     state_class: 'measurement',
                     device_class: undefined,
+                    icon: 'mdi:leaf-circle',
                     json_attributes_template: undefined,
                     name: 'Electric Economy',
                     payload_available: 'true',
@@ -741,6 +759,7 @@ describe('MQTT', () => {
                     },
                     state_class: 'measurement',
                     device_class: 'distance',
+                    icon: 'mdi:ev-station',
                     json_attributes_template: undefined,
                     name: 'Ev Range',
                     payload_available: 'true',
@@ -778,6 +797,7 @@ describe('MQTT', () => {
                     },
                     state_class: undefined,
                     device_class: 'battery_charging',
+                    icon: 'mdi:battery-charging',
                     json_attributes_template: undefined,
                     name: 'Ev Charge State',
                     payload_available: 'true',
@@ -1638,6 +1658,7 @@ describe('MQTT', () => {
                 },
                 state_class: 'measurement',
                 device_class: undefined,
+                icon: undefined,
                 name: '',
                 state_topic: 'homeassistant/sensor/XXX//state',
                 unique_id: 'xxx-undefined',
@@ -1724,8 +1745,8 @@ describe('MQTT', () => {
             });
             const result = mqtt.getStatePayload(diagnostic);
             assert.strictEqual(result.unknown_bool_message, undefined);
-            // Update this line to expect undefined since unknown values are not handled
-            assert.strictEqual(result.unknown_bool, undefined);
+            // Unknown values are passed through as-is when they can't be converted to numbers
+            assert.strictEqual(result.unknown_bool, 'INVALID');
         });
 
         describe('getStatePayload binary sensor value handling', () => {

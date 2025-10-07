@@ -32,10 +32,10 @@ describe('Diagnostics', () => {
                 // API CHANGE: Using old API field name 'diagnosticElement' for test
                 // New API uses 'diagnosticElements' (plural) and 'uom' instead of 'unit'
                 // Diagnostic class now supports both formats
+                // API CHANGE: Now accepts elements with only value (no unit required)
                 diagnosticElement: [
-                    { value: 123 }, // Missing unit
-                    { unit: 'test' }, // Missing value
-                    {} // Missing both
+                    { unit: 'test' }, // Missing value - should be rejected
+                    {} // Missing both - should be rejected
                 ]
             };
             const diagnostic = new Diagnostic(diagResponse);

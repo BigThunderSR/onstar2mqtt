@@ -53,6 +53,16 @@ describe('Measurement', () => {
             const convertedValue = Measurement.convertValue(50, 'L');
             assert.strictEqual(convertedValue, 13.2);
         });
+
+        it('should convert the value correctly for L/100km to mpg', () => {
+            const convertedValue = Measurement.convertValue(8, 'L/100km');
+            assert.strictEqual(convertedValue, 29.4);
+        });
+
+        it('should handle psi values (no conversion needed)', () => {
+            const convertedValue = Measurement.convertValue(32.5, 'psi');
+            assert.strictEqual(convertedValue, 32.5);
+        });
     });
 
     describe('convertUnit', () => {
@@ -85,6 +95,16 @@ describe('Measurement', () => {
             const convertedUnit = Measurement.convertUnit('L');
             assert.strictEqual(convertedUnit, 'gal');
         });
+
+        it('should convert the unit correctly for L/100km to mpg', () => {
+            const convertedUnit = Measurement.convertUnit('L/100km');
+            assert.strictEqual(convertedUnit, 'mpg');
+        });
+
+        it('should handle psi unit (no conversion)', () => {
+            const convertedUnit = Measurement.convertUnit('psi');
+            assert.strictEqual(convertedUnit, 'psi');
+        });
     });
 
     describe('correctUnitName', () => {
@@ -96,6 +116,18 @@ describe('Measurement', () => {
         it('should handle liter variations correctly', () => {
             assert.strictEqual(Measurement.correctUnitName('l'), 'L');
             assert.strictEqual(Measurement.correctUnitName('L'), 'L');
+        });
+
+        it('should handle L/100KM correctly', () => {
+            assert.strictEqual(Measurement.correctUnitName('L/100KM'), 'L/100km');
+        });
+
+        it('should handle KM/L correctly', () => {
+            assert.strictEqual(Measurement.correctUnitName('KM/L'), 'km/L');
+        });
+
+        it('should handle PSI correctly', () => {
+            assert.strictEqual(Measurement.correctUnitName('PSI'), 'psi');
         });
     });
 

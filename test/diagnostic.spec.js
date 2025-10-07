@@ -8,6 +8,10 @@ describe('Diagnostics', () => {
     let d;
 
     describe('Diagnostic', () => {
+        // API CHANGE: Test uses old API format path for backward compatibility
+        // Old: commandResponse.body.diagnosticResponse[0] with diagnosticElement field
+        // New: diagnostics[0] with diagnosticElements field
+        // The Diagnostic class now supports both formats
         beforeEach(() => d = new Diagnostic(_.get(apiResponse, 'commandResponse.body.diagnosticResponse[0]')));
 
         it('should parse a diagnostic response', () => {
@@ -25,10 +29,13 @@ describe('Diagnostics', () => {
         it('should handle diagnostic response with no valid elements', () => {
             const diagResponse = {
                 name: 'TEST',
+                // API CHANGE: Using old API field name 'diagnosticElement' for test
+                // New API uses 'diagnosticElements' (plural) and 'uom' instead of 'unit'
+                // Diagnostic class now supports both formats
+                // API CHANGE: Now accepts elements with only value (no unit required)
                 diagnosticElement: [
-                    { value: 123 }, // Missing unit
-                    { unit: 'test' }, // Missing value
-                    {} // Missing both
+                    { unit: 'test' }, // Missing value - should be rejected
+                    {} // Missing both - should be rejected
                 ]
             };
             const diagnostic = new Diagnostic(diagResponse);

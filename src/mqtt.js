@@ -1055,6 +1055,7 @@ class MQTT {
             case 'FUEL CAPACITY':
             case 'FUEL CAPACITY GAL':
             case 'FUEL_CAPACITY':
+            case 'FUEL_CAPACITY GAL':  // Converted name with underscore + space
             case 'FUEL_CAPACITY_GAL':
                 return this.mapSensorConfigPayload(diag, diagEl, 'measurement', 'volume_storage', undefined, undefined, 'mdi:gas-station');
             case 'FUEL LEVEL IN GAL':

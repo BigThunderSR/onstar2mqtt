@@ -166,7 +166,8 @@ describe('MQTT', () => {
                     ambient_air_temperature: 15,
                     ambient_air_temperature_f: 59,
                     ambient_air_temperature_f_message: 'na',
-                    ambient_air_temperature_message: 'na'
+                    ambient_air_temperature_message: 'na',
+                    ambient_air_temperature_status: 'NA'
                     //ambient_air_temperature: 15,
                     //ambient_air_temperature_f: 59
                 });
@@ -230,7 +231,8 @@ describe('MQTT', () => {
                     odometer: 6013.8,
                     odometer_message: "na",
                     odometer_mi: 3736.8,
-                    odometer_mi_message: "na"
+                    odometer_mi_message: "na",
+                    odometer_status: "NA"
                 });
             });
         });
@@ -269,10 +271,13 @@ describe('MQTT', () => {
                 assert.deepStrictEqual(mqtt.getStatePayload(d), {
                     ev_charge_state: false,
                     ev_charge_state_message: 'charging_complete',
+                    ev_charge_state_status: 'NA',
                     priority_charge_indicator: false,
                     priority_charge_indicator_message: 'na',
+                    priority_charge_indicator_status: 'NA',
                     priority_charge_status: false,
-                    priority_charge_status_message: 'na'
+                    priority_charge_status_message: 'na',
+                    priority_charge_status_status: 'NA'
                     //ev_charge_state: false,
                     //priority_charge_indicator: false,
                     //priority_charge_status: false
@@ -468,7 +473,7 @@ describe('MQTT', () => {
                     },
                     state_class: 'measurement',
                     device_class: 'volume_storage',
-                    icon: 'mdi:fuel',
+                    icon: 'mdi:gas-station',
                     json_attributes_template: undefined,
                     name: 'Fuel Amount',
                     payload_available: 'true',
@@ -516,14 +521,14 @@ describe('MQTT', () => {
                     },
                     state_class: 'measurement',
                     device_class: undefined,
-                    icon: 'mdi:fuel',
-                    json_attributes_template: undefined,
+                    icon: 'mdi:gas-station',
+                    json_attributes_template: "{{ {'status': value_json.fuel_level_status, 'status_color': value_json.fuel_level_status_color} | tojson }}",
                     name: 'Fuel Level',
                     payload_available: 'true',
                     payload_not_available: 'false',
                     state_topic: 'homeassistant/sensor/XXX/fuel_tank_info/state',
                     unique_id: 'xxx-fuel-level',
-                    json_attributes_topic: undefined,
+                    json_attributes_topic: 'homeassistant/sensor/XXX/fuel_tank_info/state',
                     unit_of_measurement: '%',
                     value_template: '{{ value_json.fuel_level }}'
                 });
@@ -534,16 +539,20 @@ describe('MQTT', () => {
                     fuel_amount_gal: 5.3,
                     fuel_amount_gal_message: "na",
                     fuel_amount_message: "na",
+                    fuel_amount_status: "NA",
                     fuel_capacity: 60,
                     fuel_capacity_gal: 15.9,
                     fuel_capacity_gal_message: "na",
                     fuel_capacity_message: "na",
+                    fuel_capacity_status: "NA",
                     fuel_level: 33.3,
                     fuel_level_in_gal: 19.98,
                     fuel_level_in_gal_gal: 5.3,
                     fuel_level_in_gal_gal_message: "na",
                     fuel_level_in_gal_message: "na",
-                    fuel_level_message: "na"
+                    fuel_level_in_gal_status: "NA",
+                    fuel_level_message: "na",
+                    fuel_level_status: "NA"
                 });
             });
         });
@@ -581,7 +590,8 @@ describe('MQTT', () => {
                     lifetime_fuel_econ: 11.86,
                     lifetime_fuel_econ_message: "na",
                     lifetime_fuel_econ_mpg: 27.9,
-                    lifetime_fuel_econ_mpg_message: "na"
+                    lifetime_fuel_econ_mpg_message: "na",
+                    lifetime_fuel_econ_status: "NA"
                 });
             });
         });
@@ -619,7 +629,8 @@ describe('MQTT', () => {
                     lifetime_fuel_used: 4476.94,
                     lifetime_fuel_used_gal: 1182.7,
                     lifetime_fuel_used_gal_message: "na",
-                    lifetime_fuel_used_message: "na"
+                    lifetime_fuel_used_message: "na",
+                    lifetime_fuel_used_status: "NA"
                 });
             });
         });
@@ -656,7 +667,8 @@ describe('MQTT', () => {
             it('should generate state payloads', () => {
                 assert.deepStrictEqual(mqtt.getStatePayload(d), {
                     ev_plug_state: true,
-                    ev_plug_state_message: "plugged"
+                    ev_plug_state_message: "plugged",
+                    ev_plug_state_status: "NA"
                 });
             });
         });
@@ -692,7 +704,8 @@ describe('MQTT', () => {
             it('should generate state payloads', () => {
                 assert.deepStrictEqual(mqtt.getStatePayload(d), {
                     charger_power_level: 'NO_REDUCTION',
-                    charger_power_level_message: 'na'
+                    charger_power_level_message: 'na',
+                    charger_power_level_status: 'NA'
                 });
             });
         });
@@ -729,16 +742,20 @@ describe('MQTT', () => {
                 assert.deepStrictEqual(mqtt.getStatePayload(d), {
                     electric_economy: 21.85,
                     electric_economy_message: "na",
+                    electric_economy_status: "NA",
                     lifetime_efficiency: 21.85,
                     lifetime_efficiency_message: "na",
+                    lifetime_efficiency_status: "NA",
                     lifetime_mpge: 40.73,
                     lifetime_mpge_message: "na",
                     lifetime_mpge_mpge: 95.8,
                     lifetime_mpge_mpge_message: "na",
+                    lifetime_mpge_status: "NA",
                     odometer: 6013.8,
                     odometer_message: "na",
                     odometer_mi: 3736.8,
                     odometer_mi_message: "na",
+                    odometer_status: "NA",
                 });
             });
         });
@@ -777,6 +794,7 @@ describe('MQTT', () => {
                     ev_range_message: 'na',
                     ev_range_mi: 211.9,
                     ev_range_mi_message: 'na',
+                    ev_range_status: 'NA',
                 });
             });
         });
@@ -814,10 +832,13 @@ describe('MQTT', () => {
                 assert.deepStrictEqual(mqtt.getStatePayload(d), {
                     ev_charge_state: false,
                     ev_charge_state_message: "charging_complete",
+                    ev_charge_state_status: "NA",
                     priority_charge_indicator: false,
                     priority_charge_indicator_message: "na",
+                    priority_charge_indicator_status: "NA",
                     priority_charge_status: false,
                     priority_charge_status_message: "na",
+                    priority_charge_status_status: "NA",
                 });
             });
         });
@@ -2778,6 +2799,7 @@ describe('MQTT', () => {
             const config = mqtt.getConfigPayload(d, d.diagnosticElements[0]);
             assert.strictEqual(config.icon, 'mdi:battery-arrow-down');
             assert.strictEqual(config.state_class, 'measurement');
+            assert.strictEqual(config.json_attributes_template, "{{ {'status': value_json.batt_saver_mode_counter_status, 'status_color': value_json.batt_saver_mode_counter_status_color} | tojson }}");
         });
 
         it('should map BATT SAVER MODE SEV LVL correctly', () => {
@@ -2789,6 +2811,7 @@ describe('MQTT', () => {
             const config = mqtt.getConfigPayload(d, d.diagnosticElements[0]);
             assert.strictEqual(config.icon, 'mdi:battery-alert');
             assert.strictEqual(config.state_class, 'measurement');
+            assert.strictEqual(config.json_attributes_template, "{{ {'status': value_json.batt_saver_mode_sev_lvl_status, 'status_color': value_json.batt_saver_mode_sev_lvl_status_color} | tojson }}");
         });
 
         it('should map EOL READ correctly', () => {
@@ -2800,6 +2823,7 @@ describe('MQTT', () => {
             const config = mqtt.getConfigPayload(d, d.diagnosticElements[0]);
             assert.strictEqual(config.icon, 'mdi:oil-level');
             assert.strictEqual(config.state_class, 'measurement');
+            assert.strictEqual(config.json_attributes_template, "{{ {'status': value_json.eol_read_status, 'status_color': value_json.eol_read_status_color} | tojson }}");
         });
 
         it('should map ODO READ MI correctly', () => {

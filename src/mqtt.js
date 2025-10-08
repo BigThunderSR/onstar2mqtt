@@ -797,10 +797,10 @@ class MQTT {
             let value;
             switch (e.name) {
                 case 'EV PLUG STATE': // unplugged/plugged
-                    value = e.value === 'plugged';
+                    value = e.value && e.value.toLowerCase() === 'plugged';
                     break;
                 case 'EV CHARGE STATE': // not_charging/charging
-                    value = e.value === 'charging';
+                    value = e.value && e.value.toLowerCase() === 'charging';
                     break;
                 case 'PRIORITY CHARGE INDICATOR': // FALSE/TRUE
                     value = e.value === 'TRUE';

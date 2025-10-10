@@ -735,11 +735,14 @@ class MQTT {
         if (diag.status !== undefined && diag.status !== null) {
             const statusName = `${baseName}_status`;
             const statusTopic = `${this.getBaseTopic(baseSensorType)}/${statusName}/config`;
+            const lastUpdatedFieldName = `${baseName}_last_updated`;
             const statusPayload = {
                 unique_id: `${this.vehicle.vin}-${statusName}`,
                 name: this.addNamePrefix(MQTT.convertFriendlyName(`${diag.name} Status`)),
                 state_topic: this.getStateTopic(diag),
                 value_template: `{{ value_json.${statusName} }}`,
+                json_attributes_topic: this.getStateTopic(diag),
+                json_attributes_template: `{{ {'last_updated': value_json.${lastUpdatedFieldName}} | tojson }}`,
                 icon: groupIcon,
                 availability_topic: this.getAvailabilityTopic(),
                 payload_available: 'true',
@@ -759,11 +762,14 @@ class MQTT {
         if (diag.statusColor !== undefined && diag.statusColor !== null) {
             const colorName = `${baseName}_status_color`;
             const colorTopic = `${this.getBaseTopic(baseSensorType)}/${colorName}/config`;
+            const lastUpdatedFieldName = `${baseName}_last_updated`;
             const colorPayload = {
                 unique_id: `${this.vehicle.vin}-${colorName}`,
                 name: this.addNamePrefix(MQTT.convertFriendlyName(`${diag.name} Status Color`)),
                 state_topic: this.getStateTopic(diag),
                 value_template: `{{ value_json.${colorName} }}`,
+                json_attributes_topic: this.getStateTopic(diag),
+                json_attributes_template: `{{ {'last_updated': value_json.${lastUpdatedFieldName}} | tojson }}`,
                 icon: groupIcon,
                 availability_topic: this.getAvailabilityTopic(),
                 payload_available: 'true',
@@ -795,6 +801,10 @@ class MQTT {
         }
         if (diag.statusColor !== undefined && diag.statusColor !== null) {
             state[`${MQTT.convertName(diag.name)}_status_color`] = diag.statusColor;
+        }
+        // Add group-level cts (timestamp) for use in group status sensors
+        if (diag.cts !== undefined && diag.cts !== null) {
+            state[`${MQTT.convertName(diag.name)}_last_updated`] = diag.cts;
         }
         _.forEach(diag.diagnosticElements, e => {
             // massage the binary_sensor values

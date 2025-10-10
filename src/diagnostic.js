@@ -9,6 +9,7 @@ class Diagnostic {
         this.displayName = diagResponse.displayName;
         this.status = diagResponse.status;
         this.statusColor = diagResponse.statusColor;
+        this.cts = diagResponse.cts;  // Group-level timestamp
         // API CHANGE: New API format changes field names
         // Old: diagnosticElement (singular), unit
         // New: diagnosticElements (plural), uom (unit of measure)

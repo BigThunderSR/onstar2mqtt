@@ -466,9 +466,11 @@ Commands Implemented in this Program:
 12. `chargeOverride`
 13. `cancelChargeOverride`
 14. `getLocation`
-15. `alertFlash`
-16. `alertHonk`
-17. `diagnostics` (uses OnStar API v3 - retrieves comprehensive diagnostic data for all vehicle systems. Can be requested on-demand but diagnostic data is not real-time and reflects the last cached state from the the API. Runs automatically during polling. See "Advanced Diagnostics Sensors" section above for details on the 7 diagnostic system sensors automatically created)
+15. ~~`alertFlash`~~ (deprecated - no longer available in OnStarJS)
+16. ~~`alertHonk`~~ (deprecated - no longer available in OnStarJS)
+17. `flashLights` (uses OnStar API v3 - flash vehicle lights)
+18. `stopLights` (uses OnStar API v3 - stop flashing vehicle lights)
+19. `diagnostics` (uses OnStar API v3 - retrieves comprehensive diagnostic data for all vehicle systems. Can be requested on-demand but diagnostic data is not real-time and reflects the last cached state from the the API. Runs automatically during polling. See "Advanced Diagnostics Sensors" section above for details on the 7 diagnostic system sensors automatically created)
 
 ### Lovelace Dashboard
 

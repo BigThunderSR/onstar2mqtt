@@ -126,7 +126,7 @@ MQTT auto discovery is enabled. For further integrations and screenshots see [HA
 
 - **NEW - Most non-binary sensors have a state_class assigned to allow collection of long-term statistics in HA**
 
-- **NEW - Manual diagnostic refresh command and manual engine RPM refresh command are working**
+- **NEW - Manual diagnostic refresh command ~~and manual engine RPM refresh command~~ is working**
 
 - **NEW - OnStar password/pin and MQTT password are masked by default in the console log output. To see these values in the console log output, set `--env LOG_LEVEL=debug`**
 
@@ -147,7 +147,9 @@ MQTT auto discovery is enabled. For further integrations and screenshots see [HA
   - Send commands to the command topic in the format:
     - `{"command": "diagnostics","options": "OIL LIFE,VEHICLE RANGE"}`
     - `{"command": "setChargingProfile","options": {"chargeMode": "RATE_BASED","rateType": "OFFPEAK"}}`
-    - `{"command": "alert","options": {"action": "Flash"}}`
+    - ~~`{"command": "alert","options": {"action": "Flash"}}`~~ (deprecated - use `flashLights` instead)
+    - `{"command": "flashLights"}`
+    - `{"command": "stopLights"}`
 
 - **NEW - MQTT Button Auto-Discovery for HA Added Starting at v1.14.0**
 

@@ -167,6 +167,13 @@ MQTT auto discovery is enabled. For further integrations and screenshots see [HA
   - At this point, pretty much every available sensor, button and status is published to MQTT auto-discovery topics
   - Set `MQTT_LIST_ALL_SENSORS_TOGETHER="true"` to group all the sensors under one MQTT device starting at v1.17.0. Default is `"false"`.
 
+- **NEW - Advanced Diagnostics Sensors from OnStar API v3 Added**
+  - 7 diagnostic system sensors with full subsystem details: Engine & Transmission (11 subsystems), Antilock Braking (3), StabiliTrak (1), Air Bag (4), Emissions (2), OnStar (3), Electric Lamp (1)
+  - Each sensor includes system status, color-coded status indicators, diagnostic trouble codes (DTCs), and detailed descriptions
+  - Individual subsystem attributes for granular monitoring (e.g., displacement_on_demand_subsystem, fuel_management_subsystem)
+  - Quick issue detection with subsystems_with_issues array
+  - Published to topic: `homeassistant/{VIN}/adv_diag/state`
+
 ## Helpful Usage Notes
 
 - The OnStar API has rate limiting, so they will block excessive requests over a short period of time.

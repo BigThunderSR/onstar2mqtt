@@ -172,7 +172,7 @@ const configureMQTT = async (commands, client, mqttHA) => {
 
         const commandFn = cmd.bind(commands);
         logger.debug(`List of const: Command: ${command}, cmd: ${cmd}, commandFn: ${commandFn.toString()}, options: ${options}`);
-        if (command === 'diagnostics' || command === 'enginerpm') {
+        if (command === 'diagnostics') { // || command === 'enginerpm') {
             logger.warn('Command sent:', { command });
             logger.warn(`Command Status Topic: ${commandStatusTopic}`);
             client.publish(commandStatusSensorConfig.topic, JSON.stringify(commandStatusSensorConfig.payload), { retain: true });

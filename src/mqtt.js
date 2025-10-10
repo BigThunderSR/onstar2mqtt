@@ -95,10 +95,10 @@ class MQTT {
                 Name: 'diagnostics',
                 Icon: 'mdi:car-info',
             },
-            EngineRPM: {
-                Name: 'enginerpm',
-                Icon: 'mdi:speedometer',
-            },
+            // EngineRPM: {
+            //     Name: 'enginerpm',
+            //     Icon: 'mdi:speedometer',
+            // },
             ChargeOverride: {
                 Name: 'chargeOverride',
                 Icon: 'mdi:ev-station',

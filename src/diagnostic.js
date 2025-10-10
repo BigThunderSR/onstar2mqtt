@@ -63,6 +63,7 @@ class DiagnosticElement {
      * @param {string} ele.unit (old API) or ele.uom (new API)
      * @param {string} ele.status (API v3)
      * @param {string} ele.statusColor (API v3)
+     * @param {string} ele.cts (API v3) - timestamp
      */
     constructor(ele) {
         this._name = ele.name;
@@ -73,6 +74,8 @@ class DiagnosticElement {
         // API CHANGE: Capture element-level status and statusColor from API v3
         this.status = ele.status;
         this.statusColor = ele.statusColor;
+        // API CHANGE: Capture element-level cts (timestamp) from API v3
+        this.cts = ele.cts;
     }
 
     get name() {

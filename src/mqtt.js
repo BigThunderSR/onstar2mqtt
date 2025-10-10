@@ -1203,7 +1203,7 @@ class MQTT {
             case 'LAST_OIL_CHANGE_DATE': // Date string like "2025-09-19"
                 return this.mapSensorConfigPayload(diag, diagEl, undefined, undefined, undefined, undefined, 'mdi:calendar-check');
             case 'ENGINE_AIR_FILTER_LIFE_RMAINING_HMI': // Engine air filter life remaining percentage
-                return this.mapSensorConfigPayload(diag, diagEl, undefined, undefined, undefined, undefined, 'mdi:air-filter');
+                return this.mapSensorConfigPayload(diag, diagEl, 'measurement', undefined, undefined, undefined, 'mdi:air-filter');
             case 'ENGINE_AIR_FILTER_DIAGNOSTICS': // Diagnostic status strings like "NO FAULT"
                 return this.mapSensorConfigPayload(diag, diagEl, undefined, undefined, undefined, undefined, 'mdi:air-filter');
             case 'ENGINE_AIR_FILTER_MONITOR_STATUS': // Monitor status strings like "OK"

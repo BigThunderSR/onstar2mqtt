@@ -1120,7 +1120,7 @@ class MQTT {
             case 'BATT SAVER MODE SEV LVL':
             case 'BATT_SAVER_MODE_SEV_LVL':
                 // API v3: Include status and statusColor as attributes
-                return this.mapSensorConfigPayload(diag, diagEl, 'measurement', undefined, undefined, `{{ {'status': value_json.${MQTT.convertName(diagEl.name)}_status, 'status_color': value_json.${MQTT.convertName(diagEl.name)}_status_color} | tojson }}`, 'mdi:battery-alert');
+                return this.mapSensorConfigPayload(diag, diagEl, 'measurement', undefined, undefined, `{{ {'status': value_json.${MQTT.convertName(diagEl.name)}_status, 'status_color': value_json.${MQTT.convertName(diagEl.name)}_status_color} | tojson }}`, 'mdi:battery-arrow-down');
             case 'EOL READ':
             case 'EOL_READ':
                 // API v3: Include status and statusColor as attributes

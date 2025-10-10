@@ -2809,7 +2809,7 @@ describe('MQTT', () => {
             };
             const d = new Diagnostic(diagResponse);
             const config = mqtt.getConfigPayload(d, d.diagnosticElements[0]);
-            assert.strictEqual(config.icon, 'mdi:battery-alert');
+            assert.strictEqual(config.icon, 'mdi:battery-arrow-down');
             assert.strictEqual(config.state_class, 'measurement');
             assert.strictEqual(config.json_attributes_template, "{{ {'status': value_json.batt_saver_mode_sev_lvl_status, 'status_color': value_json.batt_saver_mode_sev_lvl_status_color} | tojson }}");
         });

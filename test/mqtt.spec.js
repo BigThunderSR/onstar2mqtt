@@ -2882,6 +2882,128 @@ describe('MQTT', () => {
             assert.strictEqual(config.icon, 'mdi:gauge');
             assert.strictEqual(config.state_class, 'measurement');
         });
+
+        it('should map ENGINE_TYPE correctly', () => {
+            const diagResponse = {
+                name: 'ENGINE_TYPE',
+                diagnosticElements: [{ name: 'ENGINE_TYPE', value: 'ICE', uom: 'N/A' }]
+            };
+            const d = new Diagnostic(diagResponse);
+            const config = mqtt.getConfigPayload(d, d.diagnosticElements[0]);
+            assert.strictEqual(config.icon, 'mdi:engine');
+        });
+
+        it('should map LAST_OIL_CHANGE_DATE correctly', () => {
+            const diagResponse = {
+                name: 'LAST_OIL_CHANGE_DATE',
+                diagnosticElements: [{ name: 'LAST_OIL_CHANGE_DATE', value: '2025-09-19', uom: 'N/A' }]
+            };
+            const d = new Diagnostic(diagResponse);
+            const config = mqtt.getConfigPayload(d, d.diagnosticElements[0]);
+            assert.strictEqual(config.icon, 'mdi:calendar-check');
+        });
+
+        it('should map ENGINE_AIR_FILTER_LIFE_RMAINING_HMI correctly', () => {
+            const diagResponse = {
+                name: 'ENGINE_AIR_FILTER_LIFE_RMAINING_HMI',
+                diagnosticElements: [{ name: 'ENGINE_AIR_FILTER_LIFE_RMAINING_HMI', value: '80', uom: '%' }]
+            };
+            const d = new Diagnostic(diagResponse);
+            const config = mqtt.getConfigPayload(d, d.diagnosticElements[0]);
+            assert.strictEqual(config.icon, 'mdi:air-filter');
+        });
+
+        it('should map ENGINE_AIR_FILTER_DIAGNOSTICS correctly', () => {
+            const diagResponse = {
+                name: 'ENGINE_AIR_FILTER_DIAGNOSTICS',
+                diagnosticElements: [{ name: 'ENGINE_AIR_FILTER_DIAGNOSTICS', value: 'NO FAULT', uom: 'N/A' }]
+            };
+            const d = new Diagnostic(diagResponse);
+            const config = mqtt.getConfigPayload(d, d.diagnosticElements[0]);
+            assert.strictEqual(config.icon, 'mdi:air-filter');
+        });
+
+        it('should map ENGINE_AIR_FILTER_MONITOR_STATUS correctly', () => {
+            const diagResponse = {
+                name: 'ENGINE_AIR_FILTER_MONITOR_STATUS',
+                diagnosticElements: [{ name: 'ENGINE_AIR_FILTER_MONITOR_STATUS', value: 'OK', uom: 'N/A' }]
+            };
+            const d = new Diagnostic(diagResponse);
+            const config = mqtt.getConfigPayload(d, d.diagnosticElements[0]);
+            assert.strictEqual(config.icon, 'mdi:air-filter');
+        });
+
+        it('should map INITIALIZATION_STATUS correctly', () => {
+            const diagResponse = {
+                name: 'INITIALIZATION_STATUS',
+                diagnosticElements: [{ name: 'INITIALIZATION_STATUS', value: 'INITIALIZED', uom: 'N/A' }]
+            };
+            const d = new Diagnostic(diagResponse);
+            const config = mqtt.getConfigPayload(d, d.diagnosticElements[0]);
+            assert.strictEqual(config.icon, 'mdi:checkbox-marked-circle');
+        });
+
+        it('should map BRAKE_FLUID_LOW correctly', () => {
+            const diagResponse = {
+                name: 'BRAKE_FLUID_LOW',
+                diagnosticElements: [{ name: 'BRAKE_FLUID_LOW', value: 'FALSE', uom: 'N/A' }]
+            };
+            const d = new Diagnostic(diagResponse);
+            const config = mqtt.getConfigPayload(d, d.diagnosticElements[0]);
+            assert.strictEqual(config.icon, 'mdi:car-brake-fluid-level');
+        });
+
+        it('should map WASHER_FLUID_LOW correctly', () => {
+            const diagResponse = {
+                name: 'WASHER_FLUID_LOW',
+                diagnosticElements: [{ name: 'WASHER_FLUID_LOW', value: 'FALSE', uom: 'N/A' }]
+            };
+            const d = new Diagnostic(diagResponse);
+            const config = mqtt.getConfigPayload(d, d.diagnosticElements[0]);
+            assert.strictEqual(config.icon, 'mdi:wiper-wash');
+        });
+
+        it('should map BATTERY_STATE_OF_CHARGE_CRITICALLY_LOW correctly', () => {
+            const diagResponse = {
+                name: 'BATTERY_STATE_OF_CHARGE_CRITICALLY_LOW',
+                diagnosticElements: [{ name: 'BATTERY_STATE_OF_CHARGE_CRITICALLY_LOW', value: 'FALSE', uom: 'N/A' }]
+            };
+            const d = new Diagnostic(diagResponse);
+            const config = mqtt.getConfigPayload(d, d.diagnosticElements[0]);
+            assert.strictEqual(config.icon, 'mdi:battery-alert');
+        });
+
+        it('should map LEFT_FRONT_TIRE_PRESSURE_STATUS correctly', () => {
+            const diagResponse = {
+                name: 'LEFT_FRONT_TIRE_PRESSURE_STATUS',
+                diagnosticElements: [{ name: 'LEFT_FRONT_TIRE_PRESSURE_STATUS', value: 'TPM_STATUS_NOMINAL', uom: null }]
+            };
+            const d = new Diagnostic(diagResponse);
+            const config = mqtt.getConfigPayload(d, d.diagnosticElements[0]);
+            assert.strictEqual(config.icon, 'mdi:car-tire-alert');
+        });
+
+        it('should map LEFT_FRONT_TIRE_PRESSURE_IN_PSI PSI correctly (double PSI case)', () => {
+            const diagResponse = {
+                name: 'LEFT_FRONT_TIRE_PRESSURE_IN_PSI',
+                diagnosticElements: [{ name: 'LEFT_FRONT_TIRE_PRESSURE_IN_PSI PSI', value: '35', uom: 'PSI' }]
+            };
+            const d = new Diagnostic(diagResponse);
+            const config = mqtt.getConfigPayload(d, d.diagnosticElements[0]);
+            assert.strictEqual(config.icon, 'mdi:car-tire-alert');
+        });
+
+        it('should map OIL LIFE correctly', () => {
+            const diagResponse = {
+                name: 'OIL LIFE',
+                diagnosticElements: [{ name: 'OIL LIFE', value: '75', uom: '%', message: 'Good' }]
+            };
+            const d = new Diagnostic(diagResponse);
+            const config = mqtt.getConfigPayload(d, d.diagnosticElements[0]);
+            assert.strictEqual(config.icon, 'mdi:oil');
+            assert.strictEqual(config.state_class, 'measurement');
+            assert.strictEqual(config.name, 'Oil Life');
+        });
     });
 });
     describe('Advanced Diagnostics', () => {

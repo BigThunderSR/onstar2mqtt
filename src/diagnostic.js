@@ -9,6 +9,7 @@ class Diagnostic {
         this.displayName = diagResponse.displayName;
         this.status = diagResponse.status;
         this.statusColor = diagResponse.statusColor;
+        this.cts = diagResponse.cts;  // Group-level timestamp
         // API CHANGE: New API format changes field names
         // Old: diagnosticElement (singular), unit
         // New: diagnosticElements (plural), uom (unit of measure)
@@ -43,13 +44,16 @@ class DiagnosticElement {
      * @param {DiagnosticElement} element
      */
     static convert(element) {
-        const { name, message, unit, value } = element;
+        const { name, message, unit, value, status, statusColor, cts } = element;
         const convertedUnit = Measurement.convertUnit(unit);
         return new DiagnosticElement({
             name: DiagnosticElement.convertName(name, convertedUnit),
             message: message,
             unit: convertedUnit,
-            value: Measurement.convertValue(value, unit)
+            value: Measurement.convertValue(value, unit),
+            status: status,
+            statusColor: statusColor,
+            cts: cts
         })
     }
 
@@ -63,6 +67,7 @@ class DiagnosticElement {
      * @param {string} ele.unit (old API) or ele.uom (new API)
      * @param {string} ele.status (API v3)
      * @param {string} ele.statusColor (API v3)
+     * @param {string} ele.cts (API v3) - timestamp
      */
     constructor(ele) {
         this._name = ele.name;
@@ -73,6 +78,8 @@ class DiagnosticElement {
         // API CHANGE: Capture element-level status and statusColor from API v3
         this.status = ele.status;
         this.statusColor = ele.statusColor;
+        // API CHANGE: Capture element-level cts (timestamp) from API v3
+        this.cts = ele.cts;
     }
 
     get name() {

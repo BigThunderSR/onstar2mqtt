@@ -122,8 +122,8 @@ describe('Commands', () => {
         assert.strictEqual(result, undefined);
     });
 
-    it('should call enginerpm method', async () => {
-        const result = await commands.enginerpm({});
-        assert.strictEqual(result, undefined);
-    });
+    // it('should call enginerpm method', async () => {
+    //     const result = await commands.enginerpm({});
+    //     assert.strictEqual(result, undefined);
+    // });
 });

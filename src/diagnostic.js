@@ -43,13 +43,16 @@ class DiagnosticElement {
      * @param {DiagnosticElement} element
      */
     static convert(element) {
-        const { name, message, unit, value } = element;
+        const { name, message, unit, value, status, statusColor, cts } = element;
         const convertedUnit = Measurement.convertUnit(unit);
         return new DiagnosticElement({
             name: DiagnosticElement.convertName(name, convertedUnit),
             message: message,
             unit: convertedUnit,
-            value: Measurement.convertValue(value, unit)
+            value: Measurement.convertValue(value, unit),
+            status: status,
+            statusColor: statusColor,
+            cts: cts
         })
     }
 

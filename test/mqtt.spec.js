@@ -166,6 +166,7 @@ describe('MQTT', () => {
                     ambient_air_temperature: 15,
                     ambient_air_temperature_f: 59,
                     ambient_air_temperature_f_message: 'na',
+                    ambient_air_temperature_f_status: 'NA',
                     ambient_air_temperature_message: 'na',
                     ambient_air_temperature_status: 'NA'
                     //ambient_air_temperature: 15,
@@ -232,6 +233,7 @@ describe('MQTT', () => {
                     odometer_message: "na",
                     odometer_mi: 3736.8,
                     odometer_mi_message: "na",
+                    odometer_mi_status: "NA",
                     odometer_status: "NA"
                 });
             });
@@ -538,17 +540,20 @@ describe('MQTT', () => {
                     fuel_amount: 19.98,
                     fuel_amount_gal: 5.3,
                     fuel_amount_gal_message: "na",
+                    fuel_amount_gal_status: "NA",
                     fuel_amount_message: "na",
                     fuel_amount_status: "NA",
                     fuel_capacity: 60,
                     fuel_capacity_gal: 15.9,
                     fuel_capacity_gal_message: "na",
+                    fuel_capacity_gal_status: "NA",
                     fuel_capacity_message: "na",
                     fuel_capacity_status: "NA",
                     fuel_level: 33.3,
                     fuel_level_in_gal: 19.98,
                     fuel_level_in_gal_gal: 5.3,
                     fuel_level_in_gal_gal_message: "na",
+                    fuel_level_in_gal_gal_status: "NA",
                     fuel_level_in_gal_message: "na",
                     fuel_level_in_gal_status: "NA",
                     fuel_level_message: "na",
@@ -591,6 +596,7 @@ describe('MQTT', () => {
                     lifetime_fuel_econ_message: "na",
                     lifetime_fuel_econ_mpg: 27.9,
                     lifetime_fuel_econ_mpg_message: "na",
+                    lifetime_fuel_econ_mpg_status: "NA",
                     lifetime_fuel_econ_status: "NA"
                 });
             });
@@ -629,6 +635,7 @@ describe('MQTT', () => {
                     lifetime_fuel_used: 4476.94,
                     lifetime_fuel_used_gal: 1182.7,
                     lifetime_fuel_used_gal_message: "na",
+                    lifetime_fuel_used_gal_status: "NA",
                     lifetime_fuel_used_message: "na",
                     lifetime_fuel_used_status: "NA"
                 });
@@ -750,11 +757,13 @@ describe('MQTT', () => {
                     lifetime_mpge_message: "na",
                     lifetime_mpge_mpge: 95.8,
                     lifetime_mpge_mpge_message: "na",
+                    lifetime_mpge_mpge_status: "NA",
                     lifetime_mpge_status: "NA",
                     odometer: 6013.8,
                     odometer_message: "na",
                     odometer_mi: 3736.8,
                     odometer_mi_message: "na",
+                    odometer_mi_status: "NA",
                     odometer_status: "NA",
                 });
             });
@@ -794,6 +803,7 @@ describe('MQTT', () => {
                     ev_range_message: 'na',
                     ev_range_mi: 211.9,
                     ev_range_mi_message: 'na',
+                    ev_range_mi_status: 'NA',
                     ev_range_status: 'NA',
                 });
             });

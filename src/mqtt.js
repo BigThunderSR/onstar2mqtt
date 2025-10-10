@@ -724,6 +724,10 @@ class MQTT {
             case 'FUEL LEVEL STATUS':
                 groupIcon = 'mdi:gas-station';
                 break;
+            case 'BATTERY_STATE_OF_CHARGE_CRITICALLY_LOW':
+            case 'BATTERY STATE OF CHARGE CRITICALLY LOW':
+                groupIcon = 'mdi:battery-alert';
+                break;
             // Add more cases here as needed for other diagnostic groups
         }
         
@@ -1014,6 +1018,8 @@ class MQTT {
                 return this.mapSensorConfigPayload(diag, diagEl, undefined, undefined, undefined, undefined, 'mdi:car-brake-fluid-level');
             case 'WASHER_FLUID_LOW': // String values like "FALSE"/"TRUE"
                 return this.mapSensorConfigPayload(diag, diagEl, undefined, undefined, undefined, undefined, 'mdi:wiper-wash');
+            case 'BATTERY_STATE_OF_CHARGE_CRITICALLY_LOW': // String values like "FALSE"/"TRUE"
+                return this.mapSensorConfigPayload(diag, diagEl, undefined, undefined, undefined, undefined, 'mdi:battery-alert');
             case 'LEFT_FRONT_TIRE_PRESSURE_STATUS': // Tire pressure status strings like "TPM_STATUS_NOMINAL"
                 return this.mapSensorConfigPayload(diag, diagEl, undefined, undefined, undefined, undefined, 'mdi:car-tire-alert');
             case 'LEFT_REAR_TIRE_PRESSURE_STATUS': // Tire pressure status strings

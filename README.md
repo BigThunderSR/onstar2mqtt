@@ -37,6 +37,51 @@ There is no affiliation with this project and GM, Chevrolet nor OnStar. In fact,
 - You may need to update Home Assistant automations/dashboards that reference changed sensors
 - Review your dashboards for any broken sensor references after upgrading
 
+### Important: Manual Sensor Cleanup Required
+
+After upgrading to v2.0.0, you will need to **manually remove deprecated sensors** from both your MQTT broker and Home Assistant:
+
+#### Step 1: Delete Retained MQTT Topics from Broker
+
+First, delete the related retained MQTT topics from your MQTT broker to prevent deprecated sensors from being recreated. **Both config and state topics must be removed:**
+
+- **Using MQTT Explorer or similar tool:**
+  - Connect to your MQTT broker
+  - Navigate to `homeassistant/sensor/YOUR_VIN/` and `homeassistant/binary_sensor/YOUR_VIN/`
+  - For each deprecated sensor, delete **both**:
+    - Config topic: `homeassistant/sensor/YOUR_VIN/deprecated_sensor/config`
+    - State topic: `homeassistant/sensor/YOUR_VIN/deprecated_sensor/state`
+
+- **Using mosquitto_pub command:**
+
+  ```bash
+  # Delete config topic
+  mosquitto_pub -h YOUR_MQTT_HOST -u YOUR_MQTT_USER -P YOUR_MQTT_PASS -t "homeassistant/sensor/YOUR_VIN/deprecated_sensor/config" -n -r
+  
+  # Delete state topic
+  mosquitto_pub -h YOUR_MQTT_HOST -u YOUR_MQTT_USER -P YOUR_MQTT_PASS -t "homeassistant/sensor/YOUR_VIN/deprecated_sensor/state" -n -r
+  ```
+
+  (Replace `deprecated_sensor` with each deprecated sensor name, `-n` sends empty payload, `-r` sets retained flag)
+
+#### Step 2: Remove Sensors from Home Assistant
+
+1. **Navigate to Settings → Devices & Services → MQTT**
+2. **Find your vehicle device** in the list
+3. **Review all sensors** and look for any that show as "Unavailable" or "Unknown"
+4. **Delete deprecated sensors** by clicking on each sensor and selecting "Delete"
+
+#### Step 3: Restart Home Assistant
+
+1. **Restart Home Assistant** to ensure all changes take effect
+
+**Why This Cleanup is Necessary:**
+
+- MQTT discovery creates new sensors but doesn't automatically remove old ones
+- Deprecated sensors from API v2 may conflict with new API v3 sensors
+- Old sensors will remain as "ghost" entities until manually removed
+- Retained MQTT topics will cause deleted sensors to be recreated on restart unless also deleted from the broker
+
 **Recommendation:** Test in a sandbox/test environment first if possible, or be prepared to update your Home Assistant configurations after upgrading.
 
 For technical details, see [docs/API_MIGRATION_CHANGES.md](docs/API_MIGRATION_CHANGES.md)

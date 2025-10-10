@@ -109,79 +109,109 @@ Supply these values to the ENV vars below. The default data refresh interval is 
 
 MQTT auto discovery is enabled. For further integrations and screenshots see [HA-MQTT.md](HA-MQTT.md).
 
-### Feature Updates of Note
+## Feature Updates of Note
 
-- **NEW - Ability to dynamically change polling frequency using MQTT**
+### Dynamic Polling Frequency via MQTT
 
-  - Uses the value from `ONSTAR_REFRESH` on initial startup
-  - Change the value dynamically by publishing the new refresh value in milliseconds (ms) as an `INT` to: `homeassistant/YOUR_CAR_VIN/refresh_interval`
-  - Added new retained topic of `homeassistant/YOUR_CAR_VIN/refresh_interval_current_val` to monitor current refresh value set via MQTT
+**NEW** - Ability to dynamically change polling frequency using MQTT
 
-- **NEW - Command Response Status is now published to MQTT topics!**
+- Uses the value from `ONSTAR_REFRESH` on initial startup
+- Change the value dynamically by publishing the new refresh value in milliseconds (ms) as an `INT` to: `homeassistant/YOUR_CAR_VIN/refresh_interval`
+- Added new retained topic of `homeassistant/YOUR_CAR_VIN/refresh_interval_current_val` to monitor current refresh value set via MQTT
 
-  - Topic format: `MQTT_PREFIX/YOUR_CAR_VIN/command/{commandName}/state`
-    - Note: Unless defined, default `MQTT_PREFIX=homeassistant`
+### Command Response Status via MQTT
 
-- **NEW - Sensor specific messages are now published to MQTT as sensor attributes which are visible in HA**
+**NEW** - Command Response Status is now published to MQTT topics!
 
-- **NEW - Most non-binary sensors have a state_class assigned to allow collection of long-term statistics in HA**
+- Topic format: `MQTT_PREFIX/YOUR_CAR_VIN/command/{commandName}/state`
+  - Note: Unless defined, default `MQTT_PREFIX=homeassistant`
 
-- **NEW - Manual diagnostic refresh command ~~and manual engine RPM refresh command~~ is working**
+### Sensor-Specific Messages as Attributes
 
-- **NEW - OnStar password/pin and MQTT password are masked by default in the console log output. To see these values in the console log output, set `--env LOG_LEVEL=debug`**
+**NEW** - Sensor specific messages are now published to MQTT as sensor attributes which are visible in HA
 
-- **NEW - New env options for securing connectivity for MQTTS using TLS**
+### Long-Term Statistics Support
 
-  - `MQTT_REJECT_UNAUTHORIZED` (Default: `"true"`, set to `"false"` only for testing.)
-  - `MQTT_CA_FILE`
-  - `MQTT_CERT_FILE`
-  - `MQTT_KEY_FILE`
+**NEW** - Most non-binary sensors have a state_class assigned to allow collection of long-term statistics in HA
 
-- **NEW - Auto discovery for device_tracker has been enabled starting at v1.12.0**
+### Manual Diagnostic Refresh Command
 
-  - The device_tracker auto discovery config is published to: `homeassistant/device_tracker/YOUR_CAR_VIN/config` and the GPS coordinates are still read from the original topic automatically at: `homeassistant/device_tracker/YOUR_CAR_VIN/getlocation/state`
-  - Also added GPS based speed and direction to the device_tracker attributes
+**NEW** - Manual diagnostic refresh command ~~and manual engine RPM refresh command~~ is working
 
-- **NEW - Ability to send commands with options using MQTT now works**
+### Password Masking in Logs
 
-  - Send commands to the command topic in the format:
-    - `{"command": "diagnostics","options": "OIL LIFE,VEHICLE RANGE"}`
-    - `{"command": "setChargingProfile","options": {"chargeMode": "RATE_BASED","rateType": "OFFPEAK"}}`
-    - ~~`{"command": "alert","options": {"action": "Flash"}}`~~ (deprecated - use `flashLights` instead)
-    - `{"command": "flashLights"}`
-    - `{"command": "stopLights"}`
+**NEW** - OnStar password/pin and MQTT password are masked by default in the console log output. To see these values in the console log output, set `--env LOG_LEVEL=debug`
 
-- **NEW - MQTT Button Auto-Discovery for HA Added Starting at v1.14.0**
+### MQTTS/TLS Security Options
 
-  - **⚠️ IMPORTANT DISCLAIMER:** Buttons are added **disabled by default** because it's easy to accidentally press the wrong button and trigger an action at an inopportune time. **Enable at your own risk and you assume all responsibility for your actions.**
-  - All available buttons for all vehicles are included for now, so only enable the buttons you need and/or work for your vehicle.
-  - **How to Enable Buttons in Home Assistant:**
-    1. Go to `Settings` → `Devices & Services` → `MQTT`
-    2. Find your vehicle device and click on it
-    3. Scroll to the **Controls** section where buttons are listed (they will show as "Disabled")
-    4. Click on each button you want to enable
-    5. Click the settings/gear icon (⚙️) and toggle "Enabled" to ON
-    6. Click "Update"
-  - See [HA-MQTT.md](HA-MQTT.md) for detailed instructions and available button list
+**NEW** - New env options for securing connectivity for MQTTS using TLS
 
-- **NEW - MQTT Auto-Discovery for Command Status Sensors for HA Added Starting at v1.15.0**
+- `MQTT_REJECT_UNAUTHORIZED` (Default: `"true"`, set to `"false"` only for testing.)
+- `MQTT_CA_FILE`
+- `MQTT_CERT_FILE`
+- `MQTT_KEY_FILE`
 
-  - Command Status and Timestamp from last command run are published to MQTT auto-discovery topics and are grouped in a MQTT device grouping for all command status sensors for the same vehicle.
+### Device Tracker Auto-Discovery
 
-- **NEW - MQTT Auto-Discovery for Polling Status Sensors for HA Added Starting at v1.16.0**
+**NEW** - Auto discovery for device_tracker has been enabled starting at v1.12.0
 
-  - Polling Status, Timestamp, Error Code (if applicable), Success T/F Sensor from last polling cycle and Polling Refresh Interval Time Sensor are published to MQTT auto-discovery topics and are grouped in a MQTT device grouping for all command status sensors for the same vehicle.
+- The device_tracker auto discovery config is published to: `homeassistant/device_tracker/YOUR_CAR_VIN/config` and the GPS coordinates are still read from the original topic automatically at: `homeassistant/device_tracker/YOUR_CAR_VIN/getlocation/state`
+- Also added GPS based speed and direction to the device_tracker attributes
 
-- **NEW - MQTT Auto-Discovery for Sensor Status Message Sensors for HA Added Starting at v1.17.0**
-  - At this point, pretty much every available sensor, button and status is published to MQTT auto-discovery topics
-  - Set `MQTT_LIST_ALL_SENSORS_TOGETHER="true"` to group all the sensors under one MQTT device starting at v1.17.0. Default is `"false"`.
+### Commands with Options via MQTT
 
-- **NEW - Advanced Diagnostics Sensors from OnStar API v3 Added**
-  - 7 diagnostic system sensors with full subsystem details: Engine & Transmission (11 subsystems), Antilock Braking (3), StabiliTrak (1), Air Bag (4), Emissions (2), OnStar (3), Electric Lamp (1)
-  - Each sensor includes system status, color-coded status indicators, diagnostic trouble codes (DTCs), and detailed descriptions
-  - Individual subsystem attributes for granular monitoring (e.g., displacement_on_demand_subsystem, fuel_management_subsystem)
-  - Quick issue detection with subsystems_with_issues array
-  - Published to topic: `homeassistant/{VIN}/adv_diag/state`
+**NEW** - Ability to send commands with options using MQTT now works
+
+- Send commands to the command topic in the format:
+  - `{"command": "diagnostics","options": "OIL LIFE,VEHICLE RANGE"}`
+  - `{"command": "setChargingProfile","options": {"chargeMode": "RATE_BASED","rateType": "OFFPEAK"}}`
+  - ~~`{"command": "alert","options": {"action": "Flash"}}`~~ (deprecated - use `flashLights` instead)
+  - `{"command": "flashLights"}`
+  - `{"command": "stopLights"}`
+
+### MQTT Button Auto-Discovery
+
+**NEW** - MQTT Button Auto-Discovery for HA Added Starting at v1.14.0
+
+- **⚠️ IMPORTANT DISCLAIMER:** Buttons are added **disabled by default** because it's easy to accidentally press the wrong button and trigger an action at an inopportune time. **Enable at your own risk and you assume all responsibility for your actions.**
+- All available buttons for all vehicles are included for now, so only enable the buttons you need and/or work for your vehicle.
+- **How to Enable Buttons in Home Assistant:**
+  1. Go to `Settings` → `Devices & Services` → `MQTT`
+  2. Find your vehicle device and click on it
+  3. Scroll to the **Controls** section where buttons are listed (they will show as "Disabled")
+  4. Click on each button you want to enable
+  5. Click the settings/gear icon (⚙️) and toggle "Enabled" to ON
+  6. Click "Update"
+- See [HA-MQTT.md](HA-MQTT.md) for detailed instructions and available button list
+
+### Command Status Sensors Auto-Discovery
+
+**NEW** - MQTT Auto-Discovery for Command Status Sensors for HA Added Starting at v1.15.0
+
+- Command Status and Timestamp from last command run are published to MQTT auto-discovery topics and are grouped in a MQTT device grouping for all command status sensors for the same vehicle.
+
+### Polling Status Sensors Auto-Discovery
+
+**NEW** - MQTT Auto-Discovery for Polling Status Sensors for HA Added Starting at v1.16.0
+
+- Polling Status, Timestamp, Error Code (if applicable), Success T/F Sensor from last polling cycle and Polling Refresh Interval Time Sensor are published to MQTT auto-discovery topics and are grouped in a MQTT device grouping for all command status sensors for the same vehicle.
+
+### Sensor Status Message Sensors Auto-Discovery
+
+**NEW** - MQTT Auto-Discovery for Sensor Status Message Sensors for HA Added Starting at v1.17.0
+
+- At this point, pretty much every available sensor, button and status is published to MQTT auto-discovery topics
+- Set `MQTT_LIST_ALL_SENSORS_TOGETHER="true"` to group all the sensors under one MQTT device starting at v1.17.0. Default is `"false"`.
+
+### Advanced Diagnostics Sensors (API v3)
+
+**NEW** - Advanced Diagnostics Sensors from OnStar API v3 Added
+
+- 7 diagnostic system sensors with full subsystem details: Engine & Transmission (11 subsystems), Antilock Braking (3), StabiliTrak (1), Air Bag (4), Emissions (2), OnStar (3), Electric Lamp (1)
+- Each sensor includes system status, color-coded status indicators, diagnostic trouble codes (DTCs), and detailed descriptions
+- Individual subsystem attributes for granular monitoring (e.g., displacement_on_demand_subsystem, fuel_management_subsystem)
+- Quick issue detection with subsystems_with_issues array
+- Published to topic: `homeassistant/{VIN}/adv_diag/state`
 
 ## Helpful Usage Notes
 

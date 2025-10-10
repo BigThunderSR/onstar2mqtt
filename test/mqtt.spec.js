@@ -125,7 +125,7 @@ describe('MQTT', () => {
                     state_class: 'measurement',
                     device_class: 'temperature',
                     icon: 'mdi:thermometer',
-                    json_attributes_template: "{{ {'cts': value_json.ambient_air_temperature_cts} | tojson }}",
+                    json_attributes_template: "{{ {'last_updated': value_json.ambient_air_temperature_last_updated} | tojson }}",
                     name: 'Ambient Air Temperature',
                     payload_available: 'true',
                     payload_not_available: 'false',
@@ -150,7 +150,7 @@ describe('MQTT', () => {
                     state_class: 'measurement',
                     device_class: 'temperature',
                     icon: 'mdi:thermometer',
-                    json_attributes_template: "{{ {'cts': value_json.ambient_air_temperature_f_cts} | tojson }}",
+                    json_attributes_template: "{{ {'last_updated': value_json.ambient_air_temperature_f_last_updated} | tojson }}",
                     name: 'Ambient Air Temperature F',
                     payload_available: 'true',
                     payload_not_available: 'false',
@@ -191,7 +191,7 @@ describe('MQTT', () => {
                     state_class: 'total_increasing',
                     device_class: 'distance',
                     icon: 'mdi:counter',
-                    json_attributes_template: "{{ {'cts': value_json.odometer_cts} | tojson }}",
+                    json_attributes_template: "{{ {'last_updated': value_json.odometer_last_updated} | tojson }}",
                     name: 'Odometer',
                     payload_available: 'true',
                     payload_not_available: 'false',
@@ -215,7 +215,7 @@ describe('MQTT', () => {
                     state_class: 'total_increasing',
                     device_class: 'distance',
                     icon: 'mdi:counter',
-                    json_attributes_template: "{{ {'cts': value_json.odometer_mi_cts} | tojson }}",
+                    json_attributes_template: "{{ {'last_updated': value_json.odometer_mi_last_updated} | tojson }}",
                     name: 'Odometer Mi',
                     payload_available: 'true',
                     payload_not_available: 'false',
@@ -255,7 +255,7 @@ describe('MQTT', () => {
                     state_class: undefined,
                     device_class: undefined,
                     icon: 'mdi:battery-charging-high',
-                    json_attributes_template: "{{ {'cts': value_json.priority_charge_indicator_cts} | tojson }}",
+                    json_attributes_template: "{{ {'last_updated': value_json.priority_charge_indicator_last_updated} | tojson }}",
                     name: 'Priority Charge Indicator',
                     payload_available: 'true',
                     payload_not_available: 'false',
@@ -332,7 +332,7 @@ describe('MQTT', () => {
                     state_class: 'measurement',
                     device_class: 'pressure',
                     icon: 'mdi:car-tire-alert',
-                    json_attributes_template: "{{ {'recommendation': value_json.tire_pressure_placard_front, 'message': value_json.tire_pressure_lf_message, 'cts': value_json.tire_pressure_lf_cts} | tojson }}",
+                    json_attributes_template: "{{ {'recommendation': value_json.tire_pressure_placard_front, 'message': value_json.tire_pressure_lf_message, 'last_updated': value_json.tire_pressure_lf_last_updated} | tojson }}",
                     name: 'Tire Pressure: Left Front',
                     payload_available: 'true',
                     payload_not_available: 'false',
@@ -359,7 +359,7 @@ describe('MQTT', () => {
                     state_class: 'measurement',
                     device_class: 'pressure',
                     icon: 'mdi:car-tire-alert',
-                    json_attributes_template: "{{ {'recommendation': value_json.tire_pressure_placard_front, 'message': value_json.tire_pressure_rf_message, 'cts': value_json.tire_pressure_rf_cts} | tojson }}",
+                    json_attributes_template: "{{ {'recommendation': value_json.tire_pressure_placard_front, 'message': value_json.tire_pressure_rf_message, 'last_updated': value_json.tire_pressure_rf_last_updated} | tojson }}",
                     name: 'Tire Pressure: Right Front',
                     payload_available: 'true',
                     payload_not_available: 'false',
@@ -386,7 +386,7 @@ describe('MQTT', () => {
                     state_class: 'measurement',
                     device_class: 'pressure',
                     icon: 'mdi:car-tire-alert',
-                    json_attributes_template: "{{ {'recommendation': value_json.tire_pressure_placard_rear, 'message': value_json.tire_pressure_lr_message, 'cts': value_json.tire_pressure_lr_cts} | tojson }}",
+                    json_attributes_template: "{{ {'recommendation': value_json.tire_pressure_placard_rear, 'message': value_json.tire_pressure_lr_message, 'last_updated': value_json.tire_pressure_lr_last_updated} | tojson }}",
                     name: 'Tire Pressure: Left Rear',
                     payload_available: 'true',
                     payload_not_available: 'false',
@@ -413,7 +413,7 @@ describe('MQTT', () => {
                     state_class: 'measurement',
                     device_class: 'pressure',
                     icon: 'mdi:car-tire-alert',
-                    json_attributes_template: "{{ {'recommendation': value_json.tire_pressure_placard_rear, 'message': value_json.tire_pressure_rr_message, 'cts': value_json.tire_pressure_rr_cts} | tojson }}",
+                    json_attributes_template: "{{ {'recommendation': value_json.tire_pressure_placard_rear, 'message': value_json.tire_pressure_rr_message, 'last_updated': value_json.tire_pressure_rr_last_updated} | tojson }}",
                     name: 'Tire Pressure: Right Rear',
                     payload_available: 'true',
                     payload_not_available: 'false',
@@ -444,7 +444,7 @@ describe('MQTT', () => {
                     state_class: 'measurement',
                     device_class: undefined,
                     icon: 'mdi:oil',
-                    json_attributes_template: "{{ {'message': value_json.oil_life_message, 'cts': value_json.oil_life_cts} | tojson }}",
+                    json_attributes_template: "{{ {'message': value_json.oil_life_message, 'last_updated': value_json.oil_life_last_updated} | tojson }}",
                     name: 'Oil Life',
                     payload_available: 'true',
                     payload_not_available: 'false',
@@ -474,7 +474,7 @@ describe('MQTT', () => {
                     state_class: 'measurement',
                     device_class: 'volume_storage',
                     icon: 'mdi:gas-station',
-                    json_attributes_template: "{{ {'cts': value_json.fuel_amount_cts} | tojson }}",
+                    json_attributes_template: "{{ {'last_updated': value_json.fuel_amount_last_updated} | tojson }}",
                     name: 'Fuel Amount',
                     payload_available: 'true',
                     payload_not_available: 'false',
@@ -498,7 +498,7 @@ describe('MQTT', () => {
                     state_class: 'measurement',
                     device_class: 'volume_storage',
                     icon: 'mdi:gas-station',
-                    json_attributes_template: "{{ {'cts': value_json.fuel_capacity_cts} | tojson }}",
+                    json_attributes_template: "{{ {'last_updated': value_json.fuel_capacity_last_updated} | tojson }}",
                     name: 'Fuel Capacity',
                     payload_available: 'true',
                     payload_not_available: 'false',
@@ -522,7 +522,7 @@ describe('MQTT', () => {
                     state_class: 'measurement',
                     device_class: undefined,
                     icon: 'mdi:gas-station',
-                    json_attributes_template: "{{ {'status': value_json.fuel_level_status, 'status_color': value_json.fuel_level_status_color, 'cts': value_json.fuel_level_cts} | tojson }}",
+                    json_attributes_template: "{{ {'status': value_json.fuel_level_status, 'status_color': value_json.fuel_level_status_color, 'last_updated': value_json.fuel_level_last_updated} | tojson }}",
                     name: 'Fuel Level',
                     payload_available: 'true',
                     payload_not_available: 'false',
@@ -574,7 +574,7 @@ describe('MQTT', () => {
                     state_class: 'measurement',
                     device_class: undefined,
                     icon: 'mdi:leaf-circle',
-                    json_attributes_template: "{{ {'cts': value_json.lifetime_fuel_econ_cts} | tojson }}",
+                    json_attributes_template: "{{ {'last_updated': value_json.lifetime_fuel_econ_last_updated} | tojson }}",
                     name: 'Lifetime Fuel Econ',
                     payload_available: 'true',
                     payload_not_available: 'false',
@@ -613,7 +613,7 @@ describe('MQTT', () => {
                     state_class: 'total_increasing',
                     device_class: 'volume',
                     icon: 'mdi:gas-station',
-                    json_attributes_template: "{{ {'cts': value_json.lifetime_fuel_used_cts} | tojson }}",
+                    json_attributes_template: "{{ {'last_updated': value_json.lifetime_fuel_used_last_updated} | tojson }}",
                     name: 'Lifetime Fuel Used',
                     payload_available: 'true',
                     payload_not_available: 'false',
@@ -652,7 +652,7 @@ describe('MQTT', () => {
                     state_class: undefined,
                     device_class: 'plug',
                     icon: 'mdi:ev-plug-type1',
-                    json_attributes_template: "{{ {'cts': value_json.ev_plug_state_cts} | tojson }}",
+                    json_attributes_template: "{{ {'last_updated': value_json.ev_plug_state_last_updated} | tojson }}",
                     name: 'Ev Plug State',
                     payload_available: 'true',
                     payload_not_available: 'false',
@@ -690,7 +690,7 @@ describe('MQTT', () => {
                     state_class: undefined,
                     device_class: undefined,
                     icon: 'mdi:flash',
-                    json_attributes_template: "{{ {'cts': value_json.charger_power_level_cts} | tojson }}",
+                    json_attributes_template: "{{ {'last_updated': value_json.charger_power_level_last_updated} | tojson }}",
                     name: 'Charger Power Level',
                     payload_available: 'true',
                     payload_not_available: 'false',
@@ -727,7 +727,7 @@ describe('MQTT', () => {
                     state_class: 'measurement',
                     device_class: undefined,
                     icon: 'mdi:leaf-circle',
-                    json_attributes_template: "{{ {'cts': value_json.electric_economy_cts} | tojson }}",
+                    json_attributes_template: "{{ {'last_updated': value_json.electric_economy_last_updated} | tojson }}",
                     name: 'Electric Economy',
                     payload_available: 'true',
                     payload_not_available: 'false',
@@ -777,7 +777,7 @@ describe('MQTT', () => {
                     state_class: 'measurement',
                     device_class: 'distance',
                     icon: 'mdi:ev-station',
-                    json_attributes_template: "{{ {'cts': value_json.ev_range_cts} | tojson }}",
+                    json_attributes_template: "{{ {'last_updated': value_json.ev_range_last_updated} | tojson }}",
                     name: 'Ev Range',
                     payload_available: 'true',
                     payload_not_available: 'false',
@@ -816,7 +816,7 @@ describe('MQTT', () => {
                     state_class: undefined,
                     device_class: 'battery_charging',
                     icon: 'mdi:battery-charging',
-                    json_attributes_template: "{{ {'cts': value_json.ev_charge_state_cts} | tojson }}",
+                    json_attributes_template: "{{ {'last_updated': value_json.ev_charge_state_last_updated} | tojson }}",
                     name: 'Ev Charge State',
                     payload_available: 'true',
                     payload_not_available: 'false',
@@ -1685,7 +1685,7 @@ describe('MQTT', () => {
                 unique_id: 'xxx-undefined',
                 value_template: '{{ value_json. }}',
                 json_attributes_topic: 'homeassistant/sensor/XXX//state',
-                json_attributes_template: "{{ {'cts': value_json._cts} | tojson }}",
+                json_attributes_template: "{{ {'last_updated': value_json._last_updated} | tojson }}",
                 unit_of_measurement: undefined,
                 payload_available: 'true',
                 payload_not_available: 'false',
@@ -2799,7 +2799,7 @@ describe('MQTT', () => {
             const config = mqtt.getConfigPayload(d, d.diagnosticElements[0]);
             assert.strictEqual(config.icon, 'mdi:battery-arrow-down');
             assert.strictEqual(config.state_class, 'measurement');
-            assert.strictEqual(config.json_attributes_template, "{{ {'status': value_json.batt_saver_mode_counter_status, 'status_color': value_json.batt_saver_mode_counter_status_color, 'cts': value_json.batt_saver_mode_counter_cts} | tojson }}");
+            assert.strictEqual(config.json_attributes_template, "{{ {'status': value_json.batt_saver_mode_counter_status, 'status_color': value_json.batt_saver_mode_counter_status_color, 'last_updated': value_json.batt_saver_mode_counter_last_updated} | tojson }}");
         });
 
         it('should map BATT SAVER MODE SEV LVL correctly', () => {
@@ -2811,7 +2811,7 @@ describe('MQTT', () => {
             const config = mqtt.getConfigPayload(d, d.diagnosticElements[0]);
             assert.strictEqual(config.icon, 'mdi:battery-arrow-down');
             assert.strictEqual(config.state_class, 'measurement');
-            assert.strictEqual(config.json_attributes_template, "{{ {'status': value_json.batt_saver_mode_sev_lvl_status, 'status_color': value_json.batt_saver_mode_sev_lvl_status_color, 'cts': value_json.batt_saver_mode_sev_lvl_cts} | tojson }}");
+            assert.strictEqual(config.json_attributes_template, "{{ {'status': value_json.batt_saver_mode_sev_lvl_status, 'status_color': value_json.batt_saver_mode_sev_lvl_status_color, 'last_updated': value_json.batt_saver_mode_sev_lvl_last_updated} | tojson }}");
         });
 
         it('should map EOL READ correctly', () => {
@@ -2823,7 +2823,7 @@ describe('MQTT', () => {
             const config = mqtt.getConfigPayload(d, d.diagnosticElements[0]);
             assert.strictEqual(config.icon, 'mdi:oil-level');
             assert.strictEqual(config.state_class, 'measurement');
-            assert.strictEqual(config.json_attributes_template, "{{ {'status': value_json.eol_read_status, 'status_color': value_json.eol_read_status_color, 'cts': value_json.eol_read_cts} | tojson }}");
+            assert.strictEqual(config.json_attributes_template, "{{ {'status': value_json.eol_read_status, 'status_color': value_json.eol_read_status_color, 'last_updated': value_json.eol_read_last_updated} | tojson }}");
         });
 
         it('should map ODO READ MI correctly', () => {

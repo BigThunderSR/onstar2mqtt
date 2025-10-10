@@ -869,9 +869,9 @@ class MQTT {
             if (e.statusColor !== undefined && e.statusColor !== null) {
                 state[`${MQTT.convertName(e.name)}_status_color`] = e.statusColor;
             }
-            // Add cts (timestamp) field as an attribute for each sensor
+            // Add cts (timestamp) field as "last_updated" attribute for each sensor
             if (e.cts !== undefined && e.cts !== null) {
-                state[`${MQTT.convertName(e.name)}_cts`] = e.cts;
+                state[`${MQTT.convertName(e.name)}_last_updated`] = e.cts;
             }
         });
         return state;
@@ -884,24 +884,24 @@ class MQTT {
         let unique_id = `${this.vehicle.vin}-${diagEl.name}`
         unique_id = unique_id.replace(/\s+/g, '-').toLowerCase();
         
-        // Always include cts (timestamp) as an attribute
-        const ctsFieldName = `${MQTT.convertName(diagEl.name)}_cts`;
+        // Always include last_updated (timestamp from cts field) as an attribute
+        const lastUpdatedFieldName = `${MQTT.convertName(diagEl.name)}_last_updated`;
         let attributeTemplate;
         
         if (attr) {
-            // If custom attributes exist, merge cts into them
+            // If custom attributes exist, merge last_updated into them
             // Extract the object content from the template {{ {...} | tojson }}
             const match = attr.match(/{{ ({.*}) \| tojson }}/);
             if (match) {
-                // Parse and add cts to the existing attribute object
-                attributeTemplate = `{{ {${match[1].substring(1, match[1].length - 1)}, 'cts': value_json.${ctsFieldName}} | tojson }}`;
+                // Parse and add last_updated to the existing attribute object
+                attributeTemplate = `{{ {${match[1].substring(1, match[1].length - 1)}, 'last_updated': value_json.${lastUpdatedFieldName}} | tojson }}`;
             } else {
                 // Fallback: just use the provided attr (shouldn't happen with current patterns)
                 attributeTemplate = attr;
             }
         } else {
-            // No custom attributes, just add cts
-            attributeTemplate = `{{ {'cts': value_json.${ctsFieldName}} | tojson }}`;
+            // No custom attributes, just add last_updated
+            attributeTemplate = `{{ {'last_updated': value_json.${lastUpdatedFieldName}} | tojson }}`;
         }
         
         return {

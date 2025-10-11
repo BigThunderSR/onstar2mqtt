@@ -5,7 +5,7 @@ const { Diagnostic, AdvancedDiagnostic } = require('../src/diagnostic');
 const MQTT = require('../src/mqtt');
 const Vehicle = require('../src/vehicle');
 const apiResponse = require('./diagnostic.sample.json');
-const apiV3Response = require('./diagnostic-sample-anonymized-v3-1.json');
+const apiV3Response = require('./diagnostic-sample-v3-ice-1.json');
 
 describe('MQTT', () => {
     let mqtt;

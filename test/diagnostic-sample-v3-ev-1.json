@@ -1,0 +1,735 @@
+{
+  "status": "success",
+  "response": {
+    "data": {
+      "name": "VEHICLE_STATUS",
+      "displayName": "vehicle status",
+      "description": "vehicle status",
+      "status": "GOOD",
+      "statusColor": "GREEN",
+      "recommendedAction": null,
+      "recommendedLiveProbe": false,
+      "cts": "2025-10-11T03:19:03.350+00:00",
+      "diagnostics": [
+        {
+          "name": "BRAKE_FLUID_LOW",
+          "displayName": "Brake Fluid Low",
+          "description": "Brake Fluid Low",
+          "status": "GOOD",
+          "statusColor": "GREEN",
+          "value": null,
+          "uom": null,
+          "cts": "2025-10-11T02:50:31.200+00:00",
+          "recommendedAction": null,
+          "diagnosticElements": [
+            {
+              "name": "BRAKE_FLUID_LOW",
+              "displayName": "Brake Fluid Low",
+              "description": "Brake Fluid Low",
+              "status": "GOOD",
+              "statusColor": "GREEN",
+              "value": "FALSE",
+              "uom": "N/A",
+              "cts": "2025-10-11T02:50:31.200+00:00"
+            }
+          ]
+        },
+        {
+          "name": "TIRE_PRESSURE",
+          "displayName": "Tire Pressure Monitoring",
+          "description": "Tire Pressure Monitoring",
+          "status": "GOOD",
+          "statusColor": "GREEN",
+          "value": null,
+          "uom": null,
+          "cts": "2025-10-11T02:50:31.200+00:00",
+          "recommendedAction": null,
+          "diagnosticElements": [
+            {
+              "name": "LEFT_FRONT_TIRE_PRESSURE",
+              "displayName": "Left Front Tire Pressure",
+              "description": "Left Front Tire Pressure",
+              "status": "NOMINAL",
+              "statusColor": "GREEN",
+              "value": "272",
+              "uom": "kPa",
+              "cts": "2025-10-11T02:50:31.200+00:00"
+            },
+            {
+              "name": "LEFT_FRONT_TIRE_PRESSURE_IN_PSI",
+              "displayName": "Left Front Tire Pressure In PSI",
+              "description": "Left Front Tire Pressure In PSI",
+              "status": "NOMINAL",
+              "statusColor": "GREEN",
+              "value": "39",
+              "uom": "PSI",
+              "cts": "2025-10-11T02:50:31.200+00:00"
+            },
+            {
+              "name": "LEFT_FRONT_TIRE_PRESSURE_STATUS",
+              "displayName": "Left Front Tire Pressure Status",
+              "description": "Left Front Tire Pressure Status",
+              "status": "NOMINAL",
+              "statusColor": "GREEN",
+              "value": "TPM_STATUS_NOMINAL",
+              "uom": "N/A",
+              "cts": "2025-10-11T02:50:31.200+00:00"
+            },
+            {
+              "name": "LEFT_FRONT_TIRE_PRESSURE_VALID",
+              "displayName": "Left Front Tire Pressure Valid",
+              "description": "Left Front Tire Pressure Valid",
+              "status": null,
+              "statusColor": null,
+              "value": "0",
+              "uom": "N/A",
+              "cts": "2025-10-11T02:50:31.200+00:00"
+            },
+            {
+              "name": "LEFT_REAR_TIRE_PRESSURE",
+              "displayName": "Left Rear Tire Pressure",
+              "description": "Left Rear Tire Pressure",
+              "status": "NOMINAL",
+              "statusColor": "GREEN",
+              "value": "280",
+              "uom": "kPa",
+              "cts": "2025-10-11T02:50:31.200+00:00"
+            },
+            {
+              "name": "LEFT_REAR_TIRE_PRESSURE_IN_PSI",
+              "displayName": "Left Rear Tire Pressure In PSI",
+              "description": "Left Rear Tire Pressure In PSI",
+              "status": "NOMINAL",
+              "statusColor": "GREEN",
+              "value": "41",
+              "uom": "PSI",
+              "cts": "2025-10-11T02:50:31.200+00:00"
+            },
+            {
+              "name": "LEFT_REAR_TIRE_PRESSURE_STATUS",
+              "displayName": "Left Rear Tire Pressure Status",
+              "description": "Left Rear Tire Pressure Status",
+              "status": "NOMINAL",
+              "statusColor": "GREEN",
+              "value": "TPM_STATUS_NOMINAL",
+              "uom": "N/A",
+              "cts": "2025-10-11T02:50:31.200+00:00"
+            },
+            {
+              "name": "LEFT_REAR_TIRE_PRESSURE_VALID",
+              "displayName": "Left Rear Tire Pressure Valid",
+              "description": "Left Rear Tire Pressure Valid",
+              "status": null,
+              "statusColor": null,
+              "value": "0",
+              "uom": "N/A",
+              "cts": "2025-10-11T02:50:31.200+00:00"
+            },
+            {
+              "name": "RIGHT_FRONT_TIRE_PRESSURE",
+              "displayName": "Right Front Tire Pressure",
+              "description": "Right Front Tire Pressure",
+              "status": "NOMINAL",
+              "statusColor": "GREEN",
+              "value": "272",
+              "uom": "kPa",
+              "cts": "2025-10-11T02:50:31.200+00:00"
+            },
+            {
+              "name": "RIGHT_FRONT_TIRE_PRESSURE_IN_PSI",
+              "displayName": "Right Front Tire Pressure In PSI",
+              "description": "Right Front Tire Pressure In PSI",
+              "status": "NOMINAL",
+              "statusColor": "GREEN",
+              "value": "39",
+              "uom": "PSI",
+              "cts": "2025-10-11T02:50:31.200+00:00"
+            },
+            {
+              "name": "RIGHT_FRONT_TIRE_PRESSURE_STATUS",
+              "displayName": "Right Front Tire Pressure Status",
+              "description": "Right Front Tire Pressure Status",
+              "status": "NOMINAL",
+              "statusColor": "GREEN",
+              "value": "TPM_STATUS_NOMINAL",
+              "uom": "N/A",
+              "cts": "2025-10-11T02:50:31.200+00:00"
+            },
+            {
+              "name": "RIGHT_FRONT_TIRE_PRESSURE_VALID",
+              "displayName": "Right Front Tire Pressure Valid",
+              "description": "Right Front Tire Pressure Valid",
+              "status": null,
+              "statusColor": null,
+              "value": "0",
+              "uom": "N/A",
+              "cts": "2025-10-11T02:50:31.200+00:00"
+            },
+            {
+              "name": "RIGHT_REAR_TIRE_PRESSURE",
+              "displayName": "Right Rear Tire Pressure",
+              "description": "Right Rear Tire Pressure",
+              "status": "NOMINAL",
+              "statusColor": "GREEN",
+              "value": "276",
+              "uom": "kPa",
+              "cts": "2025-10-11T02:50:31.200+00:00"
+            },
+            {
+              "name": "RIGHT_REAR_TIRE_PRESSURE_IN_PSI",
+              "displayName": "Right Rear Tire Pressure In PSI",
+              "description": "Right Rear Tire Pressure In PSI",
+              "status": "NOMINAL",
+              "statusColor": "GREEN",
+              "value": "40",
+              "uom": "PSI",
+              "cts": "2025-10-11T02:50:31.200+00:00"
+            },
+            {
+              "name": "RIGHT_REAR_TIRE_PRESSURE_STATUS",
+              "displayName": "Right Rear Tire Pressure Status",
+              "description": "Right Rear Tire Pressure Status",
+              "status": "NOMINAL",
+              "statusColor": "GREEN",
+              "value": "TPM_STATUS_NOMINAL",
+              "uom": "N/A",
+              "cts": "2025-10-11T02:50:31.200+00:00"
+            },
+            {
+              "name": "RIGHT_REAR_TIRE_PRESSURE_VALID",
+              "displayName": "Right Rear Tire Pressure Valid",
+              "description": "Right Rear Tire Pressure Valid",
+              "status": null,
+              "statusColor": null,
+              "value": "0",
+              "uom": "N/A",
+              "cts": "2025-10-11T02:50:31.200+00:00"
+            },
+            {
+              "name": "FRONT_PLACARD",
+              "displayName": "Front Placard",
+              "description": "Front Placard",
+              "status": null,
+              "statusColor": null,
+              "value": "290",
+              "uom": "kPa",
+              "cts": "2025-10-11T02:50:31.200+00:00"
+            },
+            {
+              "name": "FRONT_PLACARD_IN_PSI",
+              "displayName": "Front Placard In PSI",
+              "description": "Front Placard In PSI",
+              "status": null,
+              "statusColor": null,
+              "value": "42",
+              "uom": "PSI",
+              "cts": "2025-10-11T02:50:31.200+00:00"
+            },
+            {
+              "name": "REAR_PLACARD",
+              "displayName": "Rear Placard",
+              "description": "Rear Placard",
+              "status": null,
+              "statusColor": null,
+              "value": "290",
+              "uom": "kPa",
+              "cts": "2025-10-11T02:50:31.200+00:00"
+            },
+            {
+              "name": "REAR_PLACARD_IN_PSI",
+              "displayName": "Rear Placard In PSI",
+              "description": "Rear Placard In PSI",
+              "status": null,
+              "statusColor": null,
+              "value": "42",
+              "uom": "PSI",
+              "cts": "2025-10-11T02:50:31.200+00:00"
+            }
+          ]
+        },
+        {
+          "name": "WASHER_FLUID_LOW",
+          "displayName": "Washer Fluid Low",
+          "description": "Washer Fluid Low",
+          "status": "GOOD",
+          "statusColor": "GREEN",
+          "value": null,
+          "uom": null,
+          "cts": "2025-10-11T02:50:31.200+00:00",
+          "recommendedAction": null,
+          "diagnosticElements": [
+            {
+              "name": "WASHER_FLUID_LOW",
+              "displayName": "Washer Fluid Low",
+              "description": "Washer Fluid Low",
+              "status": "GOOD",
+              "statusColor": "GREEN",
+              "value": "FALSE",
+              "uom": "N/A",
+              "cts": "2025-10-11T02:50:31.200+00:00"
+            }
+          ]
+        },
+        {
+          "name": "LV_BATTERY",
+          "displayName": "Battery Level",
+          "description": "Battery Level",
+          "status": "GOOD",
+          "statusColor": "GREEN",
+          "value": null,
+          "uom": null,
+          "cts": "2025-10-11T03:14:53.762+00:00",
+          "recommendedAction": null,
+          "diagnosticElements": [
+            {
+              "name": "BATT_SAVER_MODE_COUNTER",
+              "displayName": "Battery Saver Mode Counter",
+              "description": "Battery Saver Mode Counter",
+              "status": "NOMINAL",
+              "statusColor": null,
+              "value": "0",
+              "uom": "N/A",
+              "cts": "2025-10-11T03:19:23.460+00:00"
+            },
+            {
+              "name": "BATT_SAVER_MODE_SEV_LVL",
+              "displayName": "Battery Saver Mode Severity Level",
+              "description": "Battery Saver Mode Severity Level",
+              "status": "GOOD",
+              "statusColor": "GREEN",
+              "value": "0",
+              "uom": "N/A",
+              "cts": "2025-10-11T02:50:47.110+00:00"
+            }
+          ]
+        },
+        {
+          "name": "ODOMETER",
+          "displayName": "Odometer",
+          "description": "Odometer",
+          "status": "GOOD",
+          "statusColor": "GREEN",
+          "value": null,
+          "uom": null,
+          "cts": "2025-10-11T03:19:02.220+00:00",
+          "recommendedAction": null,
+          "diagnosticElements": [
+            {
+              "name": "TRIP_A_ODO",
+              "displayName": "Trip A Odometer",
+              "description": "Trip A Odometer",
+              "status": null,
+              "statusColor": null,
+              "value": "8782.8",
+              "uom": "KM",
+              "cts": "2025-10-11T02:50:44.900+00:00"
+            },
+            {
+              "name": "ODO_READ",
+              "displayName": "Odometer Read",
+              "description": "Odometer Read",
+              "status": null,
+              "statusColor": null,
+              "value": "8783.156250",
+              "uom": "KM",
+              "cts": "2025-10-11T03:19:02.220+00:00"
+            }
+          ]
+        },
+        {
+          "name": "HIGH_VOLTAGE_BATTERY",
+          "displayName": "High Voltage Battery",
+          "description": "High Voltage Battery",
+          "status": "GOOD",
+          "statusColor": "GREEN",
+          "value": null,
+          "uom": null,
+          "cts": "2025-10-11T03:19:03.340+00:00",
+          "recommendedAction": null,
+          "diagnosticElements": [
+            {
+              "name": "AMBIENT_AIR_TEMPERATURE",
+              "displayName": "Ambient Air Temperature",
+              "description": "Ambient Air Temperature",
+              "status": null,
+              "statusColor": null,
+              "value": "17.5",
+              "uom": "Cel",
+              "cts": "2025-10-11T02:51:22.590+00:00"
+            },
+            {
+              "name": "CHARGE_VOLTAGE",
+              "displayName": "Charge Voltage",
+              "description": "Charge Voltage",
+              "status": null,
+              "statusColor": null,
+              "value": "Unavailable",
+              "uom": "N/A",
+              "cts": "2025-09-24T16:58:08.367+00:00"
+            },
+            {
+              "name": "EV_CHARGE_STATE",
+              "displayName": "EV Charge State",
+              "description": "EV Charge State",
+              "status": null,
+              "statusColor": null,
+              "value": "UNCONNECTED",
+              "uom": "N/A",
+              "cts": "2025-10-11T03:19:02.250+00:00"
+            },
+            {
+              "name": "EV_PLUG_STATE",
+              "displayName": "EV Plug State",
+              "description": "EV Plug State",
+              "status": null,
+              "statusColor": null,
+              "value": "Disconnect",
+              "uom": "N/A",
+              "cts": "2025-10-11T02:50:42.800+00:00"
+            },
+            {
+              "name": "CHARGE_STATE",
+              "displayName": "Charge State",
+              "description": "Charge State",
+              "status": "GOOD",
+              "statusColor": "GREEN",
+              "value": "70",
+              "uom": "%",
+              "cts": "2025-10-11T03:19:03.340+00:00"
+            },
+            {
+              "name": "EV_RANGE",
+              "displayName": "EV Range",
+              "description": "EV Range",
+              "status": null,
+              "statusColor": null,
+              "value": "317.98",
+              "uom": "KM",
+              "cts": "2025-10-11T03:19:02.240+00:00"
+            }
+          ]
+        },
+        {
+          "name": "LIFETIME_ENERGY_USED",
+          "displayName": "Lifetime Energy Used",
+          "description": "Lifetime Energy Used",
+          "status": "GOOD",
+          "statusColor": "GREEN",
+          "value": null,
+          "uom": null,
+          "cts": "2025-10-11T03:19:03.350+00:00",
+          "recommendedAction": null,
+          "diagnosticElements": [
+            {
+              "name": "LIFETIME_ENERGY_USED",
+              "displayName": "Lifetime Energy Used",
+              "description": "Lifetime Energy Used",
+              "status": null,
+              "statusColor": null,
+              "value": "2620.50",
+              "uom": "kWh",
+              "cts": "2025-10-11T03:19:03.350+00:00"
+            }
+          ]
+        }
+      ],
+      "advDiagnostics": {
+        "name": null,
+        "displayName": null,
+        "advDiagnosticsStatus": "NO_ACTION_REQUIRED",
+        "advDiagnosticsStatusColor": "GREEN",
+        "recommendedAction": "",
+        "cts": "2025-10-11T02:40:00.751+00:00",
+        "diagnosticSystems": [
+          {
+            "systemId": "14",
+            "systemName": "Lithium-Ion Battery",
+            "systemLabel": "LITHIUM_ION_BATTERY_SYSTEM",
+            "systemDescription": "Provides the electricity needed to propel your vehicle.",
+            "systemShortDesc": "Lithium-Ion Battery",
+            "systemStatus": "NO_ACTION_REQUIRED",
+            "systemStatusColor": "GREEN",
+            "subSystems": [
+              {
+                "subSystemId": "27",
+                "subSystemName": "Auxiliary Transmission Pump System",
+                "subSystemLabel": "AUXILIARY_TRANSMISSION_PUMP_SUBSYSTEM",
+                "subSystemDescription": "Supplies oil pressure to the transmission for lube, cooling and clutch application during vehicle propulsion when the engine is off and the main transmission pump is not operating.",
+                "subSystemShortDesc": "Auxiliary Transmission Pump System",
+                "subSystemStatus": "NO ACTION REQUIRED",
+                "subSystemStatusColor": "GREEN",
+                "dtcList": []
+              },
+              {
+                "subSystemId": "28",
+                "subSystemName": "High Voltage Battery",
+                "subSystemLabel": "HIGH_VOLTAGE_BATTERY_SUBSYSTEM",
+                "subSystemDescription": "Provides the electricity needed to propel your vehicle.",
+                "subSystemShortDesc": "High Voltage Battery",
+                "subSystemStatus": "NO ACTION REQUIRED",
+                "subSystemStatusColor": "GREEN",
+                "dtcList": []
+              },
+              {
+                "subSystemId": "29",
+                "subSystemName": "Battery Conditioning System",
+                "subSystemLabel": "BATTERY_CONDITIONING_SUBSYSTEM",
+                "subSystemDescription": "Consists of both a heating and a cooling system that work together to maintain the correct temperature range for your vehicle's high-voltage battery. It also maintains proper refrigerant pressure and temperature.",
+                "subSystemShortDesc": "Battery Conditioning System",
+                "subSystemStatus": "NO ACTION REQUIRED",
+                "subSystemStatusColor": "GREEN",
+                "dtcList": []
+              },
+              {
+                "subSystemId": "30",
+                "subSystemName": "Onboard Charging System",
+                "subSystemLabel": "ONBOARDING_CHARGING_SUBSYSTEM",
+                "subSystemDescription": "Controls the charging of your vehicle's high-voltage battery based on your current charge mode.",
+                "subSystemShortDesc": "Onboard Charging System",
+                "subSystemStatus": "NO ACTION REQUIRED",
+                "subSystemStatusColor": "GREEN",
+                "dtcList": []
+              },
+              {
+                "subSystemId": "31",
+                "subSystemName": "Charging Cable System",
+                "subSystemLabel": "CHARGING_CABLE_SUBSYSTEM",
+                "subSystemDescription": "Connects the high-voltage battery to a standard household outlet through a portable 120-volt cord set. \n\nAn optional 240-volt charge station is available to owners that want to reduce the length of time it takes to recharge. This fixed option is mounted to the wall and must be hardwired to a 240-volt power supply.",
+                "subSystemShortDesc": "Charging Cable System",
+                "subSystemStatus": "NO ACTION REQUIRED",
+                "subSystemStatusColor": "GREEN",
+                "dtcList": []
+              }
+            ]
+          },
+          {
+            "systemId": "13",
+            "systemName": "Electric Drive Unit",
+            "systemLabel": "ELECTRIC_DRIVE_UNIT_SYSTEM",
+            "systemDescription": "Responsible for propelling the vehicle.",
+            "systemShortDesc": "Electric Drive Unit",
+            "systemStatus": "NO_ACTION_REQUIRED",
+            "systemStatusColor": "GREEN",
+            "subSystems": [
+              {
+                "subSystemId": "33",
+                "subSystemName": "eAWD System (if equipped)",
+                "subSystemLabel": "E_AWD_SUBSYSTEM",
+                "subSystemDescription": "Automatically adapts to difficult driving conditions and loss of rear wheel traction through sensors that will engage front wheels, providing better vehicle stability.",
+                "subSystemShortDesc": "eAWD System (if equipped)",
+                "subSystemStatus": "NO ACTION REQUIRED",
+                "subSystemStatusColor": "GREEN",
+                "dtcList": []
+              },
+              {
+                "subSystemId": "25",
+                "subSystemName": "Motor Control System",
+                "subSystemLabel": "MOTOR_CONTROL_SUBSYSTEM",
+                "subSystemDescription": "Regulates the operation of an electric motor, such as acceleration, moving in reverse, and starting and stopping the motor. It also provides regenerative braking, charging the battery when the brakes are used.",
+                "subSystemShortDesc": "Motor Control System",
+                "subSystemStatus": "NO ACTION REQUIRED",
+                "subSystemStatusColor": "GREEN",
+                "dtcList": []
+              },
+              {
+                "subSystemId": "26",
+                "subSystemName": "Accessory Power System",
+                "subSystemLabel": "ACCESSORY_POWER_SUBSYSTEM",
+                "subSystemDescription": "Converts high voltage direct current (300+V) to low voltage (12V) in order to power accessories and to charge your vehicle's 12-volt battery.",   
+                "subSystemShortDesc": "Accessory Power System",
+                "subSystemStatus": "NO ACTION REQUIRED",
+                "subSystemStatusColor": "GREEN",
+                "dtcList": []
+              },
+              {
+                "subSystemId": "27",
+                "subSystemName": "Auxiliary Transmission Pump System",
+                "subSystemLabel": "AUXILIARY_TRANSMISSION_PUMP_SUBSYSTEM",
+                "subSystemDescription": "Supplies oil pressure to the transmission for lube, cooling and clutch application during vehicle propulsion when the engine is off and the main transmission pump is not operating.",
+                "subSystemShortDesc": "Auxiliary Transmission Pump System",
+                "subSystemStatus": "NO ACTION REQUIRED",
+                "subSystemStatusColor": "GREEN",
+                "dtcList": []
+              }
+            ]
+          },
+          {
+            "systemId": "8",
+            "systemName": "Regenerative Braking System",
+            "systemLabel": "REGENERATIVE_BRAKING_SYSTEM",
+            "systemDescription": "Rather than a traditional friction braking system, this uses electric motors to slow down and stop a vehicle.",
+            "systemShortDesc": "Regenerative Braking System",
+            "systemStatus": "NO_ACTION_REQUIRED",
+            "systemStatusColor": "GREEN",
+            "subSystems": [
+              {
+                "subSystemId": "18",
+                "subSystemName": "Regenerative Braking System",
+                "subSystemLabel": "REGENERATIVE_BRAKING_SUBSYSTEM",
+                "subSystemDescription": "Rather than a traditional friction braking system, this uses electric motors to slow down and stop a vehicle. When brakes are engaged, it takes some of the energy from the moving vehicle and turns it back into electrical energy resulting in increased energy efficiency.\n\nAt higher speeds, the vehicle's hydraulic disc brakes are used instead of the Regenerative Braking System to ensure immediate and effective braking.",
+                "subSystemShortDesc": "Regenerative Braking System",
+                "subSystemStatus": "NO ACTION REQUIRED",
+                "subSystemStatusColor": "GREEN",
+                "dtcList": []
+              },
+              {
+                "subSystemId": "19",
+                "subSystemName": "Traction Control System",
+                "subSystemLabel": "TRACTION_CONTROL_SUBSYSTEM",
+                "subSystemDescription": "Monitors the speed of each wheel. If one or more of the wheels indicates a loss of traction, the brake system can be activated and/or engine power can be reduced until traction is regained. If the Traction Active light or message comes on, the system may be operating due to driving conditions.",
+                "subSystemShortDesc": "Traction Control System",
+                "subSystemStatus": "NO ACTION REQUIRED",
+                "subSystemStatusColor": "GREEN",
+                "dtcList": []
+              },
+              {
+                "subSystemId": "20",
+                "subSystemName": "Stabilitrak System",
+                "subSystemLabel": "STABILITRAK_SUBSYSTEM",
+                "subSystemDescription": "Helps maintain directional control of the vehicle in difficult driving conditions. It uses input from vehicle motion sensors and the steering wheel position to selectively apply any one of the vehicle's brakes and, if necessary, reduce engine power.\n\nWhen the system activates, a Stability Active light or message may turn on.",   
+                "subSystemShortDesc": "Stabilitrak System",
+                "subSystemStatus": "NO ACTION REQUIRED",
+                "subSystemStatusColor": "GREEN",
+                "dtcList": []
+              }
+            ]
+          },
+          {
+            "systemId": "12",
+            "systemName": "StabiliTrak® Stability Control System",
+            "systemLabel": "STABILITRAK_STABILITY_CONTROL_SYSTEM",
+            "systemDescription": "An advanced computer controlled system that helps maintain directional control of the vehicle in difficult driving conditions.",
+            "systemShortDesc": "StabiliTrak® Stability Control System",
+            "systemStatus": "NO_ACTION_REQUIRED",
+            "systemStatusColor": "GREEN",
+            "subSystems": [
+              {
+                "subSystemId": "24",
+                "subSystemName": "StabiliTrak® Stability Control System",
+                "subSystemLabel": "STABILITRAK_STABILITY_CONTROL_SUBSYSTEM",
+                "subSystemDescription": "Helps maintain directional control of the vehicle in difficult driving conditions. It uses input from vehicle motion sensors and the steering wheel position to selectively apply any one of the vehicle's brakes and, if necessary, reduce engine power.\n\nWhen the system activates, a Stability Active light or message may turn on.",   
+                "subSystemShortDesc": "StabiliTrak® Stability Control System",
+                "subSystemStatus": "NO ACTION REQUIRED",
+                "subSystemStatusColor": "GREEN",
+                "dtcList": []
+              }
+            ]
+          },
+          {
+            "systemId": "9",
+            "systemName": "Air Bag System",
+            "systemLabel": "AIRBAG_SYSTEM",
+            "systemDescription": "Responsible for the monitoring and deployment of the air bags.",
+            "systemShortDesc": "Air Bag System",
+            "systemStatus": "NO_ACTION_REQUIRED",
+            "systemStatusColor": "GREEN",
+            "subSystems": [
+              {
+                "subSystemId": "14",
+                "subSystemName": "Air Bag Deployment System",
+                "subSystemLabel": "AIR_BAG_DEPLOYMENT_SUBSYSTEM",
+                "subSystemDescription": "Continually checks and monitors the deployment devices to ensure the air bags will deploy in the event of a sufficiently severe impact.",
+                "subSystemShortDesc": "Air Bag Deployment System",
+                "subSystemStatus": "NO ACTION REQUIRED",
+                "subSystemStatusColor": "GREEN",
+                "dtcList": []
+              },
+              {
+                "subSystemId": "15",
+                "subSystemName": "Collision Sensor System",
+                "subSystemLabel": "COLLISION_SENSOR_SUBSYSTEM",
+                "subSystemDescription": "Consists of sensors that distinguish between a moderate or severe crash impact. In the event of a crash, these sensors send information to the computer that controls the deployment of the air bags.",
+                "subSystemShortDesc": "Collision Sensor System",
+                "subSystemStatus": "NO ACTION REQUIRED",
+                "subSystemStatusColor": "GREEN",
+                "dtcList": []
+              },
+              {
+                "subSystemId": "16",
+                "subSystemName": "Safety Belt Pretensioner System (if equipped)",
+                "subSystemLabel": "SAFETY_BELT_PRETENSIONER_SUBSYSTEM",
+                "subSystemDescription": "Works with the air bag system to reduce the forward movement of the driver and right front passenger in the event of a collision.",
+                "subSystemShortDesc": "Safety Belt Pretensioner System (if equipped)",
+                "subSystemStatus": "NO ACTION REQUIRED",
+                "subSystemStatusColor": "GREEN",
+                "dtcList": []
+              },
+              {
+                "subSystemId": "17",
+                "subSystemName": "Passenger Presence System (if equipped)",
+                "subSystemLabel": "PASSENGER_PRESENCE_SUBSYSTEM",
+                "subSystemDescription": "Consists of sensors that detect the presence of a properly seated occupant in the right front passenger seat to determine if the air bag should be deployed. Children and small adults can be injured by the force of an air bag deployment.",
+                "subSystemShortDesc": "Passenger Presence System (if equipped)",
+                "subSystemStatus": "NO ACTION REQUIRED",
+                "subSystemStatusColor": "GREEN",
+                "dtcList": []
+              }
+            ]
+          },
+          {
+            "systemId": "11",
+            "systemName": "OnStar System",
+            "systemLabel": "ONSTAR_SYSTEM",
+            "systemDescription": "This system is responsible for the operation of your OnStar onboard communications and vehicle diagnostics system.",
+            "systemShortDesc": "OnStar System",
+            "systemStatus": "NO_ACTION_REQUIRED",
+            "systemStatusColor": "GREEN",
+            "subSystems": [
+              {
+                "subSystemId": "22",
+                "subSystemName": "Global Positioning System (GPS)",
+                "subSystemLabel": "GLOBAL_POSITIONING_SUBSYSTEM",
+                "subSystemDescription": "Your OnStar system uses a GPS receiver and continually calculates your location as you drive. When you push your OnStar or Emergency button, or if your air bags deploy, your vehicle sends your GPS location to OnStar.",
+                "subSystemShortDesc": "Global Positioning System (GPS)",
+                "subSystemStatus": "NO ACTION REQUIRED",
+                "subSystemStatusColor": "GREEN",
+                "dtcList": []
+              },
+              {
+                "subSystemId": "23",
+                "subSystemName": "Peripheral Systems",
+                "subSystemLabel": "PERIPHERAL_SUBSYSTEM",
+                "subSystemDescription": "Consists of other components in your OnStar system like the buttons, microphone, and antenna, and are continually monitored to ensure proper function.",
+                "subSystemShortDesc": "Peripheral Systems",
+                "subSystemStatus": "NO ACTION REQUIRED",
+                "subSystemStatusColor": "GREEN",
+                "dtcList": []
+              },
+              {
+                "subSystemId": "21",
+                "subSystemName": "Wireless Communication System",
+                "subSystemLabel": "WIRELESS_COMMUNICATION_SUBSYSTEM",
+                "subSystemDescription": "The OnStar communications system uses a cellular device and cellular networks to transmit voice and data from your vehicle to the OnStar Call Centers.\n\nThis system can create a much stronger signal compared to an average cell phone and has the capability to use several different cellular networks to make a connection.",
+                "subSystemShortDesc": "Wireless Communication System",
+                "subSystemStatus": "NO ACTION REQUIRED",
+                "subSystemStatusColor": "GREEN",
+                "dtcList": []
+              }
+            ]
+          },
+          {
+            "systemId": "15",
+            "systemName": "Electric Lamp System",
+            "systemLabel": "ELECTRIC_LAMP_SYSTEM",
+            "systemDescription": "Electric Lamp System",
+            "systemShortDesc": "Electric Lamp System",
+            "systemStatus": "NO_ACTION_REQUIRED",
+            "systemStatusColor": "GREEN",
+            "subSystems": [
+              {
+                "subSystemId": "32",
+                "subSystemName": "Lighting System",
+                "subSystemLabel": "LIGHTING_SUBSYSTEM",
+                "subSystemDescription": "Lighting system.",
+                "subSystemShortDesc": "Lighting System",
+                "subSystemStatus": "NO ACTION REQUIRED",
+                "subSystemStatusColor": "GREEN",
+                "dtcList": []
+              }
+            ]
+          }
+        ]
+      }
+    }
+  }
+}

@@ -1178,7 +1178,9 @@ class MQTT {
         // TODO: this sucks, find a better way to map these diagnostics and their elements for discovery.
         switch (diagEl.name) {
             // Format: diagnostic, diagnosticElement1, state_class, device_class, attributes
+            // API v1 uses spaces, API v3 uses underscores - support both
             case 'LIFETIME ENERGY USED':
+            case 'LIFETIME_ENERGY_USED':
                 return this.mapSensorConfigPayload(diag, diagEl, 'total_increasing', 'energy', undefined, undefined, 'mdi:lightning-bolt');
             case 'INTERM VOLT BATT VOLT':
                 return this.mapSensorConfigPayload(diag, diagEl, 'measurement', 'voltage', undefined, undefined, 'mdi:car-battery');
@@ -1188,6 +1190,8 @@ class MQTT {
                 return this.mapSensorConfigPayload(diag, diagEl, 'measurement', 'temperature', undefined, undefined, 'mdi:battery-high');
             case 'AMBIENT AIR TEMPERATURE':
             case 'AMBIENT AIR TEMPERATURE F':
+            case 'AMBIENT_AIR_TEMPERATURE': // API v3
+            case 'AMBIENT_AIR_TEMPERATURE_F': // API v3 Fahrenheit
                 return this.mapSensorConfigPayload(diag, diagEl, 'measurement', 'temperature', undefined, undefined, 'mdi:thermometer');
             case 'ENGINE COOLANT TEMP':
             case 'ENGINE COOLANT TEMP F':
@@ -1296,6 +1300,8 @@ class MQTT {
                 return this.mapSensorConfigPayload(diag, diagEl, 'measurement', 'distance', undefined, undefined, 'mdi:gas-station');
             case 'EV RANGE':
             case 'EV RANGE MI':
+            case 'EV_RANGE': // API v3
+            case 'EV_RANGE_MI': // API v3 Miles
                 return this.mapSensorConfigPayload(diag, diagEl, 'measurement', 'distance', undefined, undefined, 'mdi:ev-station');
             case 'LAST TRIP TOTAL DISTANCE':
             case 'LAST TRIP TOTAL DISTANCE MI':

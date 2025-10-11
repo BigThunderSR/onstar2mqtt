@@ -2096,6 +2096,43 @@ describe('MQTT', () => {
                 const result3 = mqtt.getStatePayload(diagnostic);
                 assert.strictEqual(result3.charge_voltage, 240);
             });
+
+            it('should handle API v3 underscore sensor name variants', () => {
+                // Test AMBIENT_AIR_TEMPERATURE with underscore (Celsius)
+                diagnostic.diagnosticElements = [
+                    { name: 'AMBIENT_AIR_TEMPERATURE', value: '17.5', message: null, unit: 'Cel' }
+                ];
+                const result1 = mqtt.getStatePayload(diagnostic);
+                assert.strictEqual(result1.ambient_air_temperature, 17.5);
+
+                // Test AMBIENT_AIR_TEMPERATURE_F with underscore (Fahrenheit)
+                diagnostic.diagnosticElements = [
+                    { name: 'AMBIENT_AIR_TEMPERATURE_F', value: '63.5', message: null, unit: 'F' }
+                ];
+                const result1f = mqtt.getStatePayload(diagnostic);
+                assert.strictEqual(result1f.ambient_air_temperature_f, 63.5);
+
+                // Test LIFETIME_ENERGY_USED with underscore
+                diagnostic.diagnosticElements = [
+                    { name: 'LIFETIME_ENERGY_USED', value: '2620.50', message: null, unit: 'kWh' }
+                ];
+                const result2 = mqtt.getStatePayload(diagnostic);
+                assert.strictEqual(result2.lifetime_energy_used, 2620.50);
+
+                // Test EV_RANGE with underscore (Kilometers)
+                diagnostic.diagnosticElements = [
+                    { name: 'EV_RANGE', value: '317.98', message: null, unit: 'KM' }
+                ];
+                const result3 = mqtt.getStatePayload(diagnostic);
+                assert.strictEqual(result3.ev_range, 317.98);
+
+                // Test EV_RANGE_MI with underscore (Miles)
+                diagnostic.diagnosticElements = [
+                    { name: 'EV_RANGE_MI', value: '197.5', message: null, unit: 'MI' }
+                ];
+                const result3mi = mqtt.getStatePayload(diagnostic);
+                assert.strictEqual(result3mi.ev_range_mi, 197.5);
+            });
         });
 
 

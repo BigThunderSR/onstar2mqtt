@@ -2047,21 +2047,28 @@ describe('MQTT', () => {
             it('should handle EV CHARGE STATE with API v3 values', () => {
                 // Test "UNCONNECTED" (API v3)
                 diagnostic.diagnosticElements = [
-                    { name: 'EV CHARGE STATE', value: 'UNCONNECTED', message: null, unit: 'N/A' }
+                    { name: 'EV_CHARGE_STATE', value: 'UNCONNECTED', message: null, unit: 'N/A' }
                 ];
                 const result1 = mqtt.getStatePayload(diagnostic);
                 assert.strictEqual(result1.ev_charge_state, false);
 
                 // Test "CHARGING" (API v3)
                 diagnostic.diagnosticElements = [
-                    { name: 'EV CHARGE STATE', value: 'CHARGING', message: null, unit: 'N/A' }
+                    { name: 'EV_CHARGE_STATE', value: 'CHARGING', message: null, unit: 'N/A' }
                 ];
                 const result2 = mqtt.getStatePayload(diagnostic);
                 assert.strictEqual(result2.ev_charge_state, true);
 
+                // Test "Active" (API v3 variant)
+                diagnostic.diagnosticElements = [
+                    { name: 'EV_CHARGE_STATE', value: 'Active', message: null, unit: 'N/A' }
+                ];
+                const result4 = mqtt.getStatePayload(diagnostic);
+                assert.strictEqual(result4.ev_charge_state, true);
+
                 // Test null value
                 diagnostic.diagnosticElements = [
-                    { name: 'EV CHARGE STATE', value: null, message: null, unit: 'N/A' }
+                    { name: 'EV_CHARGE_STATE', value: null, message: null, unit: 'N/A' }
                 ];
                 const result3 = mqtt.getStatePayload(diagnostic);
                 assert.strictEqual(result3.ev_charge_state, null);

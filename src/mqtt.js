@@ -1000,14 +1000,14 @@ class MQTT {
                     }
                     break;
                 case 'EV CHARGE STATE': // API v1
-                case 'EV_CHARGE_STATE': // API v3: "UNCONNECTED"/"CHARGING", API v1: "not_charging"/"charging"
+                case 'EV_CHARGE_STATE': // API v3: "UNCONNECTED"/"CHARGING"/"Active", API v1: "not_charging"/"charging"
                     // Return null if value is null/undefined to show as unavailable in HA
                     if (e.value === null || e.value === undefined) {
                         value = null;
                     } else {
                         const lowerValue = e.value.toLowerCase();
-                        // API v3 uses "UNCONNECTED"/"CHARGING", API v1 uses "not_charging"/"charging"
-                        value = lowerValue === 'charging';
+                        // API v3 uses "UNCONNECTED"/"CHARGING"/"Active", API v1 uses "not_charging"/"charging"
+                        value = lowerValue === 'charging' || lowerValue === 'active';
                     }
                     break;
                 case 'PRIORITY CHARGE INDICATOR': // FALSE/TRUE
@@ -1216,10 +1216,10 @@ class MQTT {
             // binary_sensor, no state_class, has device_class
             // API v1 uses spaces, API v3 uses underscores - support both
             case 'EV PLUG STATE': // API v1
-            case 'EV_PLUG_STATE': // API v3: "Disconnect"/"Connect", API v1: "unplugged"/"plugged"
+            case 'EV_PLUG_STATE': // API v3: "Disconnect"/"Connect"/"Connected", API v1: "unplugged"/"plugged"
                 return this.mapBinarySensorConfigPayload(diag, diagEl, undefined, 'plug', undefined, undefined, 'mdi:ev-plug-type1');
             case 'EV CHARGE STATE': // API v1
-            case 'EV_CHARGE_STATE': // API v3: "UNCONNECTED"/"CHARGING", API v1: "not_charging"/"charging"
+            case 'EV_CHARGE_STATE': // API v3: "UNCONNECTED"/"CHARGING"/"Active", API v1: "not_charging"/"charging"
                 return this.mapBinarySensorConfigPayload(diag, diagEl, undefined, 'battery_charging', undefined, undefined, 'mdi:battery-charging');
             // binary_sensor, no state_class and no applicable device_class
             case 'PRIORITY CHARGE INDICATOR': // FALSE/TRUE

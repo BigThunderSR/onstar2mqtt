@@ -3,7 +3,7 @@ const _ = require('lodash');
 
 const { Diagnostic, DiagnosticElement, AdvancedDiagnostic, DiagnosticSystem } = require('../src/diagnostic');
 const apiResponse = require('./diagnostic.sample.json');
-const apiV3Response = require('./diagnostic-sample-anonymized-v3-1.json');
+const apiV3Response = require('./diagnostic-sample-v3-ice-1.json');
 
 describe('Diagnostics', () => {
     let d;

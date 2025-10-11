@@ -4,6 +4,12 @@
 
 EV sensors were showing "Unknown" in Home Assistant due to API v3 returning different data formats compared to API v1.
 
+## Data Sources
+
+- **API v3 Diagnostic Sample**: Real data from 2025 Chevrolet Equinox EV (`test/diagnostic-sample-v3-ev-1.json`)
+- **Live Home Assistant Logs**: Actual error messages from production system revealing additional value variants
+- **API v1 Reference**: Existing diagnostic sample from ICE vehicles
+
 ## Root Causes Identified
 
 ### 1. Sensor Name Format Change
@@ -21,8 +27,9 @@ EV sensors were showing "Unknown" in Home Assistant due to API v3 returning diff
 ### 3. EV_CHARGE_STATE Value Change
 
 - **API v1**: `"not_charging"` / `"charging"`
-- **API v3**: `"UNCONNECTED"` / `"CHARGING"`
+- **API v3**: `"UNCONNECTED"` / `"CHARGING"` / `"Active"`
 - **Impact**: String comparison failed, sensor always returned false
+- **Note**: "Active" value discovered from live Home Assistant error logs (not in diagnostic sample)
 
 ### 4. CHARGE_VOLTAGE "Unavailable" String
 
@@ -51,8 +58,13 @@ Enhanced conversion logic to handle both API versions:
 ```javascript
 case 'EV_PLUG_STATE':
     const lowerValue = e.value.toLowerCase();
-    // Handles: "Disconnect"/"Connect" (v3) and "unplugged"/"plugged" (v1)
+    // Handles: "Disconnect"/"Connect"/"Connected" (v3) and "plugged" (v1)
     value = lowerValue === 'connect' || lowerValue === 'connected' || lowerValue === 'plugged';
+
+case 'EV_CHARGE_STATE':
+    const lowerValue = e.value.toLowerCase();
+    // Handles: "UNCONNECTED"/"CHARGING"/"Active" (v3) and "charging" (v1)
+    value = lowerValue === 'charging' || lowerValue === 'active';
 ```
 
 ### 3. Added "Unavailable" String Handling
@@ -76,10 +88,10 @@ if (e.value === null || e.value === undefined) {
 
 ### 5. Added Comprehensive Tests
 
-Added 3 new test cases covering:
+Added test cases covering:
 
 - EV_PLUG_STATE with API v3 values ("Disconnect", "Connect", "connected", null)
-- EV_CHARGE_STATE with API v3 values ("UNCONNECTED", "CHARGING", null)
+- EV_CHARGE_STATE with API v3 values ("UNCONNECTED", "CHARGING", "Active", null)
 - "Unavailable" string handling (case-insensitive, converts to null, numeric values still work)
 
 ## Test Results
@@ -95,16 +107,36 @@ Added 3 new test cases covering:
 - All EV sensors working correctly with API v3 data
 - Backward compatibility with API v1 maintained
 - ICE vehicle functionality unchanged
+- Verified against live Home Assistant error logs
+
+## Home Assistant Error Resolution
+
+The fixes address the following reported errors from live systems:
+
+1. **CHARGE_VOLTAGE "Unavailable" string error**
+   - Error: `has the non-numeric value: 'Unavailable' (<class 'str'>)`
+   - Fix: Converts "Unavailable" string to null, shows as "Unavailable" in HA
+
+2. **EV_PLUG_STATE "Connected" string error**
+   - Error: `has the non-numeric value: 'Connected' (<class 'str'>)`
+   - Fix: Uses toLowerCase() to handle "Connected"/"connect"/"Connect" variants, converts to boolean
+
+3. **EV_CHARGE_STATE "Active" string error**
+   - Error: `has the non-numeric value: 'Active' (<class 'str'>)`
+   - Fix: Added "Active" as valid charging state value (discovered from HA logs), converts to boolean
 
 ## Verified Sensors
 
-Using real API v3 EV diagnostic data (`diagnostic-sample-v3-ev-1.json`):
+Using real API v3 EV diagnostic data (`diagnostic-sample-v3-ev-1.json`) and live Home Assistant logs:
 
 | Sensor | Raw Value | Processed Value | Status |
 |--------|-----------|-----------------|--------|
 | CHARGE_VOLTAGE | "Unavailable" | null | ✓ Shows as "Unavailable" in HA |
 | EV_PLUG_STATE | "Disconnect" | false | ✓ Correctly shows unplugged |
+| EV_PLUG_STATE | "Connected" | true | ✓ Correctly shows plugged (from HA logs) |
 | EV_CHARGE_STATE | "UNCONNECTED" | false | ✓ Correctly shows not charging |
+| EV_CHARGE_STATE | "CHARGING" | true | ✓ Correctly shows charging |
+| EV_CHARGE_STATE | "Active" | true | ✓ Correctly shows charging (from HA logs) |
 | CHARGE_STATE | "70" | 70 | ✓ Battery percentage |
 | EV_RANGE | "317.98" | 317.98 | ✓ Electric range in KM |
 | AMBIENT_AIR_TEMPERATURE | "17.5" | 17.5 | ✓ Temperature in Celsius |

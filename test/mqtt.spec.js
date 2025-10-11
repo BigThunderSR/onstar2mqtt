@@ -2012,6 +2012,127 @@ describe('MQTT', () => {
                 const result2 = mqtt.getStatePayload(diagnostic);
                 assert.strictEqual(result2.exhst_part_fltr_warn2_on, false);
             });
+
+            // API v3 EV sensor tests
+            it('should handle EV PLUG STATE with API v3 values', () => {
+                // Test "Disconnect" (API v3)
+                diagnostic.diagnosticElements = [
+                    { name: 'EV PLUG STATE', value: 'Disconnect', message: null, unit: 'N/A' }
+                ];
+                const result1 = mqtt.getStatePayload(diagnostic);
+                assert.strictEqual(result1.ev_plug_state, false);
+
+                // Test "Connect" (API v3)
+                diagnostic.diagnosticElements = [
+                    { name: 'EV PLUG STATE', value: 'Connect', message: null, unit: 'N/A' }
+                ];
+                const result2 = mqtt.getStatePayload(diagnostic);
+                assert.strictEqual(result2.ev_plug_state, true);
+
+                // Test "connected" (lowercase variation)
+                diagnostic.diagnosticElements = [
+                    { name: 'EV PLUG STATE', value: 'connected', message: null, unit: 'N/A' }
+                ];
+                const result3 = mqtt.getStatePayload(diagnostic);
+                assert.strictEqual(result3.ev_plug_state, true);
+
+                // Test null value
+                diagnostic.diagnosticElements = [
+                    { name: 'EV PLUG STATE', value: null, message: null, unit: 'N/A' }
+                ];
+                const result4 = mqtt.getStatePayload(diagnostic);
+                assert.strictEqual(result4.ev_plug_state, null);
+            });
+
+            it('should handle EV CHARGE STATE with API v3 values', () => {
+                // Test "UNCONNECTED" (API v3)
+                diagnostic.diagnosticElements = [
+                    { name: 'EV_CHARGE_STATE', value: 'UNCONNECTED', message: null, unit: 'N/A' }
+                ];
+                const result1 = mqtt.getStatePayload(diagnostic);
+                assert.strictEqual(result1.ev_charge_state, false);
+
+                // Test "CHARGING" (API v3)
+                diagnostic.diagnosticElements = [
+                    { name: 'EV_CHARGE_STATE', value: 'CHARGING', message: null, unit: 'N/A' }
+                ];
+                const result2 = mqtt.getStatePayload(diagnostic);
+                assert.strictEqual(result2.ev_charge_state, true);
+
+                // Test "Active" (API v3 variant)
+                diagnostic.diagnosticElements = [
+                    { name: 'EV_CHARGE_STATE', value: 'Active', message: null, unit: 'N/A' }
+                ];
+                const result4 = mqtt.getStatePayload(diagnostic);
+                assert.strictEqual(result4.ev_charge_state, true);
+
+                // Test null value
+                diagnostic.diagnosticElements = [
+                    { name: 'EV_CHARGE_STATE', value: null, message: null, unit: 'N/A' }
+                ];
+                const result3 = mqtt.getStatePayload(diagnostic);
+                assert.strictEqual(result3.ev_charge_state, null);
+            });
+
+            it('should handle "Unavailable" string value', () => {
+                // Test CHARGE_VOLTAGE with "Unavailable" string
+                diagnostic.diagnosticElements = [
+                    { name: 'CHARGE_VOLTAGE', value: 'Unavailable', message: null, unit: 'N/A' }
+                ];
+                const result1 = mqtt.getStatePayload(diagnostic);
+                assert.strictEqual(result1.charge_voltage, null);
+
+                // Test case insensitivity
+                diagnostic.diagnosticElements = [
+                    { name: 'CHARGE_VOLTAGE', value: 'UNAVAILABLE', message: null, unit: 'N/A' }
+                ];
+                const result2 = mqtt.getStatePayload(diagnostic);
+                assert.strictEqual(result2.charge_voltage, null);
+
+                // Test actual voltage value still works
+                diagnostic.diagnosticElements = [
+                    { name: 'CHARGE_VOLTAGE', value: '240', message: null, unit: 'V' }
+                ];
+                const result3 = mqtt.getStatePayload(diagnostic);
+                assert.strictEqual(result3.charge_voltage, 240);
+            });
+
+            it('should handle API v3 underscore sensor name variants', () => {
+                // Test AMBIENT_AIR_TEMPERATURE with underscore (Celsius)
+                diagnostic.diagnosticElements = [
+                    { name: 'AMBIENT_AIR_TEMPERATURE', value: '17.5', message: null, unit: 'Cel' }
+                ];
+                const result1 = mqtt.getStatePayload(diagnostic);
+                assert.strictEqual(result1.ambient_air_temperature, 17.5);
+
+                // Test AMBIENT_AIR_TEMPERATURE_F with underscore (Fahrenheit)
+                diagnostic.diagnosticElements = [
+                    { name: 'AMBIENT_AIR_TEMPERATURE_F', value: '63.5', message: null, unit: 'F' }
+                ];
+                const result1f = mqtt.getStatePayload(diagnostic);
+                assert.strictEqual(result1f.ambient_air_temperature_f, 63.5);
+
+                // Test LIFETIME_ENERGY_USED with underscore
+                diagnostic.diagnosticElements = [
+                    { name: 'LIFETIME_ENERGY_USED', value: '2620.50', message: null, unit: 'kWh' }
+                ];
+                const result2 = mqtt.getStatePayload(diagnostic);
+                assert.strictEqual(result2.lifetime_energy_used, 2620.50);
+
+                // Test EV_RANGE with underscore (Kilometers)
+                diagnostic.diagnosticElements = [
+                    { name: 'EV_RANGE', value: '317.98', message: null, unit: 'KM' }
+                ];
+                const result3 = mqtt.getStatePayload(diagnostic);
+                assert.strictEqual(result3.ev_range, 317.98);
+
+                // Test EV_RANGE_MI with underscore (Miles)
+                diagnostic.diagnosticElements = [
+                    { name: 'EV_RANGE_MI', value: '197.5', message: null, unit: 'MI' }
+                ];
+                const result3mi = mqtt.getStatePayload(diagnostic);
+                assert.strictEqual(result3mi.ev_range_mi, 197.5);
+            });
         });
 
 

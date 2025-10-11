@@ -9,9 +9,11 @@ changelog:
         labels:
           - dependencies
           - bug
+          - bugfix
     - title: 🛠️ Bug Fix
       labels:
         - bug
+        - bugfix
     - title: 📦 Dependencies
       labels:
         - dependencies

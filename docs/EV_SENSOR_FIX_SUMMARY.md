@@ -94,6 +94,26 @@ Added test cases covering:
 - EV_CHARGE_STATE with API v3 values ("UNCONNECTED", "CHARGING", "Active", null)
 - "Unavailable" string handling (case-insensitive, converts to null, numeric values still work)
 
+### 6. Added Underscore Variants for Common Sensors
+
+Added API v3 underscore support for sensors that exist in both API versions:
+
+```javascript
+// Temperature sensors
+case 'AMBIENT AIR TEMPERATURE':
+case 'AMBIENT_AIR_TEMPERATURE': // API v3
+case 'AMBIENT_AIR_TEMPERATURE_F': // API v3 Fahrenheit
+
+// Energy tracking
+case 'LIFETIME ENERGY USED':
+case 'LIFETIME_ENERGY_USED': // API v3
+
+// Range sensors
+case 'EV RANGE':
+case 'EV_RANGE': // API v3
+case 'EV_RANGE_MI': // API v3 Miles
+```
+
 ## Test Results
 
 ### Before Fix
@@ -103,11 +123,12 @@ Added test cases covering:
 
 ### After Fix
 
-- **268 tests passing** (3 new tests added)
+- **269 tests passing** (4 new tests added)
 - All EV sensors working correctly with API v3 data
 - Backward compatibility with API v1 maintained
 - ICE vehicle functionality unchanged
 - Verified against live Home Assistant error logs
+- Imperial unit variants (Fahrenheit, Miles) supported
 
 ## Home Assistant Error Resolution
 
@@ -140,6 +161,7 @@ Using real API v3 EV diagnostic data (`diagnostic-sample-v3-ev-1.json`) and live
 | CHARGE_STATE | "70" | 70 | ✓ Battery percentage |
 | EV_RANGE | "317.98" | 317.98 | ✓ Electric range in KM |
 | AMBIENT_AIR_TEMPERATURE | "17.5" | 17.5 | ✓ Temperature in Celsius |
+| LIFETIME_ENERGY_USED | "2620.50" | 2620.50 | ✓ Energy usage in kWh |
 
 ## Backward Compatibility
 
@@ -147,6 +169,7 @@ All changes maintain full backward compatibility:
 
 - API v1 sensor names with spaces still work
 - API v1 string values still work
+- Imperial units (Fahrenheit, Miles) supported in both formats
 - All existing tests pass
 - No breaking changes for ICE vehicles
 

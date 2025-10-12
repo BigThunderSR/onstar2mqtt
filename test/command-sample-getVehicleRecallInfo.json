@@ -1,0 +1,24 @@
+{
+  "errors": [],
+  "data": {
+    "vehicleDetails": {
+      "recallInfo": [
+        {
+          "recallId": "N252503010",
+          "title": "Unintended Parking Brake Engagement",
+          "type": "ZPSR",
+          "typeDescription": "Product Safety Recall",
+          "description": "General Motors has decided that a defect which relates to motor vehicle safety exists in certain 2024 – 2025 model year Chevrolet Blazer EV vehicles.  The rear parking brake wiring harness in these vehicles may become damaged or corroded, resulting in unintended actuation of the parking brake or loss of parking brake function.  If the parking brake actuates while driving, there is increased risk of a crash.   If parking brake function is lost, the vehicle may roll away while unattended, increasing the risk of a crash.",
+          "recallStatus": "A",
+          "repairStatus": "incomplete",
+          "repairStatusCode": "00",
+          "repairDescription": "Dealers will inspect the harness and, if necessary, reroute the harness and install anti-abrasive tape.  A harness with existing damage will be replaced.",
+          "safetyRiskDescription": "If the parking brake actuates while driving, there is increased risk of a crash.   If parking brake function is lost, the vehicle may roll away while unattended, increasing the risk of a crash.",
+          "completedDate": null
+        }
+      ]
+    }
+  },
+  "extensions": null,
+  "dataPresent": true
+}

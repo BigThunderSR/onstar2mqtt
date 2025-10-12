@@ -1,0 +1,1846 @@
+{
+  "errors": [],
+  "data": {
+    "vehicleDetails": {
+      "vin": "[REDACTED VIN]",
+      "make": "Chevrolet",
+      "model": "Blazer EV",
+      "year": "2024",
+      "onstarCapable": true,
+      "imageUrl": "https://cgi.chevrolet.com/mmgprod-us/dynres/prove/image.gen?i=2024/1MC26/1MC26__2LT/GJV_0ST_1MP_1NF_1SZ_2LT_2NF_2ST_3ST_4NK_4ST_5A7_5C6_5FC_5ST_6X1_7X1_8X2_9L3_9X2_A2X_A69_A70_A7J_A7Z_ACH_AED_AEO_AEQ_AGJ_AIB_AIF_AIM_AKK_AKO_AL0_AL9_AQP_AR9_ARU_ARW_AS2_ASV_AT9_ATH_AU3_AVI_AXG_AXP_AYD_BAG_BAH_BKG_BKL_BSL_BTT_BTV_C23_C25_C49_C59_C68_C75_CAJ_CTB_CTT_D06_D67_D75_DA5_DD8_DEG_DMA_DP6_E21_E28_E91_EC5_EF7_EN0_EPH_FE1_FE9_FJP_H9F_HB9_HS1_IKP_ISA_IVD_J24_JBO_JCF_JSW_K12_K28_K3Z_K7A_KAG_KH8_KI3_KKC_KRV_KSG_KTI_KWP_LHD_MAH_MF1_N37_N53_NAM_NCH_NDC_NF6_NJ1_NW9_P76_PAN_PAP_PPW_PRF_PSC_PZ8_QBX_R9N_R9Z_RFD_RSR_RT9_S78_SAL_SBK_SLL_T4L_T61_T83_T8Z_TAU_TB8_TCP_TDM_TGE_TQ5_TR0_TRB_TT9_TUJ_U05_U27_U2K_U5G_U80_UBI_UBJ_UBK_UC3_UD7_UE1_UE4_UEN_UEU_UFA_UFB_UGM_UGN_UH5_UHG_UHH_UIT_UJC_UJN_UKI_UKK_UKM_UKT_UMN_UOW_UQF_UQI_UQL_URF_URW_UTJ_UUA_UUQ_UUT_UV2_UVX_UVZ_V07_V6K_V8D_V92_VEE_VIX_VJQ_VJR_VK3_VNU_VRF_VRG_VRH_VRJ_VRK_VRL_VRM_VRN_VRR_VV4_WMY_WPN_WU5_X0C_XL8_XRD_Y7C_ZFT_ZPNgmds2.jpg&v=deg01&std=true&country=US",
+      "rpoCodes": [
+        "0ST",
+        "1MP",
+        "1NF",
+        "1SZ",
+        "2LT",
+        "2NF",
+        "2ST",
+        "3ST",
+        "4NK",
+        "4ST",
+        "5A7",
+        "5C6",
+        "5FC",
+        "5ST",
+        "6X1",
+        "7X1",
+        "8X2",
+        "9L3",
+        "9X2",
+        "A2X",
+        "A69",
+        "A70",
+        "A7J",
+        "A7Z",
+        "ACH",
+        "AED",
+        "AEO",
+        "AEQ",
+        "AGJ",
+        "AIB",
+        "AIF",
+        "AIM",
+        "AKK",
+        "AKO",
+        "AL0",
+        "AL9",
+        "AQP",
+        "AR9",
+        "ARU",
+        "ARW",
+        "AS2",
+        "ASV",
+        "AT9",
+        "ATH",
+        "AU3",
+        "AVI",
+        "AXG",
+        "AXP",
+        "AYX",
+        "BAG",
+        "BAH",
+        "BKG",
+        "BKL",
+        "BSL",
+        "BTT",
+        "BTV",
+        "C23",
+        "C25",
+        "C49",
+        "C59",
+        "C68",
+        "C75",
+        "CAJ",
+        "CTB",
+        "CTT",
+        "D06",
+        "D67",
+        "D75",
+        "DA5",
+        "DD8",
+        "DEG",
+        "DMA",
+        "DP6",
+        "E21",
+        "E28",
+        "E91",
+        "EC5",
+        "EF7",
+        "EN0",
+        "EPH",
+        "FE1",
+        "FE9",
+        "FJP",
+        "GJV",
+        "H9F",
+        "HB9",
+        "HS1",
+        "IKP",
+        "ISA",
+        "IVD",
+        "J24",
+        "JBO",
+        "JCF",
+        "JSW",
+        "K12",
+        "K28",
+        "K3Z",
+        "K7A",
+        "KAG",
+        "KH8",
+        "KI3",
+        "KKC",
+        "KRV",
+        "KSG",
+        "KTI",
+        "KWP",
+        "LHD",
+        "MAH",
+        "MF1",
+        "N37",
+        "N53",
+        "NAM",
+        "NCH",
+        "NDC",
+        "NF6",
+        "NJ1",
+        "NW9",
+        "P76",
+        "PRF",
+        "PSC",
+        "PZ8",
+        "QBX",
+        "R9N",
+        "R9Z",
+        "RFD",
+        "RSR",
+        "RT9",
+        "S78",
+        "SAL",
+        "SBK",
+        "SLL",
+        "T4L",
+        "T61",
+        "T83",
+        "T8Z",
+        "TAU",
+        "TB8",
+        "TCP",
+        "TDM",
+        "TGE",
+        "TQ5",
+        "TR0",
+        "TRB",
+        "TT9",
+        "TUJ",
+        "U05",
+        "U27",
+        "U2K",
+        "U5G",
+        "U80",
+        "UBI",
+        "UBJ",
+        "UBK",
+        "UC1",
+        "UC3",
+        "UD7",
+        "UE1",
+        "UE4",
+        "UEN",
+        "UEU",
+        "UFA",
+        "UFB",
+        "UGM",
+        "UGN",
+        "UH5",
+        "UHG",
+        "UHH",
+        "UIT",
+        "UJC",
+        "UJN",
+        "UKI",
+        "UKK",
+        "UKM",
+        "UKT",
+        "UOW",
+        "UQF",
+        "UQI",
+        "UQL",
+        "URF",
+        "URW",
+        "UTJ",
+        "UUA",
+        "UUQ",
+        "UUT",
+        "UV2",
+        "UVX",
+        "UVZ",
+        "V07",
+        "V6K",
+        "V8D",
+        "V92",
+        "VEE",
+        "VIX",
+        "VJQ",
+        "VJR",
+        "VK3",
+        "VNU",
+        "VRF",
+        "VRG",
+        "VRH",
+        "VRJ",
+        "VRK",
+        "VRL",
+        "VRM",
+        "VRN",
+        "VRR",
+        "VV4",
+        "WMY",
+        "WPN",
+        "WU5",
+        "X0C",
+        "XL8",
+        "XRD",
+        "Y7C",
+        "ZFT",
+        "ZPN"
+      ],
+      "orderDate": "2023-09-14",
+      "permissions": {
+        "userPermissions": [
+          "TRAILER_CLONE",
+          "REMINDER_MAINTENANCE_CREATE",
+          "TRAILER_VINDATA",
+          "MARKETING_CATEGORY",
+          "PROFILE_EVENTS",
+          "CONSENT_STATUS",
+          "USER",
+          "SUBSCRIBER",
+          "CONSENT",
+          "ENTITLEMENT_SERVICE",
+          "ROUTING_CODE",
+          "CONSENT_MICROFLEET_UPDATE",
+          "LEGAL_ACCEPTANCE",
+          "ACCOUNT_UPDATE",
+          "TRAILER_CHECKLIST",
+          "USER_UPDATE",
+          "CONSENT_PROCESS",
+          "TRAILER_SHARE",
+          "CONSENT_DETAIL",
+          "LOCATION_SHARING",
+          "TRAILER",
+          "VIN_CORRECTED",
+          "PREFERENCE_NOTIFICATION",
+          "LEGAL_ACCEPTANCE_UPDATE",
+          "EV_SUBSCRIBER_INFO_EXTENDED",
+          "CAMPAIGNS",
+          "SESSION_CACHE_CLEAR",
+          "CONSENT_CONTINUOUSCOVERAGE",
+          "CONSENT_SUBSCRIBER_UPDATE",
+          "PAYMENTMETHODS",
+          "TRAILER_USER_CREATE",
+          "TRAILER_FROMVIN_CREATE",
+          "EV_SUBSCRIPTION",
+          "CAPABILITY_VEHICLES",
+          "REMINDER_MAINTENANCE_DELETE",
+          "EV_SUBSCRIBER_INFO_EXTENDED_UPDATE",
+          "CONSENT_VEHICLES_THRDPRTY",
+          "CMD_HISTORY",
+          "VEHICLES",
+          "ID_FORGOT",
+          "SUBSCRIBERS",
+          "RECALL",
+          "REMINDER_MAINTENANCE",
+          "TRAILER_DELETE",
+          "TRAILER_CHECKLIST_UPDATE",
+          "USER_CHECK",
+          "ACCOUNT_INFO",
+          "PAYMENTMETHOD_DELETE",
+          "CONSENT_PAYMENT_UPDATE",
+          "PRODUCT_SERVICE",
+          "MESSAGE_ASYNC",
+          "TRAILER_CONFIG",
+          "CAPABILITY_VEHICLE",
+          "PAYMENTMETHOD_CREATE",
+          "CARRIER_ACCOUNT_OWNERSHIP",
+          "LOCALE_METADATA",
+          "REMINDER_MAINTENANCE_UPDATE",
+          "CONSENT_REVOKE",
+          "PASSWORD_FORGOT",
+          "CONSENT_PAYMENT",
+          "EV_SUBSCRIPTION_UPDATE",
+          "PASSWORD_CHANGE",
+          "TRAILER_FROMVIN_UPDATE",
+          "TRAILER_CONFIG_UPDATE",
+          "CONSENT_VEHICLES",
+          "SUBSCRIBER_INFO",
+          "CRM_SUPPORT_INFO",
+          "PREFERENCE_NOTIFICATION_UPDATE",
+          "USER_CREATE",
+          "DEALER_INFO",
+          "TRAILER_CHECKLIST_CREATE",
+          "VEHICLE_METADATA",
+          "TRAILER_BYID",
+          "CONSENT_SUBSCRIBER_EXPIRE",
+          "SUBSCRIBER_UPDATE",
+          "PAYMENTMETHOD_UPDATE",
+          "CONSENT_SUBSCRIBER_REVOKE",
+          "TRAILER_CHECKLIST_DELETE"
+        ],
+        "accountPermissions": [],
+        "devicePermissions": [
+          {
+            "id": "[REDACTED VIN]",
+            "permissions": [
+              "CMD_TRUNK_CLOSE",
+              "CMD_HOTSPOT_DISABLE",
+              "CMD_TRUNK_UNLOCK",
+              "CMD_HOTSPOT_INFO_UPDATE",
+              "EV_RATE_TABLES_UPDATE",
+              "CMD_LOCATION_ENHANCED",
+              "CMD_TRIP_PLAN",
+              "PROFILE_SETTINGS_UPDATE",
+              "CMD_ALERT_CANCEL",
+              "PROFILE_SETTINGS",
+              "LOCATION_SHARING_VEHICLE",
+              "CMD_CONNECT",
+              "BOUNDARY_ALERT",
+              "TRUSTED_DEVICE",
+              "CMD_HOME_LOCATION",
+              "OTA_CAPABLE",
+              "CMD_CHARGE_STOP",
+              "PROGNOSTIC_ALERT",
+              "CMD_ENERGY_DISCHARGE",
+              "BE_RIGHT_BACK_MODE",
+              "CMD_CHARGE_OVERRIDE",
+              "CMD_CHARGE_POWER_UPDATE",
+              "CMD_CHARGE_MODE",
+              "CMD_CHARGE_POWER",
+              "SENTINEL_COLLECTION",
+              "VEH_SECURE_STATUS",
+              "THEMES",
+              "CMD_HOME_LOCATION_UPDATE",
+              "CMD_ALERT",
+              "VEHICLE_HEALTH_STATUS_GET",
+              "CMD_LOCK",
+              "CMD_UNLOCK",
+              "OVD",
+              "CMD_LOCATION",
+              "CMD_PREFERRED_CHARGE_TIMES",
+              "CMD_TARGET_CHARGE_LEVEL",
+              "CMD_CHARGE_MODE_UPDATE",
+              "CMD_RATESCHEDULE_UPDATE",
+              "CMD_START",
+              "EV_PRECONDITION_CABIN_TEMP",
+              "EV_DEPARTURE_TABLE",
+              "CMD_FASTCHARGE_PREP_CANCEL",
+              "ELEC_VEH",
+              "PROACTIVE_ALERT",
+              "DMN",
+              "CMD_DATA",
+              "CMD_HOTSPOT_STATUS",
+              "NAVIGATION_SEND",
+              "CMD_FASTCHARGE_PREP",
+              "SHINY_OBJ",
+              "CMD_HOTSPOT_ENABLE",
+              "CMD_TRUNK_LOCK",
+              "CMD_CANCEL_START",
+              "TBT_SEND",
+              "EV_RATE_TABLES",
+              "CONSENT_PAGE",
+              "EV_DEPARTURE_TABLE_UPDATE",
+              "CMD_HOTSPOT_INFO",
+              "CMD_STOP",
+              "DATA",
+              "EV_FAST_CHRG_STOP",
+              "CMD_TRIP_PLAN_PROCESS",
+              "CMD_FASTCHARGE_STOP"
+            ],
+            "disabledPermissions": [
+              {
+                "code": "CDB_DRIVER_SETTING",
+                "reason": "UNDETERMINED_SERVICE"
+              },
+              {
+                "code": "THEFT_VIDEO_UPLOAD",
+                "reason": "NOT_VEH_CPBL"
+              },
+              {
+                "code": "MANUAL_BLUETOOTH_PAIR",
+                "reason": "NOT_VEH_CPBL"
+              },
+              {
+                "code": "REQUEST_STATUS",
+                "reason": "UNDETERMINED_SERVICE"
+              },
+              {
+                "code": "SETTINGS_HVAC_UPDATE",
+                "reason": "NOT_VEH_CPBL"
+              },
+              {
+                "code": "VEHICLE_CHECKLIST_CREATE",
+                "reason": "NOT_VEH_CPBL"
+              },
+              {
+                "code": "CMD_TRAILER_LIGHT_START",
+                "reason": "NOT_VEH_CPBL"
+              },
+              {
+                "code": "CMD_WINDOW_OPEN",
+                "reason": "UNDETERMINED_SERVICE"
+              },
+              {
+                "code": "PROFILE_APP",
+                "reason": "NOT_VEH_CPBL"
+              },
+              {
+                "code": "TELEMETRY_OPTOUT",
+                "reason": "UNDETERMINED_SERVICE"
+              },
+              {
+                "code": "CMD_TRAILER_LIGHT_STOP",
+                "reason": "NOT_VEH_CPBL"
+              },
+              {
+                "code": "AUTOFUEL",
+                "reason": "NOT_REGION"
+              },
+              {
+                "code": "TELEMETRY_DATA",
+                "reason": "UNDETERMINED_SERVICE"
+              },
+              {
+                "code": "DEVICE_UNREGISTER",
+                "reason": "UNDETERMINED_SERVICE"
+              },
+              {
+                "code": "GUARDIAN_APP",
+                "reason": "UNDETERMINED_SERVICE"
+              },
+              {
+                "code": "REMOTE_VEH_SETTINGS",
+                "reason": "NOT_VEH_CPBL"
+              },
+              {
+                "code": "PROFILE_APPS_UPDATE",
+                "reason": "NOT_VEH_CPBL"
+              },
+              {
+                "code": "VEHICLE_UNIT_SET",
+                "reason": "UNDETERMINED_SERVICE"
+              },
+              {
+                "code": "REMOTE_THM",
+                "reason": "NOT_VEH_CPBL"
+              },
+              {
+                "code": "DATA_OPTOUT",
+                "reason": "UNDETERMINED_SERVICE"
+              },
+              {
+                "code": "VEHICLE_USERS",
+                "reason": "UNDETERMINED_SERVICE"
+              },
+              {
+                "code": "VEHICLE_ALERT_HISTORY",
+                "reason": "UNDETERMINED_SERVICE"
+              },
+              {
+                "code": "VEHICLE_METRICS",
+                "reason": "NOT_VEH_CPBL"
+              },
+              {
+                "code": "ONDEMAND_VIDEO_UPLOAD",
+                "reason": "NOT_VEH_CPBL"
+              },
+              {
+                "code": "IS_CVO",
+                "reason": "INV_ACCT_TYPE"
+              },
+              {
+                "code": "CMD_IGNITION_DISABLE",
+                "reason": "NOT_VEH_CPBL"
+              },
+              {
+                "code": "REMOTE_FAV_NAV",
+                "reason": "NOT_VEH_CPBL"
+              },
+              {
+                "code": "SMART_SUGGESTIONS",
+                "reason": "UNDETERMINED_SERVICE"
+              },
+              {
+                "code": "REQUEST_RESULT",
+                "reason": "UNDETERMINED_SERVICE"
+              },
+              {
+                "code": "REMOTE_APPS_NGI",
+                "reason": "NOT_VEH_CPBL"
+              },
+              {
+                "code": "ADVISOR_REMOTE_STREAMING",
+                "reason": "NOT_VEH_CPBL"
+              },
+              {
+                "code": "CMD_WIFI_DATA_DISABLE",
+                "reason": "UNDETERMINED_SERVICE"
+              },
+              {
+                "code": "VEHICLE_REMOVE",
+                "reason": "UNDETERMINED_SERVICE"
+              },
+              {
+                "code": "CMD_IGNITION_STATUS",
+                "reason": "NOT_VEH_CPBL"
+              },
+              {
+                "code": "PROFILE_CAPABILITY",
+                "reason": "NOT_VEH_CPBL"
+              },
+              {
+                "code": "VEHICLE_DATA_ALLOCATION",
+                "reason": "UNDETERMINED_SERVICE"
+              },
+              {
+                "code": "REQUEST_RESULTS",
+                "reason": "UNDETERMINED_SERVICE"
+              },
+              {
+                "code": "CMD_WINDOWCONTROL",
+                "reason": "UNDETERMINED_SERVICE"
+              },
+              {
+                "code": "PROFILE_FAVORITES_UPDATE",
+                "reason": "NOT_VEH_CPBL"
+              },
+              {
+                "code": "VEHICLE_CHECKLIST_DELETE",
+                "reason": "NOT_VEH_CPBL"
+              },
+              {
+                "code": "CMD_SUNROOF_CLOSE",
+                "reason": "UNDETERMINED_SERVICE"
+              },
+              {
+                "code": "CMD_IGNITION_ENABLE",
+                "reason": "NOT_VEH_CPBL"
+              },
+              {
+                "code": "PROFILE_APPS",
+                "reason": "NOT_VEH_CPBL"
+              },
+              {
+                "code": "VEHICLE_CHECKLIST",
+                "reason": "NOT_VEH_CPBL"
+              },
+              {
+                "code": "INTRUSION_DETECTION",
+                "reason": "NOT_VEH_CPBL"
+              },
+              {
+                "code": "CMD_TRUNK_OPEN",
+                "reason": "UNDETERMINED_SERVICE"
+              },
+              {
+                "code": "CMD_CHARGE_PRIORITY",
+                "reason": "NOT_VEH_CPBL"
+              },
+              {
+                "code": "NAVIGATION_MS_SEND",
+                "reason": "UNDETERMINED_SERVICE"
+              },
+              {
+                "code": "PROFILE_FAVORITES",
+                "reason": "NOT_VEH_CPBL"
+              },
+              {
+                "code": "SC_TRAILERING",
+                "reason": "NOT_VEH_CPBL"
+              },
+              {
+                "code": "DATA_OPTIN",
+                "reason": "UNDETERMINED_SERVICE"
+              },
+              {
+                "code": "CMD_WINDOW_CLOSE",
+                "reason": "UNDETERMINED_SERVICE"
+              },
+              {
+                "code": "EXPEDITED_BLUETOOTH_PAIR",
+                "reason": "NOT_VEH_CPBL"
+              },
+              {
+                "code": "TRAILER_CAMERA",
+                "reason": "NOT_VEH_CPBL"
+              },
+              {
+                "code": "TRAILER_LOAD_CALC",
+                "reason": "NOT_VEH_CPBL"
+              },
+              {
+                "code": "TRAILER_TTPMS_RECONF",
+                "reason": "NOT_VEH_CPBL"
+              },
+              {
+                "code": "CMD_DISCONNECT",
+                "reason": "UNDETERMINED_SERVICE"
+              },
+              {
+                "code": "HOTSPOT_VALIDATE",
+                "reason": "UNDETERMINED_SERVICE"
+              },
+              {
+                "code": "OVERLAY",
+                "reason": "INVALID_ACC_TYPE"
+              },
+              {
+                "code": "CMD_HOODE_UNLOCK",
+                "reason": "NOT_VEH_CPBL"
+              },
+              {
+                "code": "CRASH_ VIDEO_UPLOAD",
+                "reason": "UNDETERMINED_SERVICE"
+              },
+              {
+                "code": "VEHICLE_PROGRAMS_UPDATE",
+                "reason": "UNDETERMINED_SERVICE"
+              },
+              {
+                "code": "HARD_ACCL",
+                "reason": "NO_PACKAGE"
+              },
+              {
+                "code": "CMD_RATESCHEDULE",
+                "reason": "UNDETERMINED_SERVICE"
+              },
+              {
+                "code": "CMD_SUNROOF_OPEN",
+                "reason": "UNDETERMINED_SERVICE"
+              },
+              {
+                "code": "DIGITAL_KEY_SERVICES",
+                "reason": "NOT_VEH_CPBL"
+              },
+              {
+                "code": "CMD_CHARGE_PRIORITY_UPDATE",
+                "reason": "NOT_VEH_CPBL"
+              },
+              {
+                "code": "REMOTE_FAV_AMFM",
+                "reason": "NOT_VEH_CPBL"
+              },
+              {
+                "code": "SUPERCRUISE",
+                "reason": "NOT_VEH_CPBL"
+              },
+              {
+                "code": "VEHICLE_PROGRAMS",
+                "reason": "UNDETERMINED_SERVICE"
+              },
+              {
+                "code": "VEHICLE",
+                "reason": "UNDETERMINED_SERVICE"
+              },
+              {
+                "code": "VEHICLE_UPDATE",
+                "reason": "UNDETERMINED_SERVICE"
+              },
+              {
+                "code": "SC_ALC",
+                "reason": "NOT_VEH_CPBL"
+              },
+              {
+                "code": "REMOTE_FAV_SXM",
+                "reason": "NOT_VEH_CPBL"
+              },
+              {
+                "code": "TELEMETRY_OPTIN",
+                "reason": "UNDETERMINED_SERVICE"
+              },
+              {
+                "code": "REMOTE_APPS_INFO",
+                "reason": "NOT_VEH_CPBL"
+              },
+              {
+                "code": "TELEMETRY_HISTORY",
+                "reason": "UNDETERMINED_SERVICE"
+              },
+              {
+                "code": "CMD_WIFI_DATA_ENABLE",
+                "reason": "UNDETERMINED_SERVICE"
+              },
+              {
+                "code": "ONDEMAND_REMOTE_STREAMING",
+                "reason": "NOT_VEH_CPBL"
+              }
+            ]
+          }
+        ]
+      },
+      "vehicleCommands": [
+        {
+          "name": "lockDoor",
+          "url": "/veh/cmd/v3/lock/[REDACTED VIN]",
+          "serviceId": "CMD_LOCK",
+          "isEligible": true,
+          "inEligibleReason": null,
+          "metaData": null
+        },
+        {
+          "name": "unlockDoor",
+          "url": "/veh/cmd/v3/unlock/[REDACTED VIN]",
+          "serviceId": "CMD_UNLOCK",
+          "isEligible": true,
+          "inEligibleReason": null,
+          "metaData": null
+        },
+        {
+          "name": "start",
+          "url": "/veh/cmd/v3/start/[REDACTED VIN]",
+          "serviceId": "CMD_START",
+          "isEligible": true,
+          "inEligibleReason": null,
+          "metaData": null
+        },
+        {
+          "name": "cancelStart",
+          "url": "/veh/cmd/v3/cancelStart/[REDACTED VIN]",
+          "serviceId": "CMD_CANCEL_START",
+          "isEligible": true,
+          "inEligibleReason": null,
+          "metaData": null
+        },
+        {
+          "name": "remotePreConditionEvStart",
+          "url": "/veh/cmd/v3/start/[REDACTED VIN]",
+          "serviceId": "EV_PRECONDITION_CABIN_TEMP",
+          "isEligible": true,
+          "inEligibleReason": null,
+          "metaData": null
+        },
+        {
+          "name": "remotePreConditionEv",
+          "url": "/veh/cmd/v3/cancelStart/[REDACTED VIN]",
+          "serviceId": "EV_PRECONDITION_CABIN_TEMP",
+          "isEligible": true,
+          "inEligibleReason": null,
+          "metaData": null
+        },
+        {
+          "name": "alert",
+          "url": "/veh/cmd/v3/alert/[REDACTED VIN]",
+          "serviceId": "CMD_ALERT",
+          "isEligible": true,
+          "inEligibleReason": null,
+          "metaData": null
+        },
+        {
+          "name": "cancelAlert",
+          "url": "/veh/cmd/v3/cancelAlert/[REDACTED VIN]",
+          "serviceId": "CMD_ALERT_CANCEL",
+          "isEligible": true,
+          "inEligibleReason": null,
+          "metaData": null
+        },
+        {
+          "name": "lockTrunk",
+          "url": "/veh/cmd/v3/lockTrunk/[REDACTED VIN]",
+          "serviceId": "CMD_TRUNK_LOCK",
+          "isEligible": true,
+          "inEligibleReason": null,
+          "metaData": null
+        },
+        {
+          "name": "unlockTrunk",
+          "url": "/veh/cmd/v3/unlockTrunk/[REDACTED VIN]",
+          "serviceId": "CMD_TRUNK_UNLOCK",
+          "isEligible": true,
+          "inEligibleReason": null,
+          "metaData": null
+        },
+        {
+          "name": "openTrunk",
+          "url": "/veh/cmd/v3/openTrunk/[REDACTED VIN]",
+          "serviceId": "CMD_TRUNK_OPEN",
+          "isEligible": false,
+          "inEligibleReason": "UNDETERMINED_SERVICE",
+          "metaData": null
+        },
+        {
+          "name": "eTrunk",
+          "url": "/veh/cmd/v3/unlockHoodE/[REDACTED VIN]",
+          "serviceId": "CMD_HOODE_UNLOCK",
+          "isEligible": false,
+          "inEligibleReason": "NOT_VEH_CPBL",
+          "metaData": null
+        },
+        {
+          "name": "diag",
+          "url": "/api/v1/account/vehicles/[REDACTED VIN]/commands/diagnostics",
+          "serviceId": "CMD_DATA",
+          "isEligible": true,
+          "inEligibleReason": null,
+          "metaData": {
+            "supportedDiagnostics": [
+              "TIRE PRESSURE",
+              "HOTSPOT CONFIG",
+              "ODOMETER",
+              "HOTSPOT STATUS",
+              "VEHICLE RANGE"
+            ]
+          }
+        },
+        {
+          "name": "proactiveAlert",
+          "url": "",
+          "serviceId": "PROACTIVE_ALERT",
+          "isEligible": true,
+          "inEligibleReason": null,
+          "metaData": null
+        },
+        {
+          "name": "evPreferredChargeTimesUpdate",
+          "url": "/veh/ev/v3/setPreferredChargeTimes/[REDACTED VIN]",
+          "serviceId": "CMD_PREFERRED_CHARGE_TIMES",
+          "isEligible": true,
+          "inEligibleReason": null,
+          "metaData": null
+        },
+        {
+          "name": "evTargetChargeLevelUpdate",
+          "url": "/veh/ev/v3/setTargetChargeLevel/[REDACTED VIN]",
+          "serviceId": "CMD_TARGET_CHARGE_LEVEL",
+          "isEligible": true,
+          "inEligibleReason": null,
+          "metaData": null
+        },
+        {
+          "name": "evChargeModeRead",
+          "url": "/veh/ev/v3/getChargingProfile/[REDACTED VIN]",
+          "serviceId": "CMD_CHARGE_MODE",
+          "isEligible": true,
+          "inEligibleReason": null,
+          "metaData": null
+        },
+        {
+          "name": "evChargeModeUpdate",
+          "url": "/veh/ev/v3/setChargingProfile/[REDACTED VIN]",
+          "serviceId": "CMD_CHARGE_MODE_UPDATE",
+          "isEligible": true,
+          "inEligibleReason": null,
+          "metaData": null
+        },
+        {
+          "name": "evChargePowerRead",
+          "url": "/veh/ev/v3/getChargerPowerLevel/[REDACTED VIN]",
+          "serviceId": "CMD_CHARGE_POWER",
+          "isEligible": true,
+          "inEligibleReason": null,
+          "metaData": null
+        },
+        {
+          "name": "evChargePowerUpdate",
+          "url": "/veh/ev/v3/setChargerPowerLevel/[REDACTED VIN]",
+          "serviceId": "CMD_CHARGE_POWER_UPDATE",
+          "isEligible": true,
+          "inEligibleReason": null,
+          "metaData": null
+        },
+        {
+          "name": "evChargePriorityRead",
+          "url": "/veh/ev/v3/getPriorityCharging/[REDACTED VIN]",
+          "serviceId": "CMD_CHARGE_PRIORITY",
+          "isEligible": false,
+          "inEligibleReason": "NOT_VEH_CPBL",
+          "metaData": null
+        },
+        {
+          "name": "evChargePriorityUpdate",
+          "url": "/veh/ev/v3/setPriorityCharging/[REDACTED VIN]",
+          "serviceId": "CMD_CHARGE_PRIORITY_UPDATE",
+          "isEligible": false,
+          "inEligibleReason": "NOT_VEH_CPBL",
+          "metaData": null
+        },
+        {
+          "name": "evFastChargeStop",
+          "url": "/veh/ev/v3/stopFastCharge/[REDACTED VIN]",
+          "serviceId": "CMD_CHARGE_STOP",
+          "isEligible": true,
+          "inEligibleReason": null,
+          "metaData": null
+        },
+        {
+          "name": "evChargeOverride",
+          "url": "/veh/ev/v3/chargeOverride/[REDACTED VIN]",
+          "serviceId": "CMD_CHARGE_OVERRIDE",
+          "isEligible": true,
+          "inEligibleReason": null,
+          "metaData": null
+        },
+        {
+          "name": "evFastChargePrep",
+          "url": "/veh/ev/v3/prepFastCharge/[REDACTED VIN]",
+          "serviceId": "CMD_FASTCHARGE_PREP",
+          "isEligible": true,
+          "inEligibleReason": null,
+          "metaData": null
+        },
+        {
+          "name": "evFastChargePrepCancel",
+          "url": "/veh/ev/v3/cancelPrepFastCharge/[REDACTED VIN]",
+          "serviceId": "CMD_FASTCHARGE_PREP_CANCEL",
+          "isEligible": true,
+          "inEligibleReason": null,
+          "metaData": null
+        },
+        {
+          "name": "evHomeLocationUpdate",
+          "url": "/veh/ev/v3/setHomeLocation/[REDACTED VIN]",
+          "serviceId": "CMD_HOME_LOCATION_UPDATE",
+          "isEligible": true,
+          "inEligibleReason": null,
+          "metaData": null
+        },
+        {
+          "name": "evHomeLocationRead",
+          "url": "/veh/ev/v3/getHomeLocationStatus/[REDACTED VIN]",
+          "serviceId": "CMD_HOME_LOCATION",
+          "isEligible": true,
+          "inEligibleReason": null,
+          "metaData": null
+        },
+        {
+          "name": "evHomeLocationRemove",
+          "url": "/veh/ev/v3/removeHomeLocation/[REDACTED VIN]",
+          "serviceId": "CMD_HOME_LOCATION_UPDATE",
+          "isEligible": true,
+          "inEligibleReason": null,
+          "metaData": null
+        },
+        {
+          "name": "evChargeScheduleRead",
+          "url": "/veh/ev/v3/getCommuteSchedule/[REDACTED VIN]",
+          "serviceId": "CMD_RATESCHEDULE",
+          "isEligible": false,
+          "inEligibleReason": "UNDETERMINED_SERVICE",
+          "metaData": null
+        },
+        {
+          "name": "evChargeScheduleUpdate",
+          "url": "/veh/ev/v3/setCommuteSchedule/[REDACTED VIN]",
+          "serviceId": "CMD_RATESCHEDULE_UPDATE",
+          "isEligible": true,
+          "inEligibleReason": null,
+          "metaData": null
+        },
+        {
+          "name": "evDischargeModeRead",
+          "url": "/veh/ev/v3/getDischargingProfile/[REDACTED VIN]",
+          "serviceId": "CMD_ENERGY_DISCHARGE",
+          "isEligible": true,
+          "inEligibleReason": null,
+          "metaData": null
+        },
+        {
+          "name": "evDischargeModeUpdate",
+          "url": "/veh/ev/v3/setDischargingProfile/[REDACTED VIN]",
+          "serviceId": "CMD_ENERGY_DISCHARGE",
+          "isEligible": true,
+          "inEligibleReason": null,
+          "metaData": null
+        },
+        {
+          "name": "enableRib",
+          "url": "/theft/rib/v1/vehicles/[REDACTED VIN]/ignition",
+          "serviceId": "CMD_IGNITION_ENABLE",
+          "isEligible": false,
+          "inEligibleReason": "NOT_VEH_CPBL",
+          "metaData": null
+        },
+        {
+          "name": "disableRib",
+          "url": "/theft/rib/v1/vehicles/[REDACTED VIN]/ignition",
+          "serviceId": "CMD_IGNITION_DISABLE",
+          "isEligible": false,
+          "inEligibleReason": "NOT_VEH_CPBL",
+          "metaData": null
+        },
+        {
+          "name": "ribStatus",
+          "url": "/theft/rib/v1/vehicles/[REDACTED VIN]/ignition/status",
+          "serviceId": "CMD_IGNITION_STATUS",
+          "isEligible": false,
+          "inEligibleReason": "NOT_VEH_CPBL",
+          "metaData": null
+        },
+        {
+          "name": "sendNavDestination",
+          "url": "/veh/nav/v3/destination/sendNav/[REDACTED VIN]",
+          "serviceId": "NAVIGATION_SEND",
+          "isEligible": true,
+          "inEligibleReason": null,
+          "metaData": null
+        },
+        {
+          "name": "sendTBTRoute",
+          "url": "/veh/nav/v3/tbt/sendRoute/[REDACTED VIN]",
+          "serviceId": "TBT_SEND",
+          "isEligible": true,
+          "inEligibleReason": null,
+          "metaData": null
+        },
+        {
+          "name": "connect",
+          "url": "/veh/connection/v3/initiate/[REDACTED VIN]",
+          "serviceId": "CMD_CONNECT",
+          "isEligible": true,
+          "inEligibleReason": null,
+          "metaData": null
+        },
+        {
+          "name": "getHotspotStatus",
+          "url": "/veh/cmd/v3/wifi/hotspot/getStatus/[REDACTED VIN]",
+          "serviceId": "CMD_HOTSPOT_STATUS",
+          "isEligible": true,
+          "inEligibleReason": null,
+          "metaData": null
+        },
+        {
+          "name": "setHotspotInfo",
+          "url": "/veh/cmd/v3/wifi/hotspot/setInfo/[REDACTED VIN]",
+          "serviceId": "CMD_HOTSPOT_INFO_UPDATE",
+          "isEligible": true,
+          "inEligibleReason": null,
+          "metaData": null
+        },
+        {
+          "name": "disableHotspot",
+          "url": "/veh/cmd/v3/wifi/hotspot/disable/[REDACTED VIN]",
+          "serviceId": "CMD_HOTSPOT_DISABLE",
+          "isEligible": true,
+          "inEligibleReason": null,
+          "metaData": null
+        },
+        {
+          "name": "enableHotspot",
+          "url": "/veh/cmd/v3/wifi/hotspot/enable/[REDACTED VIN]",
+          "serviceId": "CMD_HOTSPOT_ENABLE",
+          "isEligible": true,
+          "inEligibleReason": null,
+          "metaData": null
+        },
+        {
+          "name": "getHotspotInfo",
+          "url": "/veh/cmd/v3/wifi/hotspot/getInfo/[REDACTED VIN]",
+          "serviceId": "CMD_HOTSPOT_INFO",
+          "isEligible": true,
+          "inEligibleReason": null,
+          "metaData": null
+        },
+        {
+          "name": "getVehicleLocation",
+          "url": "/veh/cmd/v3/location/[REDACTED VIN]",
+          "serviceId": "CMD_LOCATION",
+          "isEligible": true,
+          "inEligibleReason": null,
+          "metaData": null
+        },
+        {
+          "name": "startTrailerLightSeq",
+          "url": "/api/v1/account/vehicles/[REDACTED VIN]/commands/startTrailerLightSeq",
+          "serviceId": "CMD_TRAILER_LIGHT_START",
+          "isEligible": false,
+          "inEligibleReason": "NOT_VEH_CPBL",
+          "metaData": null
+        },
+        {
+          "name": "stopTrailerLightSeq",
+          "url": "/api/v1/account/vehicles/[REDACTED VIN]/commands/stopTrailerLightSeq",
+          "serviceId": "CMD_TRAILER_LIGHT_STOP",
+          "isEligible": false,
+          "inEligibleReason": "NOT_VEH_CPBL",
+          "metaData": null
+        },
+        {
+          "name": "rib",
+          "url": "/veh/cmd/v3/enableIgnition/[REDACTED VIN]",
+          "serviceId": "CMD_IGNITION_ENABLE",
+          "isEligible": false,
+          "inEligibleReason": "NOT_VEH_CPBL",
+          "metaData": null
+        },
+        {
+          "name": "unrib",
+          "url": "/veh/cmd/v3/disableIgnition/[REDACTED VIN]",
+          "serviceId": "CMD_IGNITION_DISABLE",
+          "isEligible": false,
+          "inEligibleReason": "NOT_VEH_CPBL",
+          "metaData": null
+        },
+        {
+          "name": "openWindows",
+          "url": "/api/v1/account/vehicles/[REDACTED VIN]/commands/openWindows",
+          "serviceId": "CMD_WINDOW_OPEN",
+          "isEligible": false,
+          "inEligibleReason": "UNDETERMINED_SERVICE",
+          "metaData": null
+        },
+        {
+          "name": "closeWindows",
+          "url": "/api/v1/account/vehicles/[REDACTED VIN]/commands/closeWindows",
+          "serviceId": "CMD_WINDOW_CLOSE",
+          "isEligible": false,
+          "inEligibleReason": "UNDETERMINED_SERVICE",
+          "metaData": null
+        }
+      ],
+      "color": {
+        "exteriorColor": "Riptide Blue Metallic",
+        "interiorTrimColor": "Black, Evotex seat trim"
+      },
+      "vehicleMetaData": {
+        "propulsionAndFuelType": {
+          "fuelCategory": "ELECTRIC",
+          "propulsionType": "EV"
+        },
+        "unit": {
+          "unitGen": 134,
+          "unitGenDescription": "Gen 12 Global B TCP 5G"
+        },
+        "configuredCountry": "US",
+        "bodyStyle": "UTILITY",
+        "features": {
+          "epower": {
+            "supported": false
+          },
+          "activeSafetyTask": {
+            "supported": true
+          },
+          "adasisNav": {
+            "supported": false
+          },
+          "adasVdu": {
+            "supported": true
+          },
+          "airDistributionStyle": null,
+          "arrivalMode": {
+            "supported": false
+          },
+          "alert": {
+            "supported": true
+          },
+          "androidAuto": {
+            "supported": false
+          },
+          "antilockBrakingSystem": {
+            "supported": false
+          },
+          "appshop": {
+            "supported": true
+          },
+          "automaticCrashResponse": {
+            "supported": true
+          },
+          "availableCategory": null,
+          "baseConnectivity": {
+            "supported": false
+          },
+          "beRightBackMode": {
+            "supported": true
+          },
+          "bluetooth": {
+            "supported": true
+          },
+          "browser": {
+            "supported": false
+          },
+          "busWakeup": null,
+          "carPlay": {
+            "supported": false
+          },
+          "cccdk": {
+            "supported": false
+          },
+          "cccdkOptional": null,
+          "cgmCmac": {
+            "supported": false
+          },
+          "cgmDR": {
+            "supported": true
+          },
+          "cgmPolicyShiftForDoorUnlock": {
+            "supported": false
+          },
+          "cgmPolicyShiftForEV": {
+            "supported": true
+          },
+          "cgmPolicyShiftForRemoteStartStop": {
+            "supported": false
+          },
+          "cgmPolicyShiftForStolenVehicle": {
+            "supported": true
+          },
+          "cgmPolicyShiftForSunroof": {
+            "supported": false
+          },
+          "cgmPolicyShiftForTrunk": {
+            "supported": false
+          },
+          "cgmPolicyShiftForVehicleAlert": {
+            "supported": false
+          },
+          "cgmPolicyShiftForWindow": {
+            "supported": false
+          },
+          "cgmUnlock": {
+            "type": "GB"
+          },
+          "chargeLowNotif": {
+            "supported": true
+          },
+          "chargerPowerLevel": {
+            "supported": true
+          },
+          "ciradTask": {
+            "supported": false
+          },
+          "climateControlMode": {
+            "value": "AC_NORM"
+          },
+          "consumerESim": {
+            "supported": false
+          },
+          "contentTheft": {
+            "supported": true
+          },
+          "crabWalkMode": {
+            "supported": false
+          },
+          "cruiseAccessPointName": {
+            "supported": false
+          },
+          "cruiseAV": {
+            "supported": false
+          },
+          "cruiseThermalMonitoring": {
+            "supported": false
+          },
+          "dataElementBatchSize": {
+            "value": 2
+          },
+          "dataElementTimeoutExtension": {
+            "value": 15
+          },
+          "defaultChargeMode": {
+            "supported": true
+          },
+          "departScheduleTemp": {
+            "supported": true
+          },
+          "destinationDownload": {
+            "supported": true
+          },
+          "destinationNameTag": {
+            "supported": true
+          },
+          "dhm": {
+            "supported": true
+          },
+          "directWifi": {
+            "supported": false
+          },
+          "directWifiPrefix": {
+            "supported": false
+          },
+          "doorsStatus": {
+            "supported": true
+          },
+          "driveStyle": null,
+          "drvSafetyData": {
+            "supported": true
+          },
+          "emerInvehicleDisplay": {
+            "supported": true
+          },
+          "engyConsumedData": {
+            "supported": false
+          },
+          "energyDischarge": {
+            "supported": true
+          },
+          "engineeringTask": {
+            "supported": true
+          },
+          "eolCategory": null,
+          "ePower": {
+            "supported": false
+          },
+          "estimatedCabinTemp": {
+            "supported": true
+          },
+          "evChargeAlerts": {
+            "supported": true
+          },
+          "evChargeMode": [
+            "CHARGE_LATER",
+            "CHARGE_NOW"
+          ],
+          "evData": {
+            "supported": true
+          },
+          "extIntCameraSupported": {
+            "supported": false
+          },
+          "extCameraSupported": null,
+          "extendModePlus": {
+            "supported": true
+          },
+          "fleetDriverSetting": {
+            "supported": false
+          },
+          "fobEnableDisable": {
+            "supported": false
+          },
+          "fpi": null,
+          "fsi": {
+            "supported": false
+          },
+          "gaming": {
+            "supported": true
+          },
+          "heatedSteeringWheel": null,
+          "hillTopReserve": {
+            "supported": false
+          },
+          "holca": {
+            "supported": false,
+            "category": null
+          },
+          "homeChargingScheduler": {
+            "supported": true
+          },
+          "hoodE": {
+            "supported": false
+          },
+          "hvacFrontSeat": null,
+          "hvacRearRowSeat": null,
+          "hvacTempZone": null,
+          "hvacThirdRowSeat": null,
+          "ihu": {
+            "supported": false
+          },
+          "inhibitIgnition": {
+            "supported": true
+          },
+          "infinityTune": {
+            "supported": false
+          },
+          "infotainment": {
+            "supported": true
+          },
+          "infotainmentReset": {
+            "supported": true
+          },
+          "isGmpi": {
+            "supported": false
+          },
+          "localesSupported": [
+            {
+              "localeCode": "lv-LV",
+              "voicePromptLanguageValue": 38
+            },
+            {
+              "localeCode": "nl-NL",
+              "voicePromptLanguageValue": 6
+            },
+            {
+              "localeCode": "no-NO",
+              "voicePromptLanguageValue": 8
+            },
+            {
+              "localeCode": "pl-PL",
+              "voicePromptLanguageValue": 15
+            },
+            {
+              "localeCode": "pt-BR",
+              "voicePromptLanguageValue": 24
+            },
+            {
+              "localeCode": "pt-PT",
+              "voicePromptLanguageValue": 7
+            },
+            {
+              "localeCode": "ro-RO",
+              "voicePromptLanguageValue": 27
+            },
+            {
+              "localeCode": "ru-RU",
+              "voicePromptLanguageValue": 23
+            },
+            {
+              "localeCode": "sk-SK",
+              "voicePromptLanguageValue": 22
+            },
+            {
+              "localeCode": "sl-SI",
+              "voicePromptLanguageValue": 28
+            },
+            {
+              "localeCode": "sr-RS",
+              "voicePromptLanguageValue": 35
+            },
+            {
+              "localeCode": "sv-SE",
+              "voicePromptLanguageValue": 3
+            },
+            {
+              "localeCode": "tr-TR",
+              "voicePromptLanguageValue": 16
+            },
+            {
+              "localeCode": "uk-UA",
+              "voicePromptLanguageValue": 30
+            },
+            {
+              "localeCode": "en-US",
+              "voicePromptLanguageValue": 0
+            },
+            {
+              "localeCode": "es-MX",
+              "voicePromptLanguageValue": 32
+            },
+            {
+              "localeCode": "fr-CA",
+              "voicePromptLanguageValue": 31
+            },
+            {
+              "localeCode": "it-IT",
+              "voicePromptLanguageValue": 2
+            },
+            {
+              "localeCode": "lt-LT",
+              "voicePromptLanguageValue": 36
+            }
+          ],
+          "locationHistory": {
+            "supported": true
+          },
+          "locationMasking": {
+            "supported": true
+          },
+          "lockUnlock": {
+            "supported": true
+          },
+          "lowFuelPercent": {
+            "value": 11
+          },
+          "maxDigitalKeys": null,
+          "mdn": {
+            "supported": true
+          },
+          "mediaUsage": {
+            "supported": true
+          },
+          "mipAuthentication": {
+            "code": "ALL"
+          },
+          "mobileActivation": null,
+          "modemConfiguration": {
+            "supported": true
+          },
+          "mqtt": {
+            "supported": false
+          },
+          "mutualAuth": {
+            "supported": true
+          },
+          "navigationApp": null,
+          "occupantLeftBehind": {
+            "supported": false
+          },
+          "oddFormat": {
+            "value": "UTF-8"
+          },
+          "offboardVoiceRec": {
+            "supported": false
+          },
+          "offRoad": {
+            "supported": false
+          },
+          "otaCapable": {
+            "supported": true
+          },
+          "onstarEquipped": {
+            "supported": true
+          },
+          "otaPushChina": {
+            "supported": false
+          },
+          "packetData": {
+            "supported": true
+          },
+          "pans": null,
+          "personalization": {
+            "supported": true
+          },
+          "personalCalling": {
+            "supported": false
+          },
+          "pluginHybridVehicle": {
+            "supported": false
+          },
+          "pnc": {
+            "supported": false,
+            "protocols": null,
+            "pcId": null
+          },
+          "poiDownload": {
+            "supported": true
+          },
+          "preConditionTemp": {
+            "supported": true
+          },
+          "preferredChargeTimes": {
+            "supported": true
+          },
+          "prepFastCharge": {
+            "supported": true
+          },
+          "preSalesTask": {
+            "supported": true
+          },
+          "preSalesBatteryTask": {
+            "supported": true
+          },
+          "priorityCharging": {
+            "supported": false
+          },
+          "proactiveAlert": {
+            "supported": true
+          },
+          "prognosticAlert": {
+            "supported": true
+          },
+          "prognosticReadWrite": {
+            "supported": true
+          },
+          "radioNotify": {
+            "supported": false
+          },
+          "radioTcps": {
+            "supported": true
+          },
+          "radioType": {
+            "value": "CSM_VCU-MED"
+          },
+          "rearPositionStatus": null,
+          "rearLockStatus": null,
+          "remoteDiagnostics": {
+            "supported": true
+          },
+          "remoteHvac": {
+            "supported": false
+          },
+          "remoteSlowdown": {
+            "supported": true
+          },
+          "remoteStart": {
+            "supported": true,
+            "remoteStartTimer": 60,
+            "extensionType": "NOT_SUPPORTED",
+            "totalRunTime": 60,
+            "lockAfterRemoteStart": false
+          },
+          "remoteStartStatus": {
+            "supported": true
+          },
+          "remoteThemeSupported": {
+            "supported": false
+          },
+          "resetECU": {
+            "supported": false
+          },
+          "roadData": {
+            "supported": false
+          },
+          "rsi": {
+            "supported": false
+          },
+          "rssCheckBitRequired": {
+            "supported": true
+          },
+          "shrAlert": {
+            "supported": false
+          },
+          "shrApproachDetection": {
+            "supported": false
+          },
+          "shrFobEnableDisable": {
+            "supported": false
+          },
+          "shrFrontClosureLockUnlock": {
+            "supported": false
+          },
+          "shrFrontClosureRelease": {
+            "supported": false
+          },
+          "shrLockUnlock": {
+            "supported": false
+          },
+          "shrPassiveEntry": {
+            "supported": false
+          },
+          "shrPassiveFrontClosureAccess": {
+            "supported": false
+          },
+          "shrPassiveRearClosureAccess": {
+            "supported": false
+          },
+          "shrPassiveStart": {
+            "supported": false
+          },
+          "shrPowerFrontClosure": {
+            "supported": false
+          },
+          "shrPowerRearClosure": {
+            "supported": false
+          },
+          "shrPreconditionCabinTemp": {
+            "supported": false
+          },
+          "shrRearClosureLockUnlock": {
+            "supported": false
+          },
+          "shrRearClosureRelease": {
+            "supported": false
+          },
+          "shrRemoteStart": {
+            "supported": false
+          },
+          "shrVehicleLocator": {
+            "supported": false
+          },
+          "shrWindowsControl": {
+            "supported": false
+          },
+          "sideWinder": {
+            "supported": false
+          },
+          "silenceOnstarChimes": {
+            "supported": false
+          },
+          "simultaneousVoiceAndData": {
+            "supported": true
+          },
+          "slowConnectionEstablishment": {
+            "supported": true
+          },
+          "smartDriver": {
+            "supported": true
+          },
+          "smrtSysLearn": {
+            "supported": false
+          },
+          "sms": {
+            "supported": true
+          },
+          "stabilityControl": {
+            "supported": false
+          },
+          "stolenVehicle": {
+            "stolenVehicle": false,
+            "effectiveDate": null,
+            "additionalWaitTimeInSec": null,
+            "reasonText": null
+          },
+          "stopFastCharge": {
+            "supported": true
+          },
+          "sunroofControl": {
+            "supported": false
+          },
+          "sunroofPositionStatus": {
+            "supported": true
+          },
+          "supercruise": {
+            "supported": false
+          },
+          "superCruiseAlc": {
+            "supported": false
+          },
+          "superCruiseTrailering": {
+            "supported": false
+          },
+          "supercruiseDisabledByIS": {
+            "disabledByIS": false,
+            "effectiveDate": null,
+            "reasonText": null
+          },
+          "superCruiseModelYear": null,
+          "supervisedRemoteParkingSupported": null,
+          "suspendToRam": {
+            "supported": true,
+            "enabled": true
+          },
+          "switchToVoice": {
+            "supported": true
+          },
+          "targetChargeLevel": {
+            "supported": true
+          },
+          "tcpDR": {
+            "supported": true
+          },
+          "teenDriver": {
+            "supported": false
+          },
+          "tempChargeMode": {
+            "supported": true
+          },
+          "themeSupported": {
+            "supported": true
+          },
+          "tirePressureMonitoring": {
+            "supported": false
+          },
+          "trafficProbe": {
+            "supported": true
+          },
+          "trailering": null,
+          "trunkControl": {
+            "supported": true
+          },
+          "trunkLockUnlock": {
+            "supported": true
+          },
+          "trunkOpen": {
+            "supported": true
+          },
+          "trustedDevice": {
+            "supported": true
+          },
+          "turnByTurn": {
+            "supported": true
+          },
+          "turnByTurnCancel": {
+            "supported": true
+          },
+          "ucSupported": {
+            "supported": false
+          },
+          "l2PlusAdasSupported": {
+            "supported": false
+          },
+          "ultifi": {
+            "supported": true
+          },
+          "unauthorizedEntryDetection": {
+            "supported": true
+          },
+          "unitGenAttribute": {
+            "value": "GB"
+          },
+          "urlSolicitation": {
+            "supported": true
+          },
+          "usageBasedInsurance": {
+            "supported": true
+          },
+          "vdmChina": null,
+          "vehicleDataHub": {
+            "supported": true
+          },
+          "vehicleDataUpload": {
+            "supported": true
+          },
+          "vehicleInteractionProtocol": {
+            "supported": true
+          },
+          "vehicleTaskManagement": {
+            "supported": true
+          },
+          "vehicleTheft": {
+            "supported": true
+          },
+          "vehicleTracking": {
+            "supported": true
+          },
+          "velocityMode": {
+            "supported": false
+          },
+          "virtualAdvisor": {
+            "supported": false
+          },
+          "weatherData": {
+            "supported": false
+          },
+          "wifiChipShortage": null,
+          "wifi": {
+            "supported": true,
+            "wifiSsidPwdDefault": "Y",
+            "wifiSSIDCharacterSet": "^[a-zA-Z0-9]+$",
+            "wifiPasswordCharacterSet": "^[a-zA-Z0-9]+$"
+          },
+          "wifiPasswordMaxLength": {
+            "value": 24
+          },
+          "wifiPasswordMinLength": {
+            "value": 12
+          },
+          "wifiSsidMaxLength": {
+            "value": 24
+          },
+          "wifiSsidMinLength": {
+            "value": 6
+          },
+          "windowsControl": {
+            "supported": false
+          },
+          "windowPositionStatus": {
+            "supported": false
+          },
+          "mobileActivationProjection": {
+            "supported": false
+          },
+          "xm360L": {
+            "supported": true
+          },
+          "xmRadio": {
+            "supported": true
+          }
+        },
+        "extColor": "Blue"
+      },
+      "onstarInfo": {
+        "onStarStatus": "ACTIVE",
+        "ownerAccount": "[REDACTED]",
+        "isShared": false,
+        "associatedDate": "2024-04-27"
+      }
+    }
+  },
+  "extensions": null,
+  "dataPresent": true
+}

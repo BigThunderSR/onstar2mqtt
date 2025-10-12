@@ -1,0 +1,50 @@
+{
+  "status": "success",
+  "response": {
+    "data": {
+      "success": true,
+      "results": [
+        {
+          "vehicleId": "[VEHICLE GUID]",
+          "origin": "task147",
+          "utc": 1760206449001,
+          "ts": "2025-10-11T13:14:09.001-05:00",
+          "loc": "35.14096,-89.90398",
+          "lat": 35.14096,
+          "lng": -89.90398,
+          "gpsutc": 1760206449,
+          "dir": 88,
+          "dop": 7,
+          "gpsspd": 0,
+          "cplug": "unplugged",
+          "cstate": "UNCONNECTED",
+          "ign": "off",
+          "lifekwh": 1951.9,
+          "meterkwh": 2620.5,
+          "odo": 8783.15625,
+          "ravg": 317.98,
+          "soc": 70,
+          "kwh": 59.61,
+          "temp": 23,
+          "cmode": "immediate",
+          "tcl": 80,
+          "tclRavg": 363.984,
+          "clocSet": true,
+          "clocAt": false,
+          "lifecons": 22.73,
+          "tripodo": 43.4,
+          "tripcons": 18.87,
+          "disEnabled": false,
+          "disMinSoc": 20,
+          "extraMetrics": {
+            "cpwrEst": null,
+            "bprecond": "INACTIVE",
+            "cmodeRate": "invalid",
+            "cpriority": null,
+            "cschedule": null
+          }
+        }
+      ]
+    }
+  }
+}

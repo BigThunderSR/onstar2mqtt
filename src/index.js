@@ -2,6 +2,7 @@ const OnStar = require('onstarjs2').default;
 const mqtt = require('async-mqtt');
 const uuidv4 = require('uuid').v4;
 const _ = require('lodash');
+const axios = require('axios');
 const Vehicle = require('./vehicle');
 const { Diagnostic, AdvancedDiagnostic } = require('./diagnostic');
 const MQTT = require('./mqtt');
@@ -11,6 +12,7 @@ const fs = require('fs');
 //const CircularJSON = require('circular-json');
 let buttonConfigsPublished = '';
 let refreshIntervalConfigPublished = '';
+let cachedVehicleImageBase64 = null; // Cache the downloaded image
 
 const onstarConfig = {
     deviceId: process.env.ONSTAR_DEVICEID || uuidv4(),
@@ -697,6 +699,85 @@ logger.info('!-- Starting OnStar2MQTT Polling --!');
                 }
             }
             publishButtonConfigs();
+
+                        // Publish vehicle image entity
+            async function downloadAndCacheImage(imageUrl) {
+                try {
+                    logger.info('Downloading vehicle image for caching...');
+                    const response = await axios.get(imageUrl, {
+                        responseType: 'arraybuffer',
+                        timeout: 30000, // 30 second timeout
+                        headers: {
+                            'User-Agent': 'OnStar2MQTT/2.1.1'
+                        }
+                    });
+                    
+                    // Convert to base64
+                    const base64Image = Buffer.from(response.data, 'binary').toString('base64');
+                    const contentType = response.headers['content-type'] || 'image/jpeg';
+                    
+                    // Return data URI format
+                    cachedVehicleImageBase64 = `data:${contentType};base64,${base64Image}`;
+                    logger.info(`Vehicle image downloaded and cached (${Math.round(base64Image.length / 1024)}KB)`);
+                    
+                    return cachedVehicleImageBase64;
+                } catch (e) {
+                    logger.error('Failed to download vehicle image:', e.message);
+                    return null;
+                }
+            }
+
+            async function publishVehicleImage() {
+                const imageConfig = mqttHA.getVehicleImageConfig();
+                const imageStateTopic = `${mqttHA.prefix}/image/${mqttHA.instance}/vehicle_image/state`;
+                
+                try {
+                    logger.info('Publishing vehicle image entity...');
+                    const vehiclesRes = await commands.getAccountVehicles();
+                    const vehiclesData = _.get(vehiclesRes, 'data.vehicles') || _.get(vehiclesRes, 'response.data.vehicles');
+                    const currentVehicleData = _.find(vehiclesData, vehicle => 
+                        vehicle.vin.toLowerCase() === onstarConfig.vin.toLowerCase()
+                    );
+                    
+                    if (currentVehicleData && currentVehicleData.imageUrl) {
+                        const imageUrl = mqttHA.getVehicleImageStatePayload(currentVehicleData);
+                        
+                        // Download and cache the image (or use cached version)
+                        let imageData = cachedVehicleImageBase64;
+                        if (!imageData) {
+                            imageData = await downloadAndCacheImage(imageUrl);
+                        }
+                        
+                        // Always publish config to ensure entity exists
+                        await client.publish(imageConfig.topic, JSON.stringify(imageConfig.payload), { retain: true });
+                        
+                        if (imageData) {
+                            // Publish base64 image data for HA to cache locally
+                            await client.publish(imageStateTopic, imageData, { retain: true });
+                            logger.info('Vehicle image published with cached base64 data');
+                        } else {
+                            // Fallback to URL if download failed
+                            await client.publish(imageStateTopic, imageUrl, { retain: true });
+                            logger.warn('Vehicle image published with URL (download failed, using fallback)');
+                        }
+                    } else {
+                        // Publish config anyway so entity exists but mark as unavailable
+                        logger.warn('No vehicle image URL found - entity will be created but marked unavailable');
+                        await client.publish(imageConfig.topic, JSON.stringify(imageConfig.payload), { retain: true });
+                        await client.publish(imageStateTopic, '', { retain: true });
+                    }
+                } catch (e) {
+                    // On error, still create the entity but with empty state
+                    logger.error('Error publishing vehicle image, entity will be created but unavailable:', e);
+                    try {
+                        await client.publish(imageConfig.topic, JSON.stringify(imageConfig.payload), { retain: true });
+                        await client.publish(imageStateTopic, '', { retain: true });
+                    } catch (publishError) {
+                        logger.error('Failed to publish vehicle image entity config:', publishError);
+                    }
+                }
+            }
+            await publishVehicleImage();
 
             const statsRes = await commands.diagnostics({ diagnosticItem: v.getSupported() });
             logger.info('Diagnostic request status', { status: _.get(statsRes, 'status') });

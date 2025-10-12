@@ -1065,6 +1065,45 @@ class MQTT {
     }
 
     /**
+     * Create config for vehicle image entity
+     */
+    getVehicleImageConfig() {
+        const topic = `${this.prefix}/image/${this.instance}/vehicle_image/config`;
+        const unique_id = `${this.vehicle.vin}_vehicle_image`;
+        
+        const payload = {
+            "device": {
+                "identifiers": [this.vehicle.vin],
+                "manufacturer": this.vehicle.make,
+                "model": this.vehicle.year + ' ' + this.vehicle.model,
+                "name": this.vehicle.toString(),
+                "suggested_area": this.vehicle.toString(),
+            },
+            "availability": {
+                "topic": this.getAvailabilityTopic(),
+                "payload_available": 'true',
+                "payload_not_available": 'false',
+            },
+            "unique_id": unique_id,
+            "name": "Vehicle Image",
+            "url_topic": `${this.prefix}/image/${this.instance}/vehicle_image/state`,
+            "icon": "mdi:car",
+        };
+
+        return { topic, payload };
+    }
+
+    /**
+     * Create state payload for vehicle image entity
+     * @param {Object} vehicleData - The vehicle data from getAccountVehicles response
+     */
+    getVehicleImageStatePayload(vehicleData) {
+        // Extract imageUrl from the vehicle data, ensuring we return empty string for null/undefined
+        const imageUrl = _.get(vehicleData, 'imageUrl', '');
+        return imageUrl || '';  // Convert null/undefined to empty string
+    }
+
+    /**
      * Return the state payload for this diagnostic
      * @param {Diagnostic} diag
      */

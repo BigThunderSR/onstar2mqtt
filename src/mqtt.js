@@ -1086,8 +1086,10 @@ class MQTT {
             },
             "unique_id": unique_id,
             "name": "Vehicle Image",
-            "url_topic": `${this.prefix}/image/${this.instance}/vehicle_image/state`,
-            "icon": "mdi:car",
+            "image_topic": `${this.prefix}/image/${this.instance}/vehicle_image/state`,
+            "image_encoding": "b64",
+            "content_type": "image/jpeg",
+            "icon": "mdi:car-info",
         };
 
         return { topic, payload };

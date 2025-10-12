@@ -712,12 +712,11 @@ logger.info('!-- Starting OnStar2MQTT Polling --!');
                         }
                     });
                     
-                    // Convert to base64
+                    // Convert to base64 (raw format for HA image_topic)
                     const base64Image = Buffer.from(response.data, 'binary').toString('base64');
-                    const contentType = response.headers['content-type'] || 'image/jpeg';
                     
-                    // Return data URI format
-                    cachedVehicleImageBase64 = `data:${contentType};base64,${base64Image}`;
+                    // Cache as raw base64 for HA image entity
+                    cachedVehicleImageBase64 = base64Image;
                     logger.info(`Vehicle image downloaded and cached (${Math.round(base64Image.length / 1024)}KB)`);
                     
                     return cachedVehicleImageBase64;
@@ -778,6 +777,57 @@ logger.info('!-- Starting OnStar2MQTT Polling --!');
                 }
             }
             await publishVehicleImage();
+
+            // Publish vehicle recall sensor
+            async function publishVehicleRecalls() {
+                try {
+                    logger.info('Publishing vehicle recall sensor...');
+                    const recallRes = await commands.getVehicleRecallInfo();
+                    
+                    logger.debug('Recall response:', JSON.stringify(recallRes));
+                    
+                    // Try different response paths
+                    const responseData = recallRes?.response || recallRes;
+                    const hasData = _.get(responseData, 'data.vehicleDetails.recallInfo') || 
+                                   _.get(responseData, 'data.dataPresent');
+                    
+                    if (responseData && hasData !== undefined) {
+                        const recallConfig = mqttHA.getVehicleRecallConfig();
+                        const recallState = mqttHA.getVehicleRecallStatePayload(responseData);
+                        const recallStateTopic = `${mqttHA.prefix}/sensor/${mqttHA.instance}/vehicle_recalls/state`;
+                        
+                        // Publish config and state
+                        await client.publish(recallConfig.topic, JSON.stringify(recallConfig.payload), { retain: true });
+                        await client.publish(recallStateTopic, JSON.stringify(recallState), { retain: true });
+                        
+                        logger.info(`Vehicle recall sensor published: ${recallState.recall_count} total recalls, ${recallState.active_recalls_count} active`);
+                    } else {
+                        logger.warn('No recall data received from getVehicleRecallInfo');
+                        const recallConfig = mqttHA.getVehicleRecallConfig();
+                        const emptyState = mqttHA.getVehicleRecallStatePayload({ data: { vehicleDetails: { recallInfo: [] } } });
+                        const recallStateTopic = `${mqttHA.prefix}/sensor/${mqttHA.instance}/vehicle_recalls/state`;
+                        
+                        await client.publish(recallConfig.topic, JSON.stringify(recallConfig.payload), { retain: true });
+                        await client.publish(recallStateTopic, JSON.stringify(emptyState), { retain: true });
+                        logger.info('Vehicle recall sensor created with empty state (no recalls found)');
+                    }
+                } catch (e) {
+                    logger.error('Error publishing vehicle recall sensor:', e);
+                    // Still create the sensor even on error
+                    try {
+                        const recallConfig = mqttHA.getVehicleRecallConfig();
+                        const emptyState = mqttHA.getVehicleRecallStatePayload({ data: { vehicleDetails: { recallInfo: [] } } });
+                        const recallStateTopic = `${mqttHA.prefix}/sensor/${mqttHA.instance}/vehicle_recalls/state`;
+                        
+                        await client.publish(recallConfig.topic, JSON.stringify(recallConfig.payload), { retain: true });
+                        await client.publish(recallStateTopic, JSON.stringify(emptyState), { retain: true });
+                        logger.info('Vehicle recall sensor created with empty state due to error');
+                    } catch (publishError) {
+                        logger.error('Failed to publish vehicle recall sensor config:', publishError);
+                    }
+                }
+            }
+            await publishVehicleRecalls();
 
             const statsRes = await commands.diagnostics({ diagnosticItem: v.getSupported() });
             logger.info('Diagnostic request status', { status: _.get(statsRes, 'status') });

@@ -33,8 +33,10 @@ describe('Vehicle Image Entity', () => {
             
             assert.strictEqual(payload.name, 'Vehicle Image');
             assert.strictEqual(payload.unique_id, 'TEST1234567890123_vehicle_image');
-            assert.strictEqual(payload.icon, 'mdi:car');
-            assert.strictEqual(payload.url_topic, 'homeassistant/image/TEST1234567890123/vehicle_image/state');
+            assert.strictEqual(payload.icon, 'mdi:car-info');
+            assert.strictEqual(payload.image_topic, 'homeassistant/image/TEST1234567890123/vehicle_image/state');
+            assert.strictEqual(payload.image_encoding, 'b64');
+            assert.strictEqual(payload.content_type, 'image/jpeg');
         });
 
         it('should include device information', () => {
@@ -107,7 +109,7 @@ describe('Vehicle Image Entity', () => {
             const config = mqttHA.getVehicleImageConfig();
             
             assert.ok(config.topic.includes('vehicle_image/config'));
-            assert.ok(config.payload.url_topic.includes('vehicle_image/state'));
+            assert.ok(config.payload.image_topic.includes('vehicle_image/state'));
         });
 
         it('should use image entity type', () => {
@@ -192,7 +194,7 @@ describe('Vehicle Image Entity', () => {
             assert.ok(config.topic);
             assert.ok(config.payload);
             assert.strictEqual(config.payload.name, 'Vehicle Image');
-            assert.ok(config.payload.url_topic);
+            assert.ok(config.payload.image_topic);
             
             // Entity exists but may have empty state
             const emptyImageUrl = mqttHA.getVehicleImageStatePayload(null);

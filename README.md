@@ -105,6 +105,8 @@ Collect the following minimum information:
 
 Supply these values to the ENV vars below. The default data refresh interval is 30 minutes and can be overridden with `ONSTAR_REFRESH` with values in milliseconds.
 
+**Recall Checking:** Vehicle recall information is automatically checked on startup and every 7 days by default. This can be configured with `ONSTAR_RECALL_REFRESH` (in milliseconds). Recalls can also be checked manually via the "Get Vehicle Recall Info" button in Home Assistant.
+
 ### Home Assistant configuration templates
 
 MQTT auto discovery is enabled. For further integrations and screenshots see [HA-MQTT.md](HA-MQTT.md).

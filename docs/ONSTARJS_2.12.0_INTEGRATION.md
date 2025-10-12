@@ -308,13 +308,81 @@ await commands.setChargeLevelTarget(80);
 
 **Note:** Critical for vehicle safety - allows monitoring of active recalls and repair status.
 
+### Vehicle Recall Sensor
+
+A dedicated sensor is automatically created and updated for vehicle recall information:
+
+**Automatic Updates:**
+
+- Sensor is checked on application startup
+- Updates automatically every 7 days by default (configurable)
+- Can also be manually updated by pressing the "Get Vehicle Recall Info" button
+- Configurable via `ONSTAR_RECALL_REFRESH` environment variable (in milliseconds)
+
+**Sensor Name:** `Vehicle Recalls`
+
+**Main State:** Number of total recalls (e.g., `1`)
+
+**Attributes:**
+
+- `has_active_recalls` - Boolean indicating if there are active recalls
+- `active_recalls_count` - Number of recalls with status 'A' (Active)
+- `incomplete_repairs_count` - Number of recalls with incomplete repairs
+- `last_updated` - Timestamp of last update
+- `recalls` - Array of all recall details:
+  - `recall_id` - Recall ID (e.g., "N252503010")
+  - `title` - Recall title
+  - `type` - Type description (e.g., "Product Safety Recall")
+  - `description` - Full recall description
+  - `recall_status` - Status code (A=Active, I=Inactive)
+  - `repair_status` - Repair status (incomplete, complete, not_required)
+  - `repair_description` - Repair procedure description
+  - `safety_risk` - Safety risk description
+  - `completed_date` - Date repair was completed (if applicable)
+
+**Configuration:**
+
+```bash
+# Default: Check recalls every 7 days (recommended)
+# ONSTAR_RECALL_REFRESH=604800000  # (default if not specified)
+
+# Check recalls daily (more frequent, uses more API calls)
+ONSTAR_RECALL_REFRESH=86400000
+
+# Check recalls every 30 days (less frequent)
+ONSTAR_RECALL_REFRESH=2592000000
+```
+
+**Home Assistant Usage:**
+
+```yaml
+# Example automation to notify on new recalls
+automation:
+  - alias: "Vehicle Recall Alert"
+    trigger:
+      - platform: state
+        entity_id: sensor.2024_blazer_ev_vehicle_recalls
+    condition:
+      - condition: template
+        value_template: "{{ state_attr('sensor.2024_blazer_ev_vehicle_recalls', 'has_active_recalls') }}"
+    action:
+      - service: notify.mobile_app
+        data:
+          title: "⚠️ Vehicle Recall Alert"
+          message: >
+            Your vehicle has {{ states('sensor.2024_blazer_ev_vehicle_recalls') }} recall(s).
+            Latest: {{ state_attr('sensor.2024_blazer_ev_vehicle_recalls', 'recalls')[0].title }}
+```
+
 ## Test Results
 
 All tests passing successfully:
 
 ```text
-296 passing (189ms)
+315 passing (193ms)
 ```
+
+**Coverage:** 92.51%
 
 Breakdown:
 

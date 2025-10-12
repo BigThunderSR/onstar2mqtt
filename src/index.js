@@ -22,6 +22,7 @@ const onstarConfig = {
     tokenLocation: process.env.TOKEN_LOCATION || '',
     checkRequestStatus: _.get(process.env, 'ONSTAR_SYNC', 'true') === 'true',
     refreshInterval: parseInt(process.env.ONSTAR_REFRESH) || (30 * 60 * 1000), // 30 min
+    recallRefreshInterval: parseInt(process.env.ONSTAR_RECALL_REFRESH) || (7 * 24 * 60 * 60 * 1000), // 7 days default
     requestPollingIntervalSeconds: parseInt(process.env.ONSTAR_POLL_INTERVAL) || 6, // 6 sec default
     requestPollingTimeoutSeconds: parseInt(process.env.ONSTAR_POLL_TIMEOUT) || 90, // 60 sec default
     allowCommands: _.get(process.env, 'ONSTAR_ALLOW_COMMANDS', 'true') === 'true'
@@ -482,6 +483,21 @@ const configureMQTT = async (commands, client, mqttHA) => {
                     const responseData = _.get(data, 'response.data');
                     if (responseData) {
                         logger.warn('Command response data:', { responseData });
+                        
+                        // Handle getVehicleRecallInfo command - create recall sensor
+                        if (command === 'getVehicleRecallInfo') {
+                            const recallConfig = mqttHA.getVehicleRecallConfig();
+                            const recallState = mqttHA.getVehicleRecallStatePayload(data.response);
+                            const recallStateTopic = `${mqttHA.prefix}/sensor/${mqttHA.instance}/vehicle_recalls/state`;
+                            
+                            logger.info('Publishing vehicle recall sensor configuration');
+                            client.publish(recallConfig.topic, JSON.stringify(recallConfig.payload), { retain: true });
+                            logger.info('Publishing vehicle recall sensor state');
+                            client.publish(recallStateTopic, JSON.stringify(recallState), { retain: true });
+                            
+                            logger.info(`Recall sensor updated: ${recallState.recall_count} total recalls, ${recallState.active_recalls_count} active`);
+                        }
+                        
                         // API v3 uses telemetry.data.position and telemetry.data.velocity
                         const position = _.get(responseData, 'telemetry.data.position');
                         const velocity = _.get(responseData, 'telemetry.data.velocity');
@@ -868,6 +884,40 @@ logger.info('!-- Starting OnStar2MQTT Polling --!');
         logger.info(`Initial refreshInterval: ${onstarConfig.refreshInterval}`);
         client.publish(refreshIntervalCurrentValTopic, onstarConfig.refreshInterval.toString(), { retain: true });
         //client.publish(refreshIntervalTopic, onstarConfig.refreshInterval.toString(), { retain: true });
+
+        // Set up recall checking on a separate interval
+        const checkRecalls = async () => {
+            try {
+                logger.info('Checking vehicle recalls...');
+                const recallData = await commands.getVehicleRecallInfo();
+                
+                if (recallData && recallData.response) {
+                    const recallConfig = mqttHA.getVehicleRecallConfig();
+                    const recallState = mqttHA.getVehicleRecallStatePayload(recallData.response);
+                    const recallStateTopic = `${mqttHA.prefix}/sensor/${mqttHA.instance}/vehicle_recalls/state`;
+                    
+                    await client.publish(recallConfig.topic, JSON.stringify(recallConfig.payload), { retain: true });
+                    await client.publish(recallStateTopic, JSON.stringify(recallState), { retain: true });
+                    
+                    logger.info(`Recall sensor updated: ${recallState.recall_count} total recalls, ${recallState.active_recalls_count} active`);
+                    
+                    if (recallState.active_recalls_count > 0) {
+                        logger.warn(`⚠️  Vehicle has ${recallState.active_recalls_count} active recall(s)!`);
+                    }
+                } else {
+                    logger.warn('No recall data received from getVehicleRecallInfo');
+                }
+            } catch (e) {
+                logger.error('Error checking recalls:', e);
+            }
+        };
+        
+        // Initial recall check on startup
+        await checkRecalls();
+        
+        // Set up periodic recall checking
+        setInterval(checkRecalls, onstarConfig.recallRefreshInterval);
+        logger.info(`Recall check interval set to ${onstarConfig.recallRefreshInterval}ms (${onstarConfig.recallRefreshInterval / (60 * 60 * 1000)} hours)`);
 
         client.on('message', async (topic, message) => {
             if (topic === refreshIntervalTopic) {

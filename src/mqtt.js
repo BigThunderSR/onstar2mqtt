@@ -999,6 +999,72 @@ class MQTT {
     }
 
     /**
+     * Create config for vehicle recall sensor
+     * @param {Object} recallData - The recall data from getVehicleRecallInfo
+     */
+    getVehicleRecallConfig() {
+        const topic = `${this.prefix}/sensor/${this.instance}/vehicle_recalls/config`;
+        const unique_id = `${this.vehicle.vin}_vehicle_recalls`;
+        
+        const payload = {
+            "device": {
+                "identifiers": [this.vehicle.vin],
+                "manufacturer": this.vehicle.make,
+                "model": this.vehicle.year + ' ' + this.vehicle.model,
+                "name": this.vehicle.toString(),
+                "suggested_area": this.vehicle.toString(),
+            },
+            "availability": {
+                "topic": this.getAvailabilityTopic(),
+                "payload_available": 'true',
+                "payload_not_available": 'false',
+            },
+            "unique_id": unique_id,
+            "name": "Vehicle Recalls",
+            "state_topic": `${this.prefix}/sensor/${this.instance}/vehicle_recalls/state`,
+            "value_template": "{{ value_json.recall_count }}",
+            "icon": "mdi:alert-octagon",
+            "json_attributes_topic": `${this.prefix}/sensor/${this.instance}/vehicle_recalls/state`,
+            "json_attributes_template": "{{ value_json.attributes | tojson }}",
+        };
+
+        return { topic, payload };
+    }
+
+    /**
+     * Create state payload for vehicle recall sensor
+     * @param {Object} recallData - The recall data from getVehicleRecallInfo response
+     */
+    getVehicleRecallStatePayload(recallData) {
+        const recallInfo = _.get(recallData, 'data.vehicleDetails.recallInfo', []);
+        const activeRecalls = recallInfo.filter(r => r.recallStatus === 'A');
+        const incompleteRepairs = recallInfo.filter(r => r.repairStatus === 'incomplete');
+        
+        const state = {
+            recall_count: recallInfo.length,
+            active_recalls_count: activeRecalls.length,
+            incomplete_repairs_count: incompleteRepairs.length,
+            attributes: {
+                has_active_recalls: activeRecalls.length > 0,
+                last_updated: new Date().toISOString(),
+                recalls: recallInfo.map(recall => ({
+                    recall_id: recall.recallId,
+                    title: recall.title,
+                    type: recall.typeDescription,
+                    description: recall.description,
+                    recall_status: recall.recallStatus,
+                    repair_status: recall.repairStatus,
+                    repair_description: recall.repairDescription,
+                    safety_risk: recall.safetyRiskDescription,
+                    completed_date: recall.completedDate
+                }))
+            }
+        };
+
+        return state;
+    }
+
+    /**
      * Return the state payload for this diagnostic
      * @param {Diagnostic} diag
      */

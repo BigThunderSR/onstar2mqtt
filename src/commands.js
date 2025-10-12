@@ -153,6 +153,22 @@ class Commands {
     //     return this.onstar.diagnostics({ diagnosticItem });
     // }
 
+    async getVehicleDetails() {
+        return this.onstar.getVehicleDetails();
+    }
+
+    async getOnstarPlan() {
+        return this.onstar.getOnstarPlan();
+    }
+
+    async getEVChargingMetrics() {
+        return this.onstar.getEVChargingMetrics();
+    }
+
+    async getVehicleRecallInfo() {
+        return this.onstar.getVehicleRecallInfo();
+    }
+
 }
 
 module.exports = Commands;

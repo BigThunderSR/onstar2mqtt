@@ -115,6 +115,22 @@ class MQTT {
                 Name: 'setChargingProfile',
                 Icon: 'mdi:battery-sync',
             },
+            GetVehicleDetails: {
+                Name: 'getVehicleDetails',
+                Icon: 'mdi:car-info',
+            },
+            GetOnstarPlan: {
+                Name: 'getOnstarPlan',
+                Icon: 'mdi:calendar-check',
+            },
+            GetEVChargingMetrics: {
+                Name: 'getEVChargingMetrics',
+                Icon: 'mdi:ev-station',
+            },
+            GetVehicleRecallInfo: {
+                Name: 'getVehicleRecallInfo',
+                Icon: 'mdi:alert-octagon',
+            },
         }
     };
 

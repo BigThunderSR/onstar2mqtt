@@ -23,6 +23,10 @@ describe('Commands', () => {
             location: () => Promise.resolve(),
             diagnostics: () => Promise.resolve(),
             enginerpm: () => Promise.resolve(),
+            getVehicleDetails: () => Promise.resolve(),
+            getOnstarPlan: () => Promise.resolve(),
+            getEVChargingMetrics: () => Promise.resolve(),
+            getVehicleRecallInfo: () => Promise.resolve(),
         };
 
         commands = new Commands(onstarMock);
@@ -126,4 +130,24 @@ describe('Commands', () => {
     //     const result = await commands.enginerpm({});
     //     assert.strictEqual(result, undefined);
     // });
+
+    it('should call getVehicleDetails method', async () => {
+        const result = await commands.getVehicleDetails();
+        assert.strictEqual(result, undefined);
+    });
+
+    it('should call getOnstarPlan method', async () => {
+        const result = await commands.getOnstarPlan();
+        assert.strictEqual(result, undefined);
+    });
+
+    it('should call getEVChargingMetrics method', async () => {
+        const result = await commands.getEVChargingMetrics();
+        assert.strictEqual(result, undefined);
+    });
+
+    it('should call getVehicleRecallInfo method', async () => {
+        const result = await commands.getVehicleRecallInfo();
+        assert.strictEqual(result, undefined);
+    });
 });

@@ -286,9 +286,14 @@ Since the buttons are created but disabled by default, follow these steps to ena
 - Alert / Cancel Alert
 - Flash Lights / Stop Lights
 - Charge Override / Cancel Charge Override (for EVs)
+- Get Charging Profile (for EVs)
+- Set Charging Profile (for EVs)
 - Get Location
 - Get Diagnostics
-- And more...
+- **Get Vehicle Details** (new in OnStarJS 2.12.0)
+- **Get OnStar Plan** (new in OnStarJS 2.12.0)
+- **Get EV Charging Metrics** (new in OnStarJS 2.12.0)
+- **Get Vehicle Recall Info** (new in OnStarJS 2.12.0)
 
 **⚠️ Warning:** Only enable buttons you need and understand. Accidentally pressing the wrong button could trigger unwanted actions on your vehicle.
 

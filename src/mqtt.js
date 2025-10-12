@@ -1106,6 +1106,217 @@ class MQTT {
     }
 
     /**
+     * Create config and state for EV charging metrics sensors
+     * @param {Object} metricsData - The data from getEVChargingMetrics response
+     */
+    getEVChargingMetricsConfigs(metricsData) {
+        const results = _.get(metricsData, 'data.results[0]', {});
+        const configs = [];
+        
+        // Target Charge Level sensor
+        if (results.tcl !== undefined && results.tcl !== null) {
+            configs.push({
+                topic: `${this.prefix}/sensor/${this.instance}/ev_target_charge_level/config`,
+                payload: {
+                    name: "EV Target Charge Level",
+                    unique_id: `${this.vehicle.vin}_ev_target_charge_level`,
+                    state_topic: `${this.prefix}/sensor/${this.instance}/ev_target_charge_level/state`,
+                    device_class: "battery",
+                    state_class: "measurement",
+                    unit_of_measurement: "%",
+                    icon: "mdi:battery-charging-80",
+                    device: this.getDevicePayload(),
+                    availability: this.getAvailabilityPayload()
+                },
+                state: results.tcl
+            });
+        }
+
+        // Battery Capacity sensor (kWh)
+        if (results.kwh !== undefined && results.kwh !== null) {
+            configs.push({
+                topic: `${this.prefix}/sensor/${this.instance}/ev_battery_capacity/config`,
+                payload: {
+                    name: "EV Battery Capacity",
+                    unique_id: `${this.vehicle.vin}_ev_battery_capacity`,
+                    state_topic: `${this.prefix}/sensor/${this.instance}/ev_battery_capacity/state`,
+                    device_class: "energy_storage",
+                    state_class: "measurement",
+                    unit_of_measurement: "kWh",
+                    icon: "mdi:battery-high",
+                    device: this.getDevicePayload(),
+                    availability: this.getAvailabilityPayload()
+                },
+                state: results.kwh
+            });
+        }
+
+        // Trip Odometer sensor
+        if (results.tripodo !== undefined && results.tripodo !== null) {
+            configs.push({
+                topic: `${this.prefix}/sensor/${this.instance}/ev_trip_odometer/config`,
+                payload: {
+                    name: "EV Trip Odometer",
+                    unique_id: `${this.vehicle.vin}_ev_trip_odometer`,
+                    state_topic: `${this.prefix}/sensor/${this.instance}/ev_trip_odometer/state`,
+                    device_class: "distance",
+                    state_class: "total_increasing",
+                    unit_of_measurement: "km",
+                    icon: "mdi:map-marker-distance",
+                    device: this.getDevicePayload(),
+                    availability: this.getAvailabilityPayload()
+                },
+                state: results.tripodo
+            });
+        }
+
+        // Trip Consumption sensor
+        if (results.tripcons !== undefined && results.tripcons !== null) {
+            configs.push({
+                topic: `${this.prefix}/sensor/${this.instance}/ev_trip_consumption/config`,
+                payload: {
+                    name: "EV Trip Consumption",
+                    unique_id: `${this.vehicle.vin}_ev_trip_consumption`,
+                    state_topic: `${this.prefix}/sensor/${this.instance}/ev_trip_consumption/state`,
+                    state_class: "measurement",
+                    unit_of_measurement: "kWh/100km",
+                    icon: "mdi:speedometer",
+                    device: this.getDevicePayload(),
+                    availability: this.getAvailabilityPayload()
+                },
+                state: results.tripcons
+            });
+        }
+
+        // Lifetime Consumption sensor
+        if (results.lifecons !== undefined && results.lifecons !== null) {
+            configs.push({
+                topic: `${this.prefix}/sensor/${this.instance}/ev_lifetime_consumption/config`,
+                payload: {
+                    name: "EV Lifetime Consumption",
+                    unique_id: `${this.vehicle.vin}_ev_lifetime_consumption`,
+                    state_topic: `${this.prefix}/sensor/${this.instance}/ev_lifetime_consumption/state`,
+                    state_class: "measurement",
+                    unit_of_measurement: "kWh/100km",
+                    icon: "mdi:chart-line",
+                    device: this.getDevicePayload(),
+                    availability: this.getAvailabilityPayload()
+                },
+                state: results.lifecons
+            });
+        }
+
+        // Charge Mode sensor
+        if (results.cmode !== undefined && results.cmode !== null) {
+            configs.push({
+                topic: `${this.prefix}/sensor/${this.instance}/ev_charge_mode/config`,
+                payload: {
+                    name: "EV Charge Mode",
+                    unique_id: `${this.vehicle.vin}_ev_charge_mode`,
+                    state_topic: `${this.prefix}/sensor/${this.instance}/ev_charge_mode/state`,
+                    icon: "mdi:ev-station",
+                    device: this.getDevicePayload(),
+                    availability: this.getAvailabilityPayload()
+                },
+                state: results.cmode
+            });
+        }
+
+        // Charge Location Set binary sensor
+        if (results.clocSet !== undefined && results.clocSet !== null) {
+            configs.push({
+                topic: `${this.prefix}/binary_sensor/${this.instance}/ev_charge_location_set/config`,
+                payload: {
+                    name: "EV Charge Location Set",
+                    unique_id: `${this.vehicle.vin}_ev_charge_location_set`,
+                    state_topic: `${this.prefix}/binary_sensor/${this.instance}/ev_charge_location_set/state`,
+                    payload_on: true,
+                    payload_off: false,
+                    icon: "mdi:map-marker-check",
+                    device: this.getDevicePayload(),
+                    availability: this.getAvailabilityPayload()
+                },
+                state: results.clocSet
+            });
+        }
+
+        // At Charge Location binary sensor
+        if (results.clocAt !== undefined && results.clocAt !== null) {
+            configs.push({
+                topic: `${this.prefix}/binary_sensor/${this.instance}/ev_at_charge_location/config`,
+                payload: {
+                    name: "EV At Charge Location",
+                    unique_id: `${this.vehicle.vin}_ev_at_charge_location`,
+                    state_topic: `${this.prefix}/binary_sensor/${this.instance}/ev_at_charge_location/state`,
+                    payload_on: true,
+                    payload_off: false,
+                    icon: "mdi:map-marker",
+                    device: this.getDevicePayload(),
+                    availability: this.getAvailabilityPayload()
+                },
+                state: results.clocAt
+            });
+        }
+
+        // Discharge Enabled binary sensor
+        if (results.disEnabled !== undefined && results.disEnabled !== null) {
+            configs.push({
+                topic: `${this.prefix}/binary_sensor/${this.instance}/ev_discharge_enabled/config`,
+                payload: {
+                    name: "EV Discharge Enabled",
+                    unique_id: `${this.vehicle.vin}_ev_discharge_enabled`,
+                    state_topic: `${this.prefix}/binary_sensor/${this.instance}/ev_discharge_enabled/state`,
+                    payload_on: true,
+                    payload_off: false,
+                    icon: "mdi:transmission-tower-export",
+                    device: this.getDevicePayload(),
+                    availability: this.getAvailabilityPayload()
+                },
+                state: results.disEnabled
+            });
+        }
+
+        // Discharge Minimum SoC sensor
+        if (results.disMinSoc !== undefined && results.disMinSoc !== null) {
+            configs.push({
+                topic: `${this.prefix}/sensor/${this.instance}/ev_discharge_min_soc/config`,
+                payload: {
+                    name: "EV Discharge Minimum SoC",
+                    unique_id: `${this.vehicle.vin}_ev_discharge_min_soc`,
+                    state_topic: `${this.prefix}/sensor/${this.instance}/ev_discharge_min_soc/state`,
+                    device_class: "battery",
+                    state_class: "measurement",
+                    unit_of_measurement: "%",
+                    icon: "mdi:battery-low",
+                    device: this.getDevicePayload(),
+                    availability: this.getAvailabilityPayload()
+                },
+                state: results.disMinSoc
+            });
+        }
+
+        return configs;
+    }
+
+    getDevicePayload() {
+        return {
+            identifiers: [this.vehicle.vin],
+            manufacturer: this.vehicle.make,
+            model: this.vehicle.year + ' ' + this.vehicle.model,
+            name: this.vehicle.toString(),
+            suggested_area: this.vehicle.toString(),
+        };
+    }
+
+    getAvailabilityPayload() {
+        return {
+            topic: this.getAvailabilityTopic(),
+            payload_available: 'true',
+            payload_not_available: 'false',
+        };
+    }
+
+    /**
      * Return the state payload for this diagnostic
      * @param {Diagnostic} diag
      */

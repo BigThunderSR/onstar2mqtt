@@ -500,6 +500,21 @@ const configureMQTT = async (commands, client, mqttHA) => {
                             logger.info(`Recall sensor updated: ${recallState.recall_count} total recalls, ${recallState.active_recalls_count} active`);
                         }
                         
+                        // Handle getEVChargingMetrics command - create EV charging sensors
+                        if (command === 'getEVChargingMetrics') {
+                            const evMetricsConfigs = mqttHA.getEVChargingMetricsConfigs(data.response);
+                            
+                            logger.info(`Publishing ${evMetricsConfigs.length} EV charging metric sensors...`);
+                            evMetricsConfigs.forEach(config => {
+                                // Publish config
+                                client.publish(config.topic, JSON.stringify(config.payload), { retain: true });
+                                // Publish state
+                                client.publish(config.payload.state_topic, JSON.stringify(config.state), { retain: true });
+                            });
+                            
+                            logger.info(`EV charging metrics updated: ${evMetricsConfigs.length} sensors published`);
+                        }
+                        
                         // API v3 uses telemetry.data.position and telemetry.data.velocity
                         const position = _.get(responseData, 'telemetry.data.position');
                         const velocity = _.get(responseData, 'telemetry.data.velocity');

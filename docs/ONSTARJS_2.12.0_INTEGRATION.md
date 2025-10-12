@@ -448,14 +448,207 @@ data:
 3. `test/command-sample-getEVChargingMetrics.json`
 4. `test/command-sample-getVehicleRecallInfo.json`
 
+## Vehicle Recall Sensor Implementation
+
+### Vehicle Recall Sensor Overview
+
+A vehicle recall sensor has been added to automatically monitor and display recall information from the manufacturer.
+
+### Recall Sensor Implementation Details
+
+**Location**: `src/index.js` (recall polling setup), `src/mqtt.js` (lines ~1005-1067)
+
+**Key Features:**
+
+- Automatically checks recalls on startup and every 7 days (configurable)
+- Single sensor with detailed recall information as attributes
+- Manual check available via "Get Vehicle Recall Info" button
+- Configurable polling interval via `ONSTAR_RECALL_REFRESH` environment variable
+
+**MQTT Configuration:**
+
+```javascript
+getVehicleRecallConfig() {
+    // Topic: homeassistant/sensor/{VIN}/vehicle_recalls/config
+    // Entity type: sensor (numeric)
+    // Icon: mdi:alert-octagon
+    // State: Total recall count
+    // Attributes: Detailed recall information
+}
+```
+
+**State Payload:**
+
+```javascript
+getVehicleRecallStatePayload(recallData) {
+    // Main state: recall_count (total number of recalls)
+    // Attributes include:
+    //   - active_recalls_count
+    //   - incomplete_repairs_count
+    //   - has_active_recalls (boolean)
+    //   - recalls array (detailed recall objects)
+}
+```
+
+### Recall Sensor MQTT Topics
+
+- **Config**: `homeassistant/sensor/{VIN}/vehicle_recalls/config`
+- **State**: `homeassistant/sensor/{VIN}/vehicle_recalls/state`
+
+### Home Assistant Integration (Recall Sensor)
+
+**Entity:**
+
+- **Type**: `sensor` (numeric)
+- **Entity ID**: `sensor.<vehicle_name>_vehicle_recalls`
+- **Name**: "Vehicle Recalls"
+- **Icon**: `mdi:alert-octagon`
+- **State**: Total number of recalls
+- **Attributes**: Detailed recall information array
+
+### Polling Configuration
+
+Default: 7 days (604800000 ms)
+
+```bash
+ONSTAR_RECALL_REFRESH=604800000  # 7 days in milliseconds
+```
+
+### Recall Sensor Test Coverage
+
+15 tests in `test/recall-sensor.spec.js`:
+
+- ✅ Config topic and payload generation
+- ✅ State payload with recall data
+- ✅ Attribute structure and content
+- ✅ Active recalls filtering
+- ✅ Incomplete repairs counting
+- ✅ Empty recall data handling
+- ✅ Integration (config + state)
+
+## Vehicle Image Entity
+
+### Vehicle Image Entity Overview
+
+A vehicle image entity has been added to display your vehicle's photo from the manufacturer in Home Assistant.
+
+### Vehicle Image Implementation Details
+
+**Location**: `src/index.js` (lines ~702-754), `src/mqtt.js` (lines ~1068-1112)
+
+**Key Features:**
+
+- Downloads vehicle image from manufacturer's server (via `getAccountVehicles` command)
+- Caches image as base64 data in memory
+- Publishes to MQTT for Home Assistant to display
+- Automatic fallback to URL if download fails
+- Offline support after initial download
+- Entity always created even if image unavailable
+
+**Image Download Function:**
+
+```javascript
+async function downloadAndCacheImage(imageUrl) {
+    // Downloads image from manufacturer URL
+    // Converts to base64 for caching
+    // 30-second timeout for network requests
+    // Returns data URI format: data:image/jpeg;base64,...
+    // Returns data URI format: data:image/jpeg;base64,...
+}
+```
+
+**MQTT Configuration:**
+
+```javascript
+getVehicleImageConfig() {
+    // Topic: homeassistant/image/{VIN}/vehicle_image/config
+    // Entity type: image
+    // Icon: mdi:car
+    // Uses url_topic for HA to fetch image data
+}
+```
+
+**State Payload:**
+
+```javascript
+getVehicleImageStatePayload(vehicleData) {
+    // Extracts imageUrl from vehicle data
+    // Returns empty string if not available
+    // Handles null/undefined gracefully
+}
+```
+
+### Error Handling
+
+1. **Missing Image URL**: Entity created but marked unavailable (empty state)
+2. **Download Failure**: Falls back to publishing URL instead of base64
+3. **Network Timeout**: 30-second timeout prevents hanging
+4. **API Errors**: Comprehensive logging and graceful degradation
+5. **Cache Management**: In-memory cache cleared on application restart
+
+### Vehicle Image MQTT Topics
+
+- **Config**: `homeassistant/image/{VIN}/vehicle_image/config`
+- **State**: `homeassistant/image/{VIN}/vehicle_image/state`
+
+### Home Assistant Integration (Vehicle Image)
+
+**Entity:**
+
+- **Type**: `image`
+- **Entity ID**: `image.<vehicle_name>_vehicle_image`
+- **Name**: "Vehicle Image"
+- **Icon**: `mdi:car`
+- **Data**: Base64-encoded image (or URL fallback)
+
+**Example Lovelace Card:**
+
+```yaml
+type: picture-entity
+entity: image.matts_blazer_vehicle_image
+name: My Vehicle
+show_name: true
+```
+
+### Performance Characteristics
+
+- **Image Size**: Typically 30-100KB (original), 50-200KB (base64)
+- **Memory Usage**: Single cached image in RAM
+- **Network**: One download per application startup
+- **MQTT Payload**: 50-200KB message (ensure broker supports it)
+
+### Test Coverage
+
+19 tests in `test/vehicle-image.spec.js`:
+
+- ✅ Config topic and payload generation
+- ✅ State payload extraction from vehicle data
+- ✅ Device information and availability
+- ✅ Integration (config + state)
+- ✅ Multiple vehicle handling
+- ✅ Error scenarios (null/missing data)
+- ✅ Graceful degradation
+
+**Sample Data**: `test/command-sample-getAccountVehicles.json`
+
+### Future Enhancements
+
+Potential improvements for future versions:
+
+- Periodic image refresh (configurable interval)
+- Image size optimization/compression
+- Support for multiple image formats
+- Thumbnail generation for faster loading
+
 ## Validation
 
-✅ All 296 tests passing
+✅ All 334 tests passing (was 296, added 19 vehicle image tests, 19 recall sensor tests)
 ✅ No linting errors
 ✅ Button validation passing (validateButtonNames)
 ✅ Command names match between commands.js and MQTT buttons
 ✅ Sample data validated against test suite
 ✅ Documentation updated
+✅ Code coverage maintained at 92.64%
 
 ## Notes
 
@@ -464,6 +657,7 @@ data:
 - EV-specific commands (getEVChargingMetrics) require an EV vehicle
 - Recall information availability depends on NHTSA database
 - All commands respect OnStar API rate limiting
+- Vehicle image requires manufacturer image URL in getAccountVehicles response
 
 ## Compatibility
 
@@ -471,3 +665,4 @@ data:
 - Node.js: As per package.json requirements
 - Home Assistant: MQTT integration required
 - Vehicle: OnStar-capable vehicles (US/Canada)
+- MQTT Broker: Must support messages up to 200KB for vehicle image

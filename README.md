@@ -107,6 +107,8 @@ Supply these values to the ENV vars below. The default data refresh interval is 
 
 **Recall Checking:** Vehicle recall information is automatically checked on startup and every 7 days by default. This can be configured with `ONSTAR_RECALL_REFRESH` (in milliseconds). Recalls can also be checked manually via the "Get Vehicle Recall Info" button in Home Assistant.
 
+**Vehicle Image:** Your vehicle's photo from the manufacturer is automatically downloaded, cached, and published to Home Assistant as an image entity on application startup. The image is base64-encoded for offline viewing and persists even if the manufacturer's URL changes.
+
 ### Home Assistant configuration templates
 
 MQTT auto discovery is enabled. For further integrations and screenshots see [HA-MQTT.md](HA-MQTT.md).

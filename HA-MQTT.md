@@ -210,6 +210,71 @@ mode: queued
 max: 10
 ```
 
+## Vehicle Recall Sensor
+
+The application automatically creates a **recall sensor** that displays vehicle recall information from the manufacturer.
+
+- **Entity**: `sensor.<vehicle_name>_vehicle_recalls`
+- **Icon**: `mdi:alert-octagon`
+- **State**: Total number of recalls
+- **Update Frequency**: Checked on startup and every 7 days (configurable via `ONSTAR_RECALL_REFRESH`)
+- **Manual Check**: Use the "Get Vehicle Recall Info" button
+
+### Attributes
+
+The sensor includes detailed recall information as attributes:
+
+- `recall_count`: Total number of recalls
+- `active_recalls_count`: Number of active recalls
+- `incomplete_repairs_count`: Number of incomplete repairs
+- `has_active_recalls`: Boolean indicating if active recalls exist
+- `last_updated`: Timestamp of last check
+- `recalls`: Array of recall objects with details (ID, title, description, status, etc.)
+
+### Example Lovelace Card
+
+```yaml
+type: entities
+title: Vehicle Recalls
+entities:
+  - entity: sensor.matts_blazer_vehicle_recalls
+    type: attribute
+    attribute: recalls
+    name: Recall Details
+```
+
+## Vehicle Image Entity
+
+The application automatically creates an **image entity** displaying your vehicle's photo from the manufacturer.
+
+- **Entity**: `image.<vehicle_name>_vehicle_image`
+- **Icon**: `mdi:car`
+- **Data**: Base64-encoded image (cached locally, works offline)
+- **Update**: Downloads once on startup, fallback to URL if download fails
+
+### Example Lovelace Cards
+
+```yaml
+# Simple picture card
+type: picture
+image_entity: image.matts_blazer_vehicle_image
+```
+
+```yaml
+# Vehicle dashboard with image
+type: vertical-stack
+cards:
+  - type: picture
+    image_entity: image.matts_blazer_vehicle_image
+  - type: entities
+    entities:
+      - sensor.matts_blazer_odometer
+      - sensor.matts_blazer_fuel_level
+      - sensor.matts_blazer_vehicle_recalls
+```
+
+**Note**: Images are ~50-200KB when base64-encoded. Ensure your MQTT broker supports larger message sizes if you encounter issues.
+
 ## Dynamically Change Polling Frequency Using MQTT
 
 - Uses the value from `ONSTAR_REFRESH` on initial startup

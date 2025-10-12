@@ -2,15 +2,51 @@
 
 ## Overview
 
-Successfully integrated 4 new commands from OnStarJS 2.12.0 into the OnStar2MQTT application. All commands are now available as auto-created MQTT buttons in Home Assistant.
+Successfully integrated **8 new commands** from OnStarJS 2.12.0 into the OnStar2MQTT application and deprecated 4 old commands. All new commands are now available as auto-created MQTT buttons in Home Assistant.
+
+## Deprecated Commands ⚠️
+
+The following commands have been deprecated in OnStarJS 2.12.0 and should be replaced:
+
+| Deprecated Command | Replacement | Reason |
+|-------------------|-------------|---------|
+| `chargeOverride()` | `setChargeLevelTarget()` or `stopCharging()` | Better control and clarity for EV charging |
+| `cancelChargeOverride()` | `setChargeLevelTarget()` or `stopCharging()` | Better control and clarity for EV charging |
+| `getChargingProfile()` | `getEVChargingMetrics()` | More comprehensive charging information |
+| `setChargingProfile()` | `setChargeLevelTarget()` | More intuitive API for setting charge targets |
+
+**Migration Notes:**
+
+- The deprecated command methods remain in the code for backward compatibility but will be removed in a future version
+- The deprecated command buttons have been removed from MQTT auto-discovery and will not appear in Home Assistant
+- Users should update any automation scripts to use the new commands
 
 ## Changes Made
 
 ### 1. Commands Module (`src/commands.js`)
 
-Added 4 new command methods:
+Added 8 new command methods:
 
 ```javascript
+// Light control commands
+async flashLights(options = {}) {
+    return this.onstar.flashLights(options);
+}
+
+async stopLights() {
+    return this.onstar.stopLights();
+}
+
+// EV charging control commands
+async setChargeLevelTarget(tcl, options = {}) {
+    return this.onstar.setChargeLevelTarget(tcl, options);
+}
+
+async stopCharging(options = {}) {
+    return this.onstar.stopCharging(options);
+}
+
+// Vehicle information commands
 async getVehicleDetails() {
     return this.onstar.getVehicleDetails();
 }
@@ -28,11 +64,53 @@ async getVehicleRecallInfo() {
 }
 ```
 
-### 2. MQTT Button Definitions (`src/mqtt.js`)
-
-Added 4 new button configurations to `CONSTANTS.BUTTONS`:
+Marked 4 deprecated commands with deprecation comments:
 
 ```javascript
+// Deprecated - kept for backward compatibility but will be removed in future version
+async chargeOverride({ mode = Commands.CONSTANTS.CHARGE_OVERRIDE.CHARGE_NOW }) {
+    return this.onstar.chargeOverride({ mode });
+}
+
+async cancelChargeOverride() {
+    return this.onstar.cancelChargeOverride();
+}
+
+async getChargingProfile() {
+    return this.onstar.getChargingProfile();
+}
+
+async setChargingProfile({ chargeMode, rateType }) {
+    return this.onstar.setChargingProfile({ chargeMode, rateType });
+}
+```
+
+### 2. MQTT Button Definitions (`src/mqtt.js`)
+
+Added 8 new button configurations to `CONSTANTS.BUTTONS`:
+
+```javascript
+// Light control buttons
+FlashLights: {
+    Name: 'flashLights',
+    Icon: 'mdi:car-light-alert',
+},
+StopLights: {
+    Name: 'stopLights',
+    Icon: 'mdi:car-light-dimmed',
+},
+
+// EV charging control buttons
+SetChargeLevelTarget: {
+    Name: 'setChargeLevelTarget',
+    Icon: 'mdi:battery-charging-80',
+},
+StopCharging: {
+    Name: 'stopCharging',
+    Icon: 'mdi:battery-charging-outline',
+},
+
+// Vehicle information buttons
 GetVehicleDetails: {
     Name: 'getVehicleDetails',
     Icon: 'mdi:car-info',
@@ -51,13 +129,24 @@ GetVehicleRecallInfo: {
 },
 ```
 
+Removed 4 deprecated button configurations (commented out for reference):
+
+```javascript
+// Deprecated - kept for backward compatibility but hidden from auto-discovery
+// ChargeOverride: { ... }
+// CancelChargeOverride: { ... }
+// GetChargingProfile: { ... }
+// SetChargingProfile: { ... }
+```
+
 ### 3. Test Suite Updates
 
 #### Updated test/commands.spec.js
 
-- Added 4 new command methods to the mock OnStar object
-- Added 4 new test cases for the new commands
-- All tests passing (296 total tests)
+- Added 8 new command methods to the mock OnStar object
+- Added 8 new test cases for the new commands
+- Updated 4 test descriptions to mark deprecated commands with "(deprecated)" suffix
+- All tests passing (300 total tests)
 
 #### Created test/commands-new.spec.js
 
@@ -81,7 +170,69 @@ Updated the Available Buttons list to include:
 
 ## New Command Details
 
-### 1. getVehicleDetails
+### 1. flashLights
+
+**Purpose:** Flash vehicle lights without honking the horn (quieter alternative to alert)
+
+**Parameters:**
+
+- `options` (Object, optional): Additional command options
+
+**Returns:** Command acknowledgment from OnStar API
+
+**Use Case:** Locate your vehicle in a parking lot without disturbing others. Unlike `alert()` which honks the horn, this only flashes the lights.
+
+**Related Commands:**
+
+- `stopLights()` - Stop the light flashing
+
+### 2. stopLights
+
+**Purpose:** Stop the flashing lights initiated by `flashLights()`
+
+**Parameters:** None
+
+**Returns:** Command acknowledgment from OnStar API
+
+**Use Case:** Cancel light flashing if you've already located your vehicle.
+
+### 3. setChargeLevelTarget
+
+**Purpose:** Set the target charge level for your EV battery
+
+**Parameters:**
+
+- `tcl` (Number, required): Target charge level percentage (0-100)
+- `options` (Object, optional): Additional command options
+
+**Returns:** Command acknowledgment from OnStar API
+
+**Use Case:** Configure how much you want your EV battery to charge to. Setting a lower target (e.g., 80%) can extend battery life.
+
+**Example:**
+
+```javascript
+// Set charge target to 80%
+await commands.setChargeLevelTarget(80);
+```
+
+**Replaces:** `chargeOverride()` and `setChargingProfile()` (deprecated)
+
+### 4. stopCharging
+
+**Purpose:** Stop the current EV charging session
+
+**Parameters:**
+
+- `options` (Object, optional): Additional command options
+
+**Returns:** Command acknowledgment from OnStar API
+
+**Use Case:** Remotely stop charging when you've reached your desired charge level or need to leave earlier than planned.
+
+**Replaces:** `cancelChargeOverride()` (deprecated)
+
+### 5. getVehicleDetails
 
 **Purpose:** Retrieves comprehensive vehicle information
 
@@ -95,7 +246,9 @@ Updated the Available Buttons list to include:
 
 **Sample Data:** `test/command-sample-getVehicleDetails.json` (1846 lines)
 
-### 2. getOnstarPlan
+**Use Case:** Get comprehensive vehicle configuration details for displaying in Home Assistant or other automation systems.
+
+### 6. getOnstarPlan
 
 **Purpose:** Retrieves OnStar subscription plan information
 
@@ -108,9 +261,11 @@ Updated the Available Buttons list to include:
 - Product types (DATA, ONSTAR, etc.)
 - Plan expiry information
 
-**Sample Data:** `test/command-sample-getOnstarPlan.json` (190 lines)
+**Sample Data:** `test/command-sample-getOnstarPlan.json` (172 lines)
 
-### 3. getEVChargingMetrics
+**Use Case:** Monitor your OnStar subscription status and expiration dates for automation alerts.
+
+### 7. getEVChargingMetrics
 
 **Purpose:** Retrieves comprehensive EV charging and battery metrics
 
@@ -131,7 +286,9 @@ Updated the Available Buttons list to include:
 
 **Note:** This command provides real-time EV metrics that complement the standard diagnostics data.
 
-### 4. getVehicleRecallInfo
+**Replaces:** `getChargingProfile()` (deprecated)
+
+### 8. getVehicleRecallInfo
 
 **Purpose:** Retrieves active vehicle recall information
 

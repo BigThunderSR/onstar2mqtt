@@ -63,6 +63,14 @@ class MQTT {
                 Name: 'cancelAlert',
                 Icon: 'mdi:alert-minus',
             },
+            FlashLights: {
+                Name: 'flashLights',
+                Icon: 'mdi:car-light-alert',
+            },
+            StopLights: {
+                Name: 'stopLights',
+                Icon: 'mdi:car-light-dimmed',
+            },
             LockDoor: {
                 Name: 'lockDoor',
                 Icon: 'mdi:car-door-lock',
@@ -99,22 +107,31 @@ class MQTT {
             //     Name: 'enginerpm',
             //     Icon: 'mdi:speedometer',
             // },
-            ChargeOverride: {
-                Name: 'chargeOverride',
-                Icon: 'mdi:ev-station',
+            SetChargeLevelTarget: {
+                Name: 'setChargeLevelTarget',
+                Icon: 'mdi:battery-charging-80',
             },
-            CancelChargeOverride: {
-                Name: 'cancelChargeOverride',
-                Icon: 'mdi:battery-charging-wireless-alert',
+            StopCharging: {
+                Name: 'stopCharging',
+                Icon: 'mdi:battery-charging-outline',
             },
-            GetChargingProfile: {
-                Name: 'getChargingProfile',
-                Icon: 'mdi:battery-charging-wireless',
-            },
-            SetChargingProfile: {
-                Name: 'setChargingProfile',
-                Icon: 'mdi:battery-sync',
-            },
+            // Deprecated - kept for backward compatibility but hidden from auto-discovery
+            // ChargeOverride: {
+            //     Name: 'chargeOverride',
+            //     Icon: 'mdi:ev-station',
+            // },
+            // CancelChargeOverride: {
+            //     Name: 'cancelChargeOverride',
+            //     Icon: 'mdi:battery-charging-wireless-alert',
+            // },
+            // GetChargingProfile: {
+            //     Name: 'getChargingProfile',
+            //     Icon: 'mdi:battery-charging-wireless',
+            // },
+            // SetChargingProfile: {
+            //     Name: 'setChargingProfile',
+            //     Icon: 'mdi:battery-sync',
+            // },
             GetVehicleDetails: {
                 Name: 'getVehicleDetails',
                 Icon: 'mdi:car-info',

@@ -284,10 +284,12 @@ Since the buttons are created but disabled by default, follow these steps to ena
 - Unlock Door
 - Lock Trunk / Unlock Trunk (if supported by vehicle)
 - Alert / Cancel Alert
-- Flash Lights / Stop Lights
-- Charge Override / Cancel Charge Override (for EVs)
-- Get Charging Profile (for EVs)
-- Set Charging Profile (for EVs)
+- Flash Lights / Stop Lights (new in OnStarJS 2.12.0)
+- ~~Charge Override / Cancel Charge Override~~ (deprecated - use Set Charge Level Target / Stop Charging instead)
+- Set Charge Level Target (new in OnStarJS 2.12.0 - for EVs)
+- Stop Charging (new in OnStarJS 2.12.0 - for EVs)
+- ~~Get Charging Profile~~ (deprecated - use Get EV Charging Metrics instead)
+- ~~Set Charging Profile~~ (deprecated - use Set Charge Level Target instead)
 - Get Location
 - Get Diagnostics
 - **Get Vehicle Details** (new in OnStarJS 2.12.0)

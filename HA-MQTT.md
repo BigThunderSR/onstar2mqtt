@@ -252,7 +252,7 @@ The application automatically creates an **image entity** displaying your vehicl
 - **Data**: Base64-encoded image (cached locally, works offline)
 - **Update**: Downloads once on startup, fallback to URL if download fails
 
-### Example Lovelace Cards
+### Example Lovelace Cards Using Vehicle Image
 
 ```yaml
 # Simple picture card
@@ -274,6 +274,117 @@ cards:
 ```
 
 **Note**: Images are ~50-200KB when base64-encoded. Ensure your MQTT broker supports larger message sizes if you encounter issues.
+
+## EV Charging Metrics Sensors (EV Vehicles Only)
+
+For **electric vehicles**, pressing the **Get EV Charging Metrics** button creates 10 specialized sensors with detailed charging and battery information:
+
+### Sensors Created
+
+1. **EV Target Charge Level** (`sensor.<vehicle_name>_ev_target_charge_level`)
+   - **Unit**: `%` (percentage)
+   - **Icon**: `mdi:battery-charging-80`
+   - **Description**: User's configured charge limit setting (e.g., 80%)
+   - **Device Class**: Battery
+
+2. **EV Battery Capacity** (`sensor.<vehicle_name>_ev_battery_capacity`)
+   - **Unit**: `kWh` (kilowatt-hours)
+   - **Icon**: `mdi:battery-high`
+   - **Description**: Actual usable battery capacity
+   - **Device Class**: Energy Storage
+
+3. **EV Trip Odometer** (`sensor.<vehicle_name>_ev_trip_odometer`)
+   - **Unit**: `km` (kilometers)
+   - **Icon**: `mdi:map-marker-distance`
+   - **Description**: Current trip distance
+   - **Device Class**: Distance
+   - **State Class**: Total Increasing
+
+4. **EV Trip Consumption** (`sensor.<vehicle_name>_ev_trip_consumption`)
+   - **Unit**: `kWh/100km`
+   - **Icon**: `mdi:speedometer`
+   - **Description**: Energy efficiency for current trip
+   - **State Class**: Measurement
+
+5. **EV Lifetime Consumption** (`sensor.<vehicle_name>_ev_lifetime_consumption`)
+   - **Unit**: `kWh/100km`
+   - **Icon**: `mdi:chart-line`
+   - **Description**: Average lifetime energy efficiency
+   - **State Class**: Measurement
+
+6. **EV Charge Mode** (`sensor.<vehicle_name>_ev_charge_mode`)
+   - **Icon**: `mdi:ev-station`
+   - **Description**: Current charging mode (e.g., "immediate")
+   - **Values**: `immediate`, `departure`, etc.
+
+7. **EV Charge Location Set** (`binary_sensor.<vehicle_name>_ev_charge_location_set`)
+   - **Icon**: `mdi:map-marker-check`
+   - **Description**: Whether home charging location is configured
+   - **Values**: `on` (set), `off` (not set)
+
+8. **EV At Charge Location** (`binary_sensor.<vehicle_name>_ev_at_charge_location`)
+   - **Icon**: `mdi:map-marker`
+   - **Description**: Whether vehicle is currently at the configured charging location
+   - **Values**: `on` (at location), `off` (away)
+
+9. **EV Discharge Enabled** (`binary_sensor.<vehicle_name>_ev_discharge_enabled`)
+   - **Icon**: `mdi:transmission-tower-export`
+   - **Description**: Whether vehicle-to-grid discharge is enabled
+   - **Values**: `on` (enabled), `off` (disabled)
+
+10. **EV Discharge Minimum SoC** (`sensor.<vehicle_name>_ev_discharge_min_soc`)
+    - **Unit**: `%` (percentage)
+    - **Icon**: `mdi:battery-low`
+    - **Description**: Minimum battery percentage for discharge operations
+    - **Device Class**: Battery
+
+### Update Frequency
+
+- **On-Demand**: These sensors are created/updated when you press the **Get EV Charging Metrics** button
+- **Complementary**: These provide additional metrics not available in the automatic diagnostics (which refresh every 30 minutes)
+- **Persistent**: Sensor values remain until the next button press
+
+### Example Lovelace Cards
+
+```yaml
+# EV Charging Status Card
+type: entities
+title: EV Charging Info
+entities:
+  - sensor.my_blazer_ev_target_charge_level
+  - sensor.my_blazer_ev_battery_capacity
+  - sensor.my_blazer_ev_charge_mode
+  - binary_sensor.my_blazer_ev_at_charge_location
+  - binary_sensor.my_blazer_ev_charge_location_set
+```
+
+```yaml
+# EV Efficiency Dashboard
+type: vertical-stack
+cards:
+  - type: gauge
+    entity: sensor.my_blazer_ev_target_charge_level
+    name: Target Charge Level
+    min: 0
+    max: 100
+  - type: entities
+    title: Energy Consumption
+    entities:
+      - sensor.my_blazer_ev_trip_consumption
+      - sensor.my_blazer_ev_lifetime_consumption
+      - sensor.my_blazer_ev_trip_odometer
+```
+
+```yaml
+# Vehicle-to-Grid Card
+type: entities
+title: V2G Discharge Settings
+entities:
+  - binary_sensor.my_blazer_ev_discharge_enabled
+  - sensor.my_blazer_ev_discharge_min_soc
+```
+
+**Note**: These sensors are only available for electric vehicles. The Get EV Charging Metrics button will not create sensors for ICE (Internal Combustion Engine) vehicles.
 
 ## Dynamically Change Polling Frequency Using MQTT
 

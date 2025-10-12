@@ -284,7 +284,20 @@ await commands.setChargeLevelTarget(80);
 
 **Sample Data:** `test/command-sample-getEVChargingMetrics.json` (48 lines)
 
-**Note:** This command provides real-time EV metrics that complement the standard diagnostics data.
+**Sensors Created:** When this button is pressed, 10 Home Assistant sensors are created/updated:
+
+1. **EV Target Charge Level** (`%`) - User's charge limit setting
+2. **EV Battery Capacity** (`kWh`) - Actual usable battery capacity
+3. **EV Trip Odometer** (`km`) - Current trip distance
+4. **EV Trip Consumption** (`kWh/100km`) - Efficiency for current trip
+5. **EV Lifetime Consumption** (`kWh/100km`) - Average lifetime efficiency
+6. **EV Charge Mode** (text) - Charging mode (immediate, etc.)
+7. **EV Charge Location Set** (binary) - Home charging location configured
+8. **EV At Charge Location** (binary) - Currently at charging location
+9. **EV Discharge Enabled** (binary) - Vehicle-to-grid discharge enabled
+10. **EV Discharge Minimum SoC** (`%`) - Minimum state of charge for discharge
+
+**Note:** These sensors provide EV-specific metrics not available in automatic diagnostics. They are updated on-demand when the button is pressed, complementing the automatic diagnostic sensors that refresh every 30 minutes.
 
 **Replaces:** `getChargingProfile()` (deprecated)
 

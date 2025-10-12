@@ -492,6 +492,11 @@ icon: "mdi:car-electric"
 
 - Set Charging Profile
   - `{"command": "setChargingProfile","options": {"chargeMode": "RATE_BASED","rateType": "OFFPEAK"}}`
+- Set Charge Level Target (set target charge percentage)
+  - `{"command": "setChargeLevelTarget","options": 80}` (sets target to 80%)
+  - Alternative formats also supported:
+    - `{"command": "setChargeLevelTarget","options": {"targetChargeLevel": 80}}`
+    - `{"command": "setChargeLevelTarget","options": {"tcl": 80}}`
 - Alert
   - `{"command": "alert","options": {"action": "Flash"}}`
 
@@ -516,6 +521,53 @@ condition:
 action:
   - service: script.car_start_vehicle
     data: {}
+mode: single
+```
+
+### Set EV Charge Level Target
+
+This example shows how to set the target charge level to 80% for your electric vehicle:
+
+```yaml
+alias: Set EV Charge to 80%
+description: Set target charge level to 80%
+trigger:
+  - platform: time
+    at: "22:00:00"
+action:
+  - service: mqtt.publish
+    data:
+      topic: homeassistant/YOUR_CAR_VIN/command
+      payload: '{"command": "setChargeLevelTarget","options": 80}'
+mode: single
+icon: "mdi:battery-charging-80"
+```
+
+You can also create an input number slider to dynamically set the charge level:
+
+```yaml
+# In configuration.yaml
+input_number:
+  ev_charge_target:
+    name: EV Charge Target
+    min: 50
+    max: 100
+    step: 5
+    unit_of_measurement: "%"
+    icon: mdi:battery-charging
+
+# Automation to set charge level from slider
+alias: Set EV Charge Level from Slider
+description: Set EV charge target based on input slider
+trigger:
+  - platform: state
+    entity_id: input_number.ev_charge_target
+action:
+  - service: mqtt.publish
+    data:
+      topic: homeassistant/YOUR_CAR_VIN/command
+      payload: >
+        {"command": "setChargeLevelTarget","options": {{ states('input_number.ev_charge_target') | int }}}
 mode: single
 ```
 

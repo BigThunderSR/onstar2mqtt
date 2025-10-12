@@ -442,6 +442,99 @@ const configureMQTT = async (commands, client, mqttHA) => {
                 });
         }
 
+        else if (command === 'setChargeLevelTarget') {
+            // Handle setChargeLevelTarget command with target charge level value
+            let targetChargeLevel;
+
+            if (!options) {
+                logger.error('Options is undefined for setChargeLevelTarget command! A target charge level (0-100) is required.');
+                return;
+            }
+
+            // Support both numeric value and object format
+            if (typeof options === 'number') {
+                targetChargeLevel = options;
+            } else if (typeof options === 'object' && options.targetChargeLevel !== undefined) {
+                targetChargeLevel = options.targetChargeLevel;
+            } else if (typeof options === 'object' && options.tcl !== undefined) {
+                targetChargeLevel = options.tcl;
+            } else {
+                logger.error('Invalid options for setChargeLevelTarget. Expected a number or object with targetChargeLevel/tcl property.');
+                return;
+            }
+
+            logger.info('setChargeLevelTarget command sent:', { targetChargeLevel });
+            logger.warn(`Command Status Topic: ${commandStatusTopic}`);
+            client.publish(commandStatusSensorConfig.topic, JSON.stringify(commandStatusSensorConfig.payload), { retain: true });
+            client.publish(commandStatusSensorTimestampConfig.topic, JSON.stringify(commandStatusSensorTimestampConfig.payload), { retain: true });
+            client.publish(commandStatusTopic,
+                JSON.stringify({
+                    "command": {
+                        "error": {
+                            "message": "Sent",
+                            "response": {
+                                "status": 0,
+                                "statusText": "Sent"
+                            }
+                        }
+                    },
+                    "completionTimestamp": new Date().toISOString()
+                }), { retain: true });
+            
+            // Call the command with targetChargeLevel as first parameter
+            commands[command](targetChargeLevel, {})
+                .then(data => {
+                    const completionTimestamp = new Date().toISOString();
+                    logger.debug(`Completion Timestamp: ${completionTimestamp}`);
+                    logger.warn('setChargeLevelTarget command completed:', { targetChargeLevel });
+                    logger.warn(`Command Status Topic: ${commandStatusTopic}`);
+                    logger.debug('setChargeLevelTarget response:', { data });
+                    client.publish(
+                        commandStatusTopic,
+                        JSON.stringify({
+                            "command": {
+                                "error": {
+                                    "message": "Completed Successfully",
+                                    "response": {
+                                        "status": 0,
+                                        "statusText": "Completed Successfully"
+                                    }
+                                }
+                            },
+                            "completionTimestamp": completionTimestamp
+                        }), { retain: true }
+                    );
+                })
+                .catch((e) => {
+                    if (e instanceof Error) {
+                        const completionTimestamp = new Date().toISOString();
+                        logger.debug(`Completion Timestamp: ${completionTimestamp}`);
+                        const errorPayload = {
+                            error: _.pick(e, [
+                                'message',
+                                'response.status',
+                                'response.statusText',
+                                'response.headers',
+                                'response.data',
+                                'request.method',
+                                'request.body',
+                                'request.contentType',
+                                'request.headers',
+                                'request.url',
+                                'stack'
+                            ])
+                        };
+                        logger.error('setChargeLevelTarget Command Error!', { command, error: errorPayload });
+                        logger.error(`Command Status Topic for Errored Command: ${commandStatusTopic}`);
+                        client.publish(commandStatusTopic,
+                            JSON.stringify({
+                                "command": errorPayload,
+                                "completionTimestamp": completionTimestamp
+                            }), { retain: true });
+                    }
+                });
+        }
+
         else {
             logger.warn('Command sent:', { command }, { options });
             logger.warn(`Command Status Topic: ${commandStatusTopic}`);

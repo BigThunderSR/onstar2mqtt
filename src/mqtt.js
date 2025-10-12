@@ -1341,6 +1341,10 @@ class MQTT {
                 return this.mapSensorConfigPayload(diag, diagEl, 'measurement', 'temperature', undefined, undefined, 'mdi:thermostat');
             case 'EV BATTERY LEVEL':
                 return this.mapSensorConfigPayload(diag, diagEl, 'measurement', 'battery', undefined, undefined, 'mdi:battery-high');
+            case 'CHARGE STATE': // API v1
+            case 'CHARGE_STATE': // API v3 - EV battery state of charge percentage
+                // API v3: Include status and statusColor as attributes
+                return this.mapSensorConfigPayload(diag, diagEl, 'measurement', 'battery', undefined, `{{ {'status': value_json.${MQTT.convertName(diagEl.name)}_status, 'status_color': value_json.${MQTT.convertName(diagEl.name)}_status_color} | tojson }}`, 'mdi:battery-high');
             case 'TIRE PRESSURE LF':
                 return this.mapSensorConfigPayload(diag, diagEl, 'measurement', 'pressure', 'Tire Pressure: Left Front', `{{ {'recommendation': value_json.${MQTT.convertName('TIRE_PRESSURE_PLACARD_FRONT')}, 'message': value_json.${MQTT.convertName('TIRE_PRESSURE_LF_MESSAGE')}} | tojson }}`, 'mdi:car-tire-alert');
             case 'TIRE PRESSURE LF PSI':

@@ -109,6 +109,8 @@ Supply these values to the ENV vars below. The default data refresh interval is 
 
 **Vehicle Image:** Your vehicle's photo from the manufacturer is automatically downloaded, cached, and published to Home Assistant as an image entity on application startup. The image is base64-encoded for offline viewing and persists even if the manufacturer's URL changes.
 
+**EV Charging Metrics:** For electric vehicles, detailed charging metrics are available on-demand via the "Get EV Charging Metrics" button in Home Assistant. This creates 10 specialized sensors including target charge level, battery capacity, trip consumption, charge mode, charge location status, and discharge settings. See [HA-MQTT.md](HA-MQTT.md) for full sensor details.
+
 ### Home Assistant configuration templates
 
 MQTT auto discovery is enabled. For further integrations and screenshots see [HA-MQTT.md](HA-MQTT.md).

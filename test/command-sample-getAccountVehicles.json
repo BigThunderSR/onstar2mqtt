@@ -1,0 +1,43 @@
+{
+  "errors": [],
+  "data": {
+    "vehicles": [
+      {
+        "vin": "[REDACTED]",
+        "vehicleId": "[REDACTED]",
+        "make": "Chevrolet",
+        "model": "Blazer EV",
+        "nickName": "Matt's Blazer",
+        "year": "2024",
+        "imageUrl": "https://cgi.chevrolet.com/mmgprod-us/dynres/prove/image.gen?i=2024/1MC26/1MC26__2LT/GJV_1SZ_2LT_2NF_2ST_3ST_4NK_4ST_5A7_5C6_5FC_5ST_6X1_7X1_8X2_9L3_9X2_ACH_AED_AEO_AEQ_AGJ_AIB_AIF_AIM_AKK_AKO_AL0_AL9_AQP_ARU_ARW_AR9_ASV_AS2_ATH_AT9_AU3_AVI_AXG_AXP_AYX_A2X_A69_A7J_A7Z_A70_BAG_BAH_BKG_BKL_BSL_BTT_BTV_CAJ_CTB_CTT_C23_C25_C49_C59_C68_C75_DA5_DD8_DEG_DMA_DP6_D06_D67_D75_EC5_EF7_EN0_EPH_E21_E28_E91_FE1_FE9_FJP_GJV_HB9_HS1_H9F_IKP_ISA_IVD_JBO_JCF_JSW_J24_KAG_KH8_KI3_KKC_KRV_KSG_KTI_KWP_K12_K28_K3Z_K7A_LHD_MAH_MF1_NAM_NCH_NDC_NF6_NJ1_NW9_N37_N53_PRF_PSC_PZ8_P76_QBX_RFD_RSR_RT9_R9N_R9Z_SAL_SBK_SLL_S78_TAU_TB8_TCP_TDM_TGE_TQ5_TRB_TR0_TT9_TUJ_T4L_T61_T8Z_T83_UBI_UBJ_UBK_UC1_UC3_UD7_UEN_UEU_UE1_UE4_UFA_UFB_UGM_UGN_UHG_UHH_UH5_UIT_UJC_UJN_UKI_UKK_UKM_UKT_UOW_UQF_UQI_UQL_URF_URW_UTJ_UUA_UUQ_UUT_UVX_UVZ_UV2_U05_U2K_U27_U5G_U80_VEE_VIX_VJQ_VJR_VK3_VNU_VRF_VRG_VRH_VRJ_VRK_VRL_VRM_VRN_VRR_VV4_V07_V6K_V8D_V92_WMY_WPN_WU5_XL8_XRD_X0C_Y7C_ZFT_ZPN_0ST_1MP_1NF_Fgmds2.jpg&v=deg01&std=true&background=FFFFFF&country=US",
+        "onstarCapable": true,
+        "vehicleType": "connected",
+        "roleCode": "OWNER",
+        "onstarStatusCode": "ACTIVE",
+        "onstarAccountNumber": "[REDACTED]",
+        "preDelivery": false,
+        "orderNum": null,
+        "orderStatus": null
+      },
+      {
+        "vin": "[REDACTED]",
+        "vehicleId": "[REDACTED]",
+        "make": "Chevrolet",
+        "model": "Blazer EV",
+        "nickName": null,
+        "year": "2024",
+        "imageUrl": "https://cgi.chevrolet.com/mmgprod-us/dynres/prove/image.gen?i=2024/1MC26/1MC26__2LT/GJVgmds2.png&v=deg01&std=true&country=US&send404=true&background=ffffff",
+        "onstarCapable": true,
+        "vehicleType": "connected",
+        "roleCode": "DRIVER",
+        "onstarStatusCode": "ACTIVE",
+        "onstarAccountNumber": "[REDACTED]",
+        "preDelivery": false,
+        "orderNum": null,
+        "orderStatus": null
+      }
+    ]
+  },
+  "extensions": null,
+  "dataPresent": true
+}

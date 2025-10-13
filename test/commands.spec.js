@@ -12,10 +12,14 @@ describe('Commands', () => {
             cancelStart: () => Promise.resolve(),
             alert: () => Promise.resolve(),
             cancelAlert: () => Promise.resolve(),
+            flashLights: () => Promise.resolve(),
+            stopLights: () => Promise.resolve(),
             lockDoor: () => Promise.resolve(),
             unlockDoor: () => Promise.resolve(),
             lockTrunk: () => Promise.resolve(),
             unlockTrunk: () => Promise.resolve(),
+            setChargeLevelTarget: () => Promise.resolve(),
+            stopCharging: () => Promise.resolve(),
             chargeOverride: () => Promise.resolve(),
             cancelChargeOverride: () => Promise.resolve(),
             getChargingProfile: () => Promise.resolve(),
@@ -23,6 +27,10 @@ describe('Commands', () => {
             location: () => Promise.resolve(),
             diagnostics: () => Promise.resolve(),
             enginerpm: () => Promise.resolve(),
+            getVehicleDetails: () => Promise.resolve(),
+            getOnstarPlan: () => Promise.resolve(),
+            getEVChargingMetrics: () => Promise.resolve(),
+            getVehicleRecallInfo: () => Promise.resolve(),
         };
 
         commands = new Commands(onstarMock);
@@ -72,6 +80,16 @@ describe('Commands', () => {
         assert.strictEqual(result, undefined);
     });
 
+    it('should call flashLights method', async () => {
+        const result = await commands.flashLights({});
+        assert.strictEqual(result, undefined);
+    });
+
+    it('should call stopLights method', async () => {
+        const result = await commands.stopLights();
+        assert.strictEqual(result, undefined);
+    });
+
     it('should call lockDoor method', async () => {
         const result = await commands.lockDoor({});
         assert.strictEqual(result, undefined);
@@ -92,22 +110,32 @@ describe('Commands', () => {
         assert.strictEqual(result, undefined);
     });
 
-    it('should call chargeOverride method', async () => {
+    it('should call setChargeLevelTarget method', async () => {
+        const result = await commands.setChargeLevelTarget(80, {});
+        assert.strictEqual(result, undefined);
+    });
+
+    it('should call stopCharging method', async () => {
+        const result = await commands.stopCharging({});
+        assert.strictEqual(result, undefined);
+    });
+
+    it('should call chargeOverride method (deprecated)', async () => {
         const result = await commands.chargeOverride({});
         assert.strictEqual(result, undefined);
     });
 
-    it('should call cancelChargeOverride method', async () => {
+    it('should call cancelChargeOverride method (deprecated)', async () => {
         const result = await commands.cancelChargeOverride({});
         assert.strictEqual(result, undefined);
     });
 
-    it('should call getChargingProfile method', async () => {
+    it('should call getChargingProfile method (deprecated)', async () => {
         const result = await commands.getChargingProfile();
         assert.strictEqual(result, undefined);
     });
 
-    it('should call setChargingProfile method', async () => {
+    it('should call setChargingProfile method (deprecated)', async () => {
         const result = await commands.setChargingProfile({});
         assert.strictEqual(result, undefined);
     });
@@ -126,4 +154,24 @@ describe('Commands', () => {
     //     const result = await commands.enginerpm({});
     //     assert.strictEqual(result, undefined);
     // });
+
+    it('should call getVehicleDetails method', async () => {
+        const result = await commands.getVehicleDetails();
+        assert.strictEqual(result, undefined);
+    });
+
+    it('should call getOnstarPlan method', async () => {
+        const result = await commands.getOnstarPlan();
+        assert.strictEqual(result, undefined);
+    });
+
+    it('should call getEVChargingMetrics method', async () => {
+        const result = await commands.getEVChargingMetrics();
+        assert.strictEqual(result, undefined);
+    });
+
+    it('should call getVehicleRecallInfo method', async () => {
+        const result = await commands.getVehicleRecallInfo();
+        assert.strictEqual(result, undefined);
+    });
 });

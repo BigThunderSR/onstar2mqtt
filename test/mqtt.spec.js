@@ -2272,6 +2272,66 @@ describe('MQTT', () => {
             assert.strictEqual(result.state_class, 'measurement');
         });
 
+        it('should map sensor config payload for EV scheduled charge start day sensors', () => {
+            const diagEl120V = {
+                name: 'EV_SCHEDULED_CHARGE_START_120V_DAY',
+                value: 'Wednesday',
+                unit: null
+            };
+            const result120V = mqtt.getConfigMapping(d, diagEl120V);
+            assert.strictEqual(result120V.state_class, undefined);
+            assert.strictEqual(result120V.icon, 'mdi:calendar');
+
+            const diagEl240V = {
+                name: 'EV SCHEDULED CHARGE START 240V DAY',
+                value: 'Wednesday',
+                unit: null
+            };
+            const result240V = mqtt.getConfigMapping(d, diagEl240V);
+            assert.strictEqual(result240V.state_class, undefined);
+            assert.strictEqual(result240V.icon, 'mdi:calendar');
+        });
+
+        it('should map sensor config payload for priority charge request get', () => {
+            const diagEl = {
+                name: 'PRIORITY_CHARGE_REQ_GET',
+                value: 'ACTIVE',
+                unit: null
+            };
+            const result = mqtt.getConfigMapping(d, diagEl);
+            assert.strictEqual(result.state_class, undefined);
+            assert.strictEqual(result.icon, 'mdi:battery-charging');
+
+            const diagElSpace = {
+                name: 'PRIORITY CHARGE REQ GET',
+                value: 'ACTIVE',
+                unit: null
+            };
+            const resultSpace = mqtt.getConfigMapping(d, diagElSpace);
+            assert.strictEqual(resultSpace.state_class, undefined);
+            assert.strictEqual(resultSpace.icon, 'mdi:battery-charging');
+        });
+
+        it('should map sensor config payload for charge abort reason pid', () => {
+            const diagEl = {
+                name: 'CHARGE_ABORT_REASON_PID',
+                value: 'NOT_ABORT',
+                unit: null
+            };
+            const result = mqtt.getConfigMapping(d, diagEl);
+            assert.strictEqual(result.state_class, undefined);
+            assert.strictEqual(result.icon, 'mdi:alert-circle');
+
+            const diagElSpace = {
+                name: 'CHARGE ABORT REASON PID',
+                value: 'NOT_ABORT',
+                unit: null
+            };
+            const resultSpace = mqtt.getConfigMapping(d, diagElSpace);
+            assert.strictEqual(resultSpace.state_class, undefined);
+            assert.strictEqual(resultSpace.icon, 'mdi:alert-circle');
+        });
+
         it('should handle unknown diagnostic element names', () => {
             const diagEl = {
                 name: 'UNKNOWN_SENSOR',

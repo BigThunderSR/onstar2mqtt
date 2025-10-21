@@ -65,11 +65,11 @@ describe('Vehicle Recall Sensor', () => {
             assert.strictEqual(payload.json_attributes_template, '{{ value_json.attributes | tojson }}');
         });
 
-        it('should use unrepaired_active_recalls_count as main sensor value', () => {
+        it('should use unrepaired_active_recall_count as main sensor value', () => {
             const config = mqttHA.getVehicleRecallConfig();
             const payload = config.payload;
             
-            assert.strictEqual(payload.value_template, '{{ value_json.unrepaired_active_recalls_count }}');
+            assert.strictEqual(payload.value_template, '{{ value_json.unrepaired_active_recall_count }}');
         });
     });
 
@@ -80,7 +80,7 @@ describe('Vehicle Recall Sensor', () => {
             assert.strictEqual(state.recall_count, 1);
             assert.strictEqual(state.active_recalls_count, 1);
             assert.strictEqual(state.incomplete_repairs_count, 1);
-            assert.strictEqual(state.unrepaired_active_recalls_count, 1);
+            assert.strictEqual(state.unrepaired_active_recall_count, 1);
         });
 
         it('should include attributes object', () => {
@@ -121,7 +121,7 @@ describe('Vehicle Recall Sensor', () => {
             assert.strictEqual(state.recall_count, 0);
             assert.strictEqual(state.active_recalls_count, 0);
             assert.strictEqual(state.incomplete_repairs_count, 0);
-            assert.strictEqual(state.unrepaired_active_recalls_count, 0);
+            assert.strictEqual(state.unrepaired_active_recall_count, 0);
             assert.strictEqual(state.attributes.has_active_recalls, false);
             assert.strictEqual(state.attributes.has_unrepaired_active_recalls, false);
             assert.strictEqual(state.attributes.recalls.length, 0);
@@ -135,7 +135,7 @@ describe('Vehicle Recall Sensor', () => {
             assert.strictEqual(state.recall_count, 0);
             assert.strictEqual(state.active_recalls_count, 0);
             assert.strictEqual(state.incomplete_repairs_count, 0);
-            assert.strictEqual(state.unrepaired_active_recalls_count, 0);
+            assert.strictEqual(state.unrepaired_active_recall_count, 0);
         });
 
         it('should filter active recalls correctly', () => {
@@ -275,7 +275,7 @@ describe('Vehicle Recall Sensor', () => {
             // Incomplete repairs: R001 (A + incomplete), R003 (I + incomplete) = 2
             assert.strictEqual(state.incomplete_repairs_count, 2);
             // Unrepaired AND active: only R001 (A + incomplete) = 1
-            assert.strictEqual(state.unrepaired_active_recalls_count, 1);
+            assert.strictEqual(state.unrepaired_active_recall_count, 1);
             assert.strictEqual(state.attributes.has_unrepaired_active_recalls, true);
         });
     });

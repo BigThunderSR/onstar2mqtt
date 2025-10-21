@@ -1022,7 +1022,7 @@ class MQTT {
             "unique_id": unique_id,
             "name": "Vehicle Recalls",
             "state_topic": `${this.prefix}/sensor/${this.instance}/vehicle_recalls/state`,
-            "value_template": "{{ value_json.unrepaired_active_recalls_count }}",
+            "value_template": "{{ value_json.unrepaired_active_recall_count }}",
             "icon": "mdi:alert-octagon",
             "json_attributes_topic": `${this.prefix}/sensor/${this.instance}/vehicle_recalls/state`,
             "json_attributes_template": "{{ value_json.attributes | tojson }}",
@@ -1046,7 +1046,7 @@ class MQTT {
             recall_count: recallInfo.length,
             active_recalls_count: activeRecalls.length,
             incomplete_repairs_count: incompleteRepairs.length,
-            unrepaired_active_recalls_count: unrepairedActiveRecalls.length,
+            unrepaired_active_recall_count: unrepairedActiveRecalls.length,
             attributes: {
                 has_active_recalls: activeRecalls.length > 0,
                 has_unrepaired_active_recalls: unrepairedActiveRecalls.length > 0,

@@ -278,6 +278,62 @@ describe('Vehicle Recall Sensor', () => {
             assert.strictEqual(state.unrepaired_active_recall_count, 1);
             assert.strictEqual(state.attributes.has_unrepaired_active_recalls, true);
         });
+
+        it('should include expired unrepaired recalls in count', () => {
+            const multiRecallData = {
+                data: {
+                    vehicleDetails: {
+                        recallInfo: [
+                            {
+                                recallId: 'R001',
+                                title: 'Active and Unrepaired',
+                                typeDescription: 'Safety',
+                                recallStatus: 'A',
+                                repairStatus: 'incomplete',
+                                description: 'Test',
+                                repairDescription: 'Test',
+                                safetyRiskDescription: 'Test',
+                                completedDate: null
+                            },
+                            {
+                                recallId: 'R002',
+                                title: 'Expired and Unrepaired',
+                                typeDescription: 'Safety',
+                                recallStatus: 'E',
+                                repairStatus: 'incomplete',
+                                description: 'Test',
+                                repairDescription: 'Test',
+                                safetyRiskDescription: 'Test',
+                                completedDate: null
+                            },
+                            {
+                                recallId: 'R003',
+                                title: 'Expired but Repaired',
+                                typeDescription: 'Safety',
+                                recallStatus: 'E',
+                                repairStatus: 'complete',
+                                description: 'Test',
+                                repairDescription: 'Test',
+                                safetyRiskDescription: 'Test',
+                                completedDate: '2024-01-01'
+                            }
+                        ]
+                    }
+                }
+            };
+            
+            const state = mqttHA.getVehicleRecallStatePayload(multiRecallData);
+            
+            // Total recalls: 3
+            assert.strictEqual(state.recall_count, 3);
+            // Active recalls: only R001 (status A) = 1
+            assert.strictEqual(state.active_recalls_count, 1);
+            // Incomplete repairs: R001 (A + incomplete), R002 (E + incomplete) = 2
+            assert.strictEqual(state.incomplete_repairs_count, 2);
+            // Unrepaired AND (active OR expired): R001 (A + incomplete), R002 (E + incomplete) = 2
+            assert.strictEqual(state.unrepaired_active_recall_count, 2);
+            assert.strictEqual(state.attributes.has_unrepaired_active_recalls, true);
+        });
     });
 
     describe('Recall Sensor Integration', () => {

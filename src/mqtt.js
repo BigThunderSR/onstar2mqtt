@@ -1039,8 +1039,11 @@ class MQTT {
         const recallInfo = _.get(recallData, 'data.vehicleDetails.recallInfo', []);
         const activeRecalls = recallInfo.filter(r => r.recallStatus === 'A');
         const incompleteRepairs = recallInfo.filter(r => r.repairStatus === 'incomplete');
-        // Filter for recalls that are BOTH active AND unrepaired
-        const unrepairedActiveRecalls = recallInfo.filter(r => r.recallStatus === 'A' && r.repairStatus === 'incomplete');
+        // Filter for recalls that are (Active OR Expired) AND unrepaired
+        // Include expired recalls because the safety issue still exists even if the recall program expired
+        const unrepairedActiveRecalls = recallInfo.filter(r => 
+            (r.recallStatus === 'A' || r.recallStatus === 'E') && r.repairStatus === 'incomplete'
+        );
         
         const state = {
             recall_count: recallInfo.length,

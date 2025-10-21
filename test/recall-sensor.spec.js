@@ -274,8 +274,8 @@ describe('Vehicle Recall Sensor', () => {
             assert.strictEqual(state.active_recalls_count, 2);
             // Incomplete repairs: R001 (A + incomplete), R003 (I + incomplete) = 2
             assert.strictEqual(state.incomplete_repairs_count, 2);
-            // Unrepaired AND active: only R001 (A + incomplete) = 1
-            assert.strictEqual(state.unrepaired_active_recall_count, 1);
+            // Unrepaired AND (active OR inactive): R001 (A + incomplete), R003 (I + incomplete) = 2
+            assert.strictEqual(state.unrepaired_active_recall_count, 2);
             assert.strictEqual(state.attributes.has_unrepaired_active_recalls, true);
         });
 
@@ -331,6 +331,62 @@ describe('Vehicle Recall Sensor', () => {
             // Incomplete repairs: R001 (A + incomplete), R002 (E + incomplete) = 2
             assert.strictEqual(state.incomplete_repairs_count, 2);
             // Unrepaired AND (active OR expired): R001 (A + incomplete), R002 (E + incomplete) = 2
+            assert.strictEqual(state.unrepaired_active_recall_count, 2);
+            assert.strictEqual(state.attributes.has_unrepaired_active_recalls, true);
+        });
+
+        it('should include inactive unrepaired recalls for awareness', () => {
+            const multiRecallData = {
+                data: {
+                    vehicleDetails: {
+                        recallInfo: [
+                            {
+                                recallId: 'R001',
+                                title: 'Active Unrepaired',
+                                typeDescription: 'Safety',
+                                recallStatus: 'A',
+                                repairStatus: 'incomplete',
+                                description: 'Test',
+                                repairDescription: 'Test',
+                                safetyRiskDescription: 'Test',
+                                completedDate: null
+                            },
+                            {
+                                recallId: 'R002',
+                                title: 'Inactive Unrepaired - User should be aware',
+                                typeDescription: 'Safety',
+                                recallStatus: 'I',
+                                repairStatus: 'incomplete',
+                                description: 'Test',
+                                repairDescription: 'Test',
+                                safetyRiskDescription: 'Test',
+                                completedDate: null
+                            },
+                            {
+                                recallId: 'R003',
+                                title: 'Completed Recall',
+                                typeDescription: 'Safety',
+                                recallStatus: 'C',
+                                repairStatus: 'complete',
+                                description: 'Test',
+                                repairDescription: 'Test',
+                                safetyRiskDescription: 'Test',
+                                completedDate: '2024-01-01'
+                            }
+                        ]
+                    }
+                }
+            };
+            
+            const state = mqttHA.getVehicleRecallStatePayload(multiRecallData);
+            
+            // Total recalls: 3
+            assert.strictEqual(state.recall_count, 3);
+            // Active recalls: only R001 (status A) = 1
+            assert.strictEqual(state.active_recalls_count, 1);
+            // Incomplete repairs: R001 (A + incomplete), R002 (I + incomplete) = 2
+            assert.strictEqual(state.incomplete_repairs_count, 2);
+            // Unrepaired AND (active OR expired OR inactive): R001 (A), R002 (I) = 2
             assert.strictEqual(state.unrepaired_active_recall_count, 2);
             assert.strictEqual(state.attributes.has_unrepaired_active_recalls, true);
         });

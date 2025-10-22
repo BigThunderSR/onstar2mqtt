@@ -7,6 +7,7 @@ const Vehicle = require('./vehicle');
 const { Diagnostic, AdvancedDiagnostic } = require('./diagnostic');
 const MQTT = require('./mqtt');
 const Commands = require('./commands');
+const TokenManager = require('./tokenManager');
 const logger = require('./logger');
 const fs = require('fs');
 //const CircularJSON = require('circular-json');
@@ -22,6 +23,7 @@ const onstarConfig = {
     onStarTOTP: process.env.ONSTAR_TOTP,
     onStarPin: process.env.ONSTAR_PIN,
     tokenLocation: process.env.TOKEN_LOCATION || '',
+    authMode: process.env.ONSTAR_AUTH_MODE || 'auto', // 'auto', 'token-only', 'manual'
     checkRequestStatus: _.get(process.env, 'ONSTAR_SYNC', 'true') === 'true',
     refreshInterval: parseInt(process.env.ONSTAR_REFRESH) || (30 * 60 * 1000), // 30 min
     recallRefreshInterval: parseInt(process.env.ONSTAR_RECALL_REFRESH) || (7 * 24 * 60 * 60 * 1000), // 7 days default
@@ -30,18 +32,33 @@ const onstarConfig = {
     allowCommands: _.get(process.env, 'ONSTAR_ALLOW_COMMANDS', 'true') === 'true'
 };
 
-const onstarRequiredProperties = {
-    vin: 'ONSTAR_VIN',
-    username: 'ONSTAR_USERNAME',
-    password: 'ONSTAR_PASSWORD',
-    onStarTOTP: 'ONSTAR_TOTP',
-    onStarPin: 'ONSTAR_PIN'
-};
-
-for (let prop in onstarRequiredProperties) {
-    if (!onstarConfig[prop]) {
-        throw new Error(`"${onstarRequiredProperties[prop]}" is not defined`);
+// Validation depends on auth mode
+if (onstarConfig.authMode === 'token-only') {
+    // In token-only mode, only VIN and TOKEN_LOCATION are required
+    if (!onstarConfig.vin) {
+        throw new Error('"ONSTAR_VIN" is not defined');
     }
+    if (!onstarConfig.tokenLocation) {
+        throw new Error('"TOKEN_LOCATION" is required for token-only mode');
+    }
+    logger.info('Running in TOKEN-ONLY mode - browser automation will be skipped');
+} else {
+    // In auto/manual mode, all credentials are required
+    const onstarRequiredProperties = {
+        vin: 'ONSTAR_VIN',
+        username: 'ONSTAR_USERNAME',
+        password: 'ONSTAR_PASSWORD',
+        onStarTOTP: 'ONSTAR_TOTP',
+        onStarPin: 'ONSTAR_PIN'
+    };
+
+    for (let prop in onstarRequiredProperties) {
+        if (!onstarConfig[prop]) {
+            throw new Error(`"${onstarRequiredProperties[prop]}" is not defined`);
+        }
+    }
+
+    logger.info(`Running in ${onstarConfig.authMode.toUpperCase()} mode - browser automation enabled`);
 }
 
 // Validate VIN
@@ -94,7 +111,67 @@ if (process.env.LOG_LEVEL === 'debug') {
     logger.info('MQTT Config:', { mqttConfig: { ...mqttConfig, password: '********', ca: undefined, cert: undefined, key: undefined } });
 }
 
-const init = () => new Commands(OnStar.create(onstarConfig));
+/**
+ * Initialize OnStar client with authentication mode support
+ * @returns {Commands} Commands instance wrapping OnStar client
+ */
+const init = () => {
+    logger.info(`Initializing OnStar client in ${onstarConfig.authMode} mode...`);
+
+    // Token-only mode: Validate tokens exist before attempting to create client
+    if (onstarConfig.authMode === 'token-only') {
+        const tokenManager = new TokenManager(onstarConfig.tokenLocation);
+
+        // Check token status
+        const status = tokenManager.getTokenStatus();
+        tokenManager.printTokenStatus();
+
+        // Validate token location exists
+        if (!status.locationValid) {
+            throw new Error(
+                `Token location not valid: ${onstarConfig.tokenLocation}\n` +
+                `Please ensure TOKEN_LOCATION is set and writable.\n` +
+                `See docs/TOKEN_ONLY_MODE.md for setup instructions.`
+            );
+        }
+
+        // Validate GM token exists
+        if (!status.gmToken.exists) {
+            throw new Error(
+                `No GM token found at: ${onstarConfig.tokenLocation}/gm-token.json\n\n` +
+                `TOKEN-ONLY MODE requires existing tokens. Please either:\n` +
+                `1. Run once in AUTO mode to generate tokens:\n` +
+                `   ONSTAR_AUTH_MODE=auto npm start\n\n` +
+                `2. Manually extract tokens from browser:\n` +
+                `   See docs/TOKEN_ONLY_MODE.md for detailed instructions.\n\n` +
+                `After obtaining tokens, run again in token-only mode.`
+            );
+        }
+
+        // Validate token is not expired
+        if (!status.gmToken.valid) {
+            throw new Error(
+                `GM token exists but is expired or invalid.\n` +
+                `Token lifetime: ${status.gmToken.lifetimeFormatted}\n\n` +
+                `Please refresh tokens using one of these methods:\n` +
+                `1. Temporarily switch to AUTO mode:\n` +
+                `   ONSTAR_AUTH_MODE=auto npm start\n\n` +
+                `2. Manually extract new tokens from browser:\n` +
+                `   See docs/TOKEN_ONLY_MODE.md for instructions.`
+            );
+        }
+
+        logger.info(`✓ Token validation passed. Token valid for: ${status.gmToken.lifetimeFormatted}`);
+        logger.info(`Creating OnStar client with existing tokens (no browser automation)...`);
+
+        // Token exists and is valid - OnStar.create() should load from disk without browser
+        return new Commands(OnStar.create(onstarConfig));
+    }
+
+    // Auto/manual mode: Standard initialization with potential browser automation
+    logger.info('Creating OnStar client (browser automation may be used)...');
+    return new Commands(OnStar.create(onstarConfig));
+};
 
 const getVehicles = async commands => {
     logger.info('Requesting vehicles');

@@ -86,6 +86,84 @@ First, delete the related retained MQTT topics from your MQTT broker to prevent 
 
 For technical details, see [docs/API_MIGRATION_CHANGES.md](docs/API_MIGRATION_CHANGES.md)
 
+## 🔐 NEW: Token-Only Authentication Mode (Bypass Bot Detection)
+
+**Are you experiencing authentication failures or timeouts?** GM's OnStar login uses **Akamai Bot Manager** which blocks automated browsers.
+
+### Symptoms of Bot Detection
+
+- Login page loads but never completes (networkidle timeout)
+- Manual browser login works fine, but automated login fails
+- Presence of `_abck` or `bm_sz` cookies
+- Authentication hangs or times out
+
+### Solution: Token-Only Mode
+
+**Token-Only Mode** completely bypasses browser automation by using manually-obtained authentication tokens:
+
+```bash
+# In your .env file
+ONSTAR_AUTH_MODE=token-only
+TOKEN_LOCATION=./tokens  # or /app/tokens for Docker
+```
+
+**Benefits:**
+- ✅ No browser automation = No bot detection
+- ✅ Faster startup (skips authentication flow)
+- ✅ More reliable
+- ✅ Works when Akamai blocking is active
+
+### Quick Setup
+
+1. **Enable token-only mode** in `.env`:
+   ```bash
+   ONSTAR_AUTH_MODE=token-only
+   TOKEN_LOCATION=./tokens
+   ```
+
+2. **Obtain initial tokens** (one-time setup):
+
+   **Option A:** Try auto mode once (may work, may not due to bot detection)
+   ```bash
+   ONSTAR_AUTH_MODE=auto npm start
+   ```
+
+   **Option B:** Manual token extraction (recommended - always works)
+   - Login to https://my.chevrolet.com/ in your browser
+   - Open DevTools (F12) → Network tab
+   - Find request to `api.gm.com`
+   - Copy `Authorization: Bearer <token>` from headers
+   - Create `tokens/gm-token.json` with token data
+
+   See [docs/TOKEN_ONLY_MODE.md](docs/TOKEN_ONLY_MODE.md) for detailed instructions
+
+3. **Verify token status**:
+   ```bash
+   npm run token:status
+   ```
+
+4. **Run in token-only mode**:
+   ```bash
+   npm start
+   ```
+
+### Token Lifecycle
+
+- Tokens typically last **1-4 hours**
+- When expired, manually refresh using browser method or temporarily switch to `auto` mode
+- Check token status anytime: `npm run token:status`
+
+### Documentation
+
+📖 **Full guide**: [docs/TOKEN_ONLY_MODE.md](docs/TOKEN_ONLY_MODE.md)
+
+Covers:
+- Detailed token extraction steps
+- Token management
+- Troubleshooting
+- Docker configuration
+- Security considerations
+
 ## Running
 
 Collect the following minimum information:

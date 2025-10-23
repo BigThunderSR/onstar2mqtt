@@ -67,6 +67,14 @@ body:
       placeholder: Sanitized log output
 
   - type: textarea
+    id: getvehicledetails_output
+    attributes:
+      label: Output from Running GetVehicleDetails Command
+      description: |
+        For sensor and command errors/issues, please provide the output from running the "GetVehicleDetails" command (remove any sensitive information).
+      placeholder: Output from running "GetVehicleDetails" command
+
+  - type: textarea
     id: screenshots
     attributes:
       label: Screenshots

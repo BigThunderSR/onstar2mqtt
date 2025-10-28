@@ -1,6 +1,6 @@
 #FROM node:22-alpine
 #FROM node:22-bullseye-slim
-FROM node:22-bookworm-slim
+FROM node:24-bookworm-slim
 
 RUN mkdir /app
 WORKDIR /app

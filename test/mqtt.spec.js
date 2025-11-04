@@ -2312,6 +2312,53 @@ describe('MQTT', () => {
             assert.strictEqual(resultSpace.icon, 'mdi:battery-charging');
         });
 
+        it('should map sensor config payload for EV scheduled charge start day sensors and exclude Day unit', () => {
+            // Test with "Day" unit from API v3
+            const diagEl120VWithUnit = {
+                name: 'EV_SCHEDULED_CHARGE_START_120V_DAY',
+                value: 'Sunday',
+                unit: 'Day'
+            };
+            const result120VWithUnit = mqtt.getConfigMapping(d, diagEl120VWithUnit);
+            assert.strictEqual(result120VWithUnit.state_class, undefined);
+            assert.strictEqual(result120VWithUnit.unit_of_measurement, undefined, 'Day unit should be excluded');
+            assert.strictEqual(result120VWithUnit.icon, 'mdi:calendar');
+
+            const diagEl240VWithUnit = {
+                name: 'EV SCHEDULED CHARGE START 240V DAY',
+                value: 'Sunday',
+                unit: 'Day'
+            };
+            const result240VWithUnit = mqtt.getConfigMapping(d, diagEl240VWithUnit);
+            assert.strictEqual(result240VWithUnit.state_class, undefined);
+            assert.strictEqual(result240VWithUnit.unit_of_measurement, undefined, 'Day unit should be excluded');
+            assert.strictEqual(result240VWithUnit.icon, 'mdi:calendar');
+        });
+
+        it('should map binary sensor config payload for PRIORITY_CHARGE_STATUS', () => {
+            const diagEl = {
+                name: 'PRIORITY_CHARGE_STATUS',
+                value: 'ACTIVE',
+                unit: null
+            };
+            const result = mqtt.getConfigMapping(d, diagEl);
+            assert.strictEqual(result.state_class, undefined, 'Binary sensors should not have state_class');
+            assert.strictEqual(result.payload_on, true, 'Binary sensor should have payload_on');
+            assert.strictEqual(result.payload_off, false, 'Binary sensor should have payload_off');
+            assert.strictEqual(result.icon, 'mdi:battery-charging-high');
+
+            const diagElSpace = {
+                name: 'PRIORITY CHARGE STATUS',
+                value: 'NOT_ACTIVE',
+                unit: null
+            };
+            const resultSpace = mqtt.getConfigMapping(d, diagElSpace);
+            assert.strictEqual(resultSpace.state_class, undefined, 'Binary sensors should not have state_class');
+            assert.strictEqual(resultSpace.payload_on, true, 'Binary sensor should have payload_on');
+            assert.strictEqual(resultSpace.payload_off, false, 'Binary sensor should have payload_off');
+            assert.strictEqual(resultSpace.icon, 'mdi:battery-charging-high');
+        });
+
         it('should map sensor config payload for charge abort reason pid', () => {
             const diagEl = {
                 name: 'CHARGE_ABORT_REASON_PID',
@@ -2408,6 +2455,30 @@ describe('MQTT', () => {
             const result = mqtt.mapSensorConfigPayload(d, diagEl, 'measurement');
             assert.strictEqual(result.unit_of_measurement, undefined);
             assert.strictEqual(result.state_class, 'measurement');
+        });
+
+        it('should handle Day unit values by converting them to undefined', () => {
+            const d = new Diagnostic({});
+            const diagEl = {
+                name: 'EV_SCHEDULED_CHARGE_START_120V_DAY',
+                value: 'Sunday',
+                unit: 'Day'
+            };
+            const result = mqtt.mapSensorConfigPayload(d, diagEl, undefined);
+            assert.strictEqual(result.unit_of_measurement, undefined, 'Day unit should be excluded');
+            assert.strictEqual(result.state_class, undefined);
+        });
+
+        it('should handle lowercase day unit values by converting them to undefined', () => {
+            const d = new Diagnostic({});
+            const diagEl = {
+                name: 'EV_SCHEDULED_CHARGE_START_240V_DAY',
+                value: 'Monday',
+                unit: 'day'
+            };
+            const result = mqtt.mapSensorConfigPayload(d, diagEl, undefined);
+            assert.strictEqual(result.unit_of_measurement, undefined, 'day unit should be excluded (case insensitive)');
+            assert.strictEqual(result.state_class, undefined);
         });
     });
 

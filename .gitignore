@@ -7,6 +7,7 @@ node_modules/
 # Build outputs and temporary files
 .tmp/
 coverage/
+temp-*
 
 # Environment variables and secrets
 .env*

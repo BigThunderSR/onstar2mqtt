@@ -30,6 +30,7 @@ describe('Commands', () => {
             getVehicleDetails: () => Promise.resolve(),
             getOnstarPlan: () => Promise.resolve(),
             getEVChargingMetrics: () => Promise.resolve(),
+            refreshEVChargingMetrics: () => Promise.resolve(),
             getVehicleRecallInfo: () => Promise.resolve(),
         };
 
@@ -167,6 +168,11 @@ describe('Commands', () => {
 
     it('should call getEVChargingMetrics method', async () => {
         const result = await commands.getEVChargingMetrics();
+        assert.strictEqual(result, undefined);
+    });
+
+    it('should call refreshEVChargingMetrics method', async () => {
+        const result = await commands.refreshEVChargingMetrics();
         assert.strictEqual(result, undefined);
     });
 

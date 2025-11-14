@@ -1,6 +1,8 @@
 const assert = require('assert');
 const Commands = require('../src/commands');
 
+const refreshEVChargingMetricsSampleData = require('./command-sample-refreshEVChargingMetrics.json');
+
 describe('Commands', () => {
     let commands;
 
@@ -30,7 +32,7 @@ describe('Commands', () => {
             getVehicleDetails: () => Promise.resolve(),
             getOnstarPlan: () => Promise.resolve(),
             getEVChargingMetrics: () => Promise.resolve(),
-            refreshEVChargingMetrics: () => Promise.resolve(),
+            refreshEVChargingMetrics: () => Promise.resolve(refreshEVChargingMetricsSampleData),
             getVehicleRecallInfo: () => Promise.resolve(),
         };
 
@@ -173,7 +175,23 @@ describe('Commands', () => {
 
     it('should call refreshEVChargingMetrics method', async () => {
         const result = await commands.refreshEVChargingMetrics();
-        assert.strictEqual(result, undefined);
+        assert.ok(result);
+        assert.strictEqual(result.status, 'success');
+        assert.ok(result.response.data.results);
+        assert.strictEqual(result.response.data.results.length, 1);
+        
+        const metrics = result.response.data.results[0];
+        assert.strictEqual(metrics.origin, 'papi');
+        assert.strictEqual(metrics.cplug, 'unplugged');
+        assert.strictEqual(metrics.cstate, 'UNCONNECTED');
+        assert.strictEqual(metrics.ign, 'off');
+        assert.strictEqual(metrics.soc, 67.6);
+        
+        // Verify null fields are present
+        assert.strictEqual(metrics.dir, null);
+        assert.strictEqual(metrics.dop, null);
+        assert.strictEqual(metrics.cpwr, null);
+        assert.strictEqual(metrics.ctype, null);
     });
 
     it('should call getVehicleRecallInfo method', async () => {

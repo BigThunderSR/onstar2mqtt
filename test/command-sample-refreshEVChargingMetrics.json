@@ -1,0 +1,50 @@
+{
+  "status": "success",
+  "response": {
+    "data": {
+      "success": true,
+      "results": [
+        {
+          "origin": "papi",
+          "utc": 1762874423257,
+          "ts": "2025-11-11T09:20:23.257-06:00",
+          "loc": "Detroit, MI",
+          "lat": 42.3314,
+          "lng": -83.0458,
+          "gpsutc": 1762874392,
+          "dir": null,
+          "dop": null,
+          "gpsspd": 0,
+          "cplug": "unplugged",
+          "cpwr": null,
+          "cstate": "UNCONNECTED",
+          "ctype": null,
+          "ign": "off",
+          "lifekwh": 2069.2,
+          "meterkwh": 2756.6,
+          "odo": 9358.67188,
+          "ravg": 319.98438,
+          "soc": 67.6,
+          "kwh": 58.78,
+          "temp": 4,
+          "cmode": "immediate",
+          "tcl": 90,
+          "tclRavg": 423.984,
+          "clocSet": true,
+          "clocAt": false,
+          "lifecons": 22.73,
+          "tripodo": 98.7,
+          "tripcons": 19.23,
+          "disEnabled": false,
+          "disMinSoc": 20,
+          "extraMetrics": {
+            "cmodeRate": "invalid",
+            "creduction": "REDUCTION_CHARGE_LEVEL_1",
+            "cschedule": ",,,,,,",
+            "bprecond": "INACTIVE"
+          }
+        }
+      ]
+    }
+  }
+}

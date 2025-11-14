@@ -18,7 +18,7 @@ A service that utilizes the [OnStarJS](https://github.com/BigThunderSR/OnStarJS)
 
 There is no affiliation with this project and GM, Chevrolet nor OnStar. In fact, it would be nice if they'd even respond to development requests so we wouldn't have to reverse engineer their API.
 
-## What's New in v2.0.0
+## What's New in v2.x
 
 **Important Update:** This version includes OnStar API v3 changes that may affect some sensors.
 
@@ -27,9 +27,10 @@ There is no affiliation with this project and GM, Chevrolet nor OnStar. In fact,
 
 **New Features:**
 
-- **OnStar API v3 Support** - Updated to OnStarJS 2.10.0 with full API v3 compatibility
+- **OnStar API v3 Support** - Updated to OnStarJS 2.14.0+ with full API v3 compatibility
 - **Enhanced Reliability** - Improved handling of OnStar API field naming variations
 - **Unit Stability Fix** - Automatic caching of sensor units to handle API instability where units intermittently return as null, preventing Home Assistant unit conversion errors
+- **New EV Commands** - Added refreshEVChargingMetrics for live charging data, setChargeLevelTarget, stopCharging, and comprehensive EV metrics
 
 **What This Means for You:**
 
@@ -110,7 +111,7 @@ Supply these values to the ENV vars below. The default data refresh interval is 
 
 **Vehicle Image:** Your vehicle's photo from the manufacturer is automatically downloaded, cached, and published to Home Assistant as an image entity on application startup. The image is base64-encoded for offline viewing and persists even if the manufacturer's URL changes.
 
-**EV Charging Metrics:** For electric vehicles, detailed charging metrics are available on-demand via the "Get EV Charging Metrics" button in Home Assistant. This creates 10 specialized sensors including target charge level, battery capacity, trip consumption, charge mode, charge location status, and discharge settings. See [HA-MQTT.md](HA-MQTT.md) for full sensor details.
+**EV Charging Metrics:** For electric vehicles, detailed charging metrics are available on-demand via the "Get EV Charging Metrics" (cached data) or "Refresh EV Charging Metrics" (live data) buttons in Home Assistant. These create 10 specialized sensors including target charge level, battery capacity, trip consumption, charge mode, charge location status, and discharge settings. See [HA-MQTT.md](HA-MQTT.md) for full sensor details.
 
 ### Home Assistant configuration templates
 
@@ -170,11 +171,14 @@ MQTT auto discovery is enabled. For further integrations and screenshots see [HA
 **NEW** - Ability to send commands with options using MQTT now works
 
 - Send commands to the command topic in the format:
-  - `{"command": "diagnostics","options": "OIL LIFE,VEHICLE RANGE"}`
-  - `{"command": "setChargingProfile","options": {"chargeMode": "RATE_BASED","rateType": "OFFPEAK"}}`
+  - `{"command": "diagnostics"}` (API v3 returns all diagnostic data - no filtering options available)
+  - ~~`{"command": "setChargingProfile","options": {"chargeMode": "RATE_BASED","rateType": "OFFPEAK"}}`~~ (deprecated - use `setChargeLevelTarget` instead)
+  - `{"command": "setChargeLevelTarget","options": 80}` (set target charge level to 80%)
+  - `{"command": "stopCharging"}` (stop active charging session)
   - ~~`{"command": "alert","options": {"action": "Flash"}}`~~ (deprecated - use `flashLights` instead)
   - `{"command": "flashLights"}`
   - `{"command": "stopLights"}`
+  - `{"command": "refreshEVChargingMetrics"}` (get live charging data)
 
 ### MQTT Button Auto-Discovery
 

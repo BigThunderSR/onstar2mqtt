@@ -16,3 +16,6 @@ temp-*
 onstar2mqtt.env
 *tokens.json
 .secrets
+
+# Unit cache files (per-VIN)
+.unit_cache_*.json

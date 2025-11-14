@@ -29,6 +29,7 @@ There is no affiliation with this project and GM, Chevrolet nor OnStar. In fact,
 
 - **OnStar API v3 Support** - Updated to OnStarJS 2.10.0 with full API v3 compatibility
 - **Enhanced Reliability** - Improved handling of OnStar API field naming variations
+- **Unit Stability Fix** - Automatic caching of sensor units to handle API instability where units intermittently return as null, preventing Home Assistant unit conversion errors
 
 **What This Means for You:**
 
@@ -246,10 +247,16 @@ docker run \
   --env MQTT_PASSWORD \
   --env MQTT_ONSTAR_POLLING_STATUS_TOPIC \
   -v ~/onstar2mqtt-tokens:/app/tokens \
+  -v ~/onstar2mqtt-data:/app/data \
+  --env UNIT_CACHE_DIR=/app/data \
   bigthundersr/onstar2mqtt:latest
 ```
 
-**NOTE:** TOKEN_LOCATION is optional, but STRONGLY RECOMMENDED and allows you to save/read tokens from persistent storage
+**NOTE:**
+
+- TOKEN_LOCATION is optional, but STRONGLY RECOMMENDED and allows you to save/read tokens from persistent storage
+- UNIT_CACHE_DIR volume mount is optional but recommended for persistent unit caching across container restarts (prevents unit conversion errors during API instability)
+- If UNIT_CACHE_DIR is not set, cache files will use TOKEN_LOCATION automatically
 
 [GitHub Container Registry](https://github.com/BigThunderSR/onstar2mqtt/pkgs/container/onstar2mqtt)
 
@@ -267,6 +274,8 @@ docker run \
   --env MQTT_PASSWORD \
   --env MQTT_ONSTAR_POLLING_STATUS_TOPIC \
   -v ~/onstar2mqtt-tokens:/app/tokens \
+  -v ~/onstar2mqtt-data:/app/data \
+  --env UNIT_CACHE_DIR=/app/data \
   ghcr.io/bigthundersr/onstar2mqtt:latest
 ```
 
@@ -285,8 +294,10 @@ onstar2mqtt:
     - ONSTAR_DEVICEID=
     - ONSTAR_VIN=
     - MQTT_HOST=
+    - UNIT_CACHE_DIR=/app/data
   volumes:
     - ~/onstar2mqtt-tokens:/app/tokens
+    - ~/onstar2mqtt-data:/app/data
 ```
 
 [GitHub Container Registry](https://github.com/BigThunderSR/onstar2mqtt/pkgs/container/onstar2mqtt)
@@ -302,8 +313,10 @@ onstar2mqtt:
     - ONSTAR_DEVICEID=
     - ONSTAR_VIN=
     - MQTT_HOST=
+    - UNIT_CACHE_DIR=/app/data
   volumes:
     - ~/onstar2mqtt-tokens:/app/tokens
+    - ~/onstar2mqtt-data:/app/data
 ```
 
 onstar2mqtt.env:
@@ -314,6 +327,7 @@ ONSTAR_PASSWORD=
 ONSTAR_TOTP=
 ONSTAR_PIN=
 TOKEN_LOCATION=/app/tokens  # (NOTE: This is optional and allows you to save/read tokens from persistent storage)
+UNIT_CACHE_DIR=/app/data  # (NOTE: This is optional but recommended for persistent unit caching across container restarts)
 MQTT_USERNAME=
 MQTT_PASSWORD=
 MQTT_ONSTAR_POLLING_STATUS_TOPIC=

@@ -1,19 +1,21 @@
-# OnStarJS 2.12.0 New Commands Integration Summary
+# OnStarJS 2.12.0+ New Commands Integration Summary
 
 ## Overview
 
-Successfully integrated **8 new commands** from OnStarJS 2.12.0 into the OnStar2MQTT application and deprecated 4 old commands. All new commands are now available as auto-created MQTT buttons in Home Assistant.
+Successfully integrated **9 new commands** from OnStarJS 2.12.0+ into the OnStar2MQTT application and deprecated 4 old commands. All new commands are now available as auto-created MQTT buttons in Home Assistant.
+
+**Latest Update (OnStarJS 2.14.0):** Added `refreshEVChargingMetrics()` for live vehicle charging metrics.
 
 ## Deprecated Commands ⚠️
 
 The following commands have been deprecated in OnStarJS 2.12.0 and should be replaced:
 
-| Deprecated Command | Replacement | Reason |
-|-------------------|-------------|---------|
-| `chargeOverride()` | `setChargeLevelTarget()` or `stopCharging()` | Better control and clarity for EV charging |
-| `cancelChargeOverride()` | `setChargeLevelTarget()` or `stopCharging()` | Better control and clarity for EV charging |
-| `getChargingProfile()` | `getEVChargingMetrics()` | More comprehensive charging information |
-| `setChargingProfile()` | `setChargeLevelTarget()` | More intuitive API for setting charge targets |
+| Deprecated Command       | Replacement                                  | Reason                                        |
+| ------------------------ | -------------------------------------------- | --------------------------------------------- |
+| `chargeOverride()`       | `setChargeLevelTarget()` or `stopCharging()` | Better control and clarity for EV charging    |
+| `cancelChargeOverride()` | `setChargeLevelTarget()` or `stopCharging()` | Better control and clarity for EV charging    |
+| `getChargingProfile()`   | `getEVChargingMetrics()`                     | More comprehensive charging information       |
+| `setChargingProfile()`   | `setChargeLevelTarget()`                     | More intuitive API for setting charge targets |
 
 **Migration Notes:**
 
@@ -57,6 +59,10 @@ async getOnstarPlan() {
 
 async getEVChargingMetrics() {
     return this.onstar.getEVChargingMetrics();
+}
+
+async refreshEVChargingMetrics() {
+    return this.onstar.refreshEVChargingMetrics();
 }
 
 async getVehicleRecallInfo() {
@@ -122,6 +128,10 @@ GetOnstarPlan: {
 GetEVChargingMetrics: {
     Name: 'getEVChargingMetrics',
     Icon: 'mdi:ev-station',
+},
+RefreshEVChargingMetrics: {
+    Name: 'refreshEVChargingMetrics',
+    Icon: 'mdi:refresh',
 },
 GetVehicleRecallInfo: {
     Name: 'getVehicleRecallInfo',
@@ -301,7 +311,40 @@ await commands.setChargeLevelTarget(80);
 
 **Replaces:** `getChargingProfile()` (deprecated)
 
-### 8. getVehicleRecallInfo
+### 8. refreshEVChargingMetrics
+
+**Purpose:** Force-refresh and retrieve live vehicle charging metrics (OnStarJS 2.14.0+)
+
+**Key Difference from getEVChargingMetrics:**
+
+- `getEVChargingMetrics()` - Returns cached charging data
+- `refreshEVChargingMetrics()` - Forces the vehicle to generate fresh telemetry before returning data
+
+**Returns:** Same comprehensive data as `getEVChargingMetrics()` but with live/current values:
+
+- Real-time battery state of charge (SOC)
+- Current charge plug state and charge state
+- Active charge mode and settings
+- Latest energy consumption data
+- Current range calculations
+- Fresh location data
+- Live trip consumption metrics
+- Real-time battery preconditioning status
+
+**Parameters:**
+
+- `options` (Object, optional): Additional command options
+
+**Use Case:** Get the most up-to-date charging status when:
+
+- You need real-time charging progress
+- Cached data may be stale
+- Making critical decisions based on current battery state
+- Monitoring active charging sessions
+
+**Note:** This command may take slightly longer than `getEVChargingMetrics()` as it waits for fresh vehicle telemetry. Use `getEVChargingMetrics()` for quick status checks where slightly older data is acceptable.
+
+### 9. getVehicleRecallInfo
 
 **Purpose:** Retrieves active vehicle recall information
 
@@ -562,11 +605,11 @@ A vehicle image entity has been added to display your vehicle's photo from the m
 
 ```javascript
 async function downloadAndCacheImage(imageUrl) {
-    // Downloads image from manufacturer URL
-    // Converts to base64 for caching
-    // 30-second timeout for network requests
-    // Returns data URI format: data:image/jpeg;base64,...
-    // Returns data URI format: data:image/jpeg;base64,...
+  // Downloads image from manufacturer URL
+  // Converts to base64 for caching
+  // 30-second timeout for network requests
+  // Returns data URI format: data:image/jpeg;base64,...
+  // Returns data URI format: data:image/jpeg;base64,...
 }
 ```
 

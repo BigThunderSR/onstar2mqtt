@@ -171,6 +171,23 @@ const connectMQTT = async availabilityTopic => {
         logger.debug('Published availability=true');
     });
     
+    // Additional event handlers for connection lifecycle monitoring
+    client.on('reconnect', () => {
+        logger.info('MQTT client attempting to reconnect...');
+    });
+    
+    client.on('close', () => {
+        logger.warn('MQTT connection closed');
+    });
+    
+    client.on('offline', () => {
+        logger.warn('MQTT client is offline');
+    });
+    
+    client.on('disconnect', (packet) => {
+        logger.warn('MQTT client disconnected', { packet });
+    });
+    
     return client;
 }
 

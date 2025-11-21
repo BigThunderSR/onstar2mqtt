@@ -150,7 +150,15 @@ const connectMQTT = async availabilityTopic => {
         
         const mqttClient = mqtt.connect(url, config);
         
+        // Set up persistent event handler for availability restoration on every (re)connect
+        // Must be attached BEFORE the first connect event fires
         mqttClient.on('connect', () => {
+            logger.info('MQTT connection established, publishing availability');
+            mqttClient.publish(availabilityTopic, 'true', { retain: true });
+            logger.debug('Published availability=true');
+        });
+        
+        mqttClient.once('connect', () => {
             global.clearTimeout(timeout);
             logger.info('Connected to MQTT!');
             resolve(mqttClient);
@@ -161,14 +169,6 @@ const connectMQTT = async availabilityTopic => {
             logger.error('MQTT connection error:', error);
             reject(error);
         });
-    });
-    
-    // Set up persistent event handler for availability restoration on every (re)connect
-    // This handler persists beyond the Promise and fires on all reconnections
-    client.on('connect', () => {
-        logger.info('MQTT connection established, publishing availability');
-        client.publish(availabilityTopic, 'true', { retain: true });
-        logger.debug('Published availability=true');
     });
     
     // Additional event handlers for connection lifecycle monitoring

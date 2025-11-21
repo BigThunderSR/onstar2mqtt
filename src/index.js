@@ -163,6 +163,14 @@ const connectMQTT = async availabilityTopic => {
         });
     });
     
+    // Set up persistent event handler for availability restoration on every (re)connect
+    // This handler persists beyond the Promise and fires on all reconnections
+    client.on('connect', () => {
+        logger.info('MQTT connection established, publishing availability');
+        client.publish(availabilityTopic, 'true', { retain: true });
+        logger.debug('Published availability=true');
+    });
+    
     return client;
 }
 
@@ -1044,8 +1052,6 @@ logger.info('!-- Starting OnStar2MQTT Polling --!');
         const mqttHA = new MQTT(vehicle, mqttConfig.prefix, mqttConfig.namePrefix);
         const availTopic = mqttHA.getAvailabilityTopic();
         const client = await connectMQTT(availTopic);
-        client.publish(availTopic, 'true', { retain: true });
-        logger.debug('Published availability');
         await configureMQTT(commands, client, mqttHA);
 
         const configurations = new Map();

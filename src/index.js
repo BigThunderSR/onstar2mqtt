@@ -158,17 +158,24 @@ const connectMQTT = async availabilityTopic => {
             logger.debug('Published availability=true');
         });
         
+        // Use .once() for initial connection to resolve Promise only once
         mqttClient.once('connect', () => {
             global.clearTimeout(timeout);
             logger.info('Connected to MQTT!');
             resolve(mqttClient);
         });
         
-        mqttClient.on('error', (error) => {
+        // Use .once() for initial connection error to reject Promise only once
+        mqttClient.once('error', (error) => {
             global.clearTimeout(timeout);
-            logger.error('MQTT connection error:', error);
+            logger.error('MQTT initial connection error:', error);
             reject(error);
         });
+    });
+    
+    // Set up persistent error handler for runtime errors (after initial connection)
+    client.on('error', (error) => {
+        logger.error('MQTT runtime error:', error);
     });
     
     // Additional event handlers for connection lifecycle monitoring

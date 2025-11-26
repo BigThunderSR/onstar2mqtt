@@ -10,3 +10,12 @@ onstar2mqtt.env
 # Token files
 *tokens.json
 .secrets
+
+# Unit cache files (per-VIN)
+.unit_cache_*.json
+
+# Test and development scripts that may contain sensitive data
+docker-run-test.sh
+
+# Temporary directories
+temp-*

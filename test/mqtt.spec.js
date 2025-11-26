@@ -3038,7 +3038,7 @@ describe('MQTT', () => {
             const config = mqtt.getConfigPayload(d, d.diagnosticElements[0]);
             assert.strictEqual(config.icon, 'mdi:gas-station');
             assert.strictEqual(config.state_class, 'measurement');
-            assert.strictEqual(config.device_class, 'volume');
+            assert.strictEqual(config.device_class, 'volume_storage');
         });
 
         it('should map FUEL USED GAL correctly', () => {
@@ -3050,7 +3050,7 @@ describe('MQTT', () => {
             const config = mqtt.getConfigPayload(d, d.diagnosticElements[0]);
             assert.strictEqual(config.icon, 'mdi:gas-station');
             assert.strictEqual(config.state_class, 'measurement');
-            assert.strictEqual(config.device_class, 'volume');
+            assert.strictEqual(config.device_class, 'volume_storage');
         });
 
         it('should map BATT SAVER MODE COUNTER correctly', () => {

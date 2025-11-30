@@ -111,17 +111,11 @@ jobs:
           BRANCH_NAME="chore/sync-patchright-$(date +%Y%m%d-%H%M%S)"
           echo "branch=$BRANCH_NAME" >> $GITHUB_OUTPUT
           git checkout -b "$BRANCH_NAME"
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
           git add package.json package-lock.json
-
-      - name: Commit changes via API
-        if: steps.git-check.outputs.changed == 'true'
-        uses: planetscale/ghcommit-action@v0.2.0
-        with:
-          commit_message: "chore: sync patchright version with onstarjs2"
-          repo: ${{ github.repository }}
-          branch: ${{ steps.create-branch.outputs.branch }}
-        env:
-          GITHUB_TOKEN: ${{ secrets.PAT_TOKEN }}
+          git commit -m "chore: sync patchright version with onstarjs2"
+          git push origin "$BRANCH_NAME"
 
       - name: Create Pull Request
         if: steps.git-check.outputs.changed == 'true'

@@ -54,7 +54,7 @@ jobs:
 
       - name: Update package-lock.json
         if: steps.check-onstarjs2.outputs.result == 'true'
-        run: npm install --package-lock-only --legacy-peer-deps
+        run: npm install
 
       - name: Check for changes
         if: steps.check-onstarjs2.outputs.result == 'true'
@@ -62,14 +62,19 @@ jobs:
         run: |
           git diff --exit-code package.json package-lock.json || echo "changed=true" >> $GITHUB_OUTPUT
 
+      - name: Stage changes
+        if: steps.check-onstarjs2.outputs.result == 'true' && steps.git-check.outputs.changed == 'true'
+        run: git add package.json package-lock.json
+
       - name: Commit and push changes
         if: steps.check-onstarjs2.outputs.result == 'true' && steps.git-check.outputs.changed == 'true'
-        run: |
-          git config --local user.email "41898282+github-actions[bot]@users.noreply.github.com"
-          git config --local user.name "github-actions[bot]"
-          git add package.json package-lock.json
-          git commit -m "chore: sync patchright version with onstarjs2"
-          git push
+        uses: planetscale/ghcommit-action@v0.2.0
+        with:
+          commit_message: "chore: sync patchright version with onstarjs2"
+          repo: ${{ github.repository }}
+          branch: ${{ github.head_ref }}
+        env:
+          GITHUB_TOKEN: ${{ secrets.PAT_TOKEN }}
 
   sync-patchright-manual:
     runs-on: ubuntu-latest
@@ -92,26 +97,41 @@ jobs:
         run: npm run sync-patchright
 
       - name: Update package-lock.json
-        run: npm install --package-lock-only --legacy-peer-deps
+        run: npm install
 
       - name: Check for changes
         id: git-check
         run: |
           git diff --exit-code package.json package-lock.json || echo "changed=true" >> $GITHUB_OUTPUT
 
-      - name: Create PR with changes
+      - name: Create branch and commit
         if: steps.git-check.outputs.changed == 'true'
+        id: create-branch
         run: |
           BRANCH_NAME="chore/sync-patchright-$(date +%Y%m%d-%H%M%S)"
-          git config --local user.email "41898282+github-actions[bot]@users.noreply.github.com"
-          git config --local user.name "github-actions[bot]"
+          echo "branch=$BRANCH_NAME" >> $GITHUB_OUTPUT
           git checkout -b "$BRANCH_NAME"
           git add package.json package-lock.json
-          git commit -m "chore: sync patchright version with onstarjs2"
-          git push -u origin "$BRANCH_NAME"
+
+      - name: Commit changes via API
+        if: steps.git-check.outputs.changed == 'true'
+        uses: planetscale/ghcommit-action@v0.2.0
+        with:
+          commit_message: "chore: sync patchright version with onstarjs2"
+          repo: ${{ github.repository }}
+          branch: ${{ steps.create-branch.outputs.branch }}
+        env:
+          GITHUB_TOKEN: ${{ secrets.PAT_TOKEN }}
+
+      - name: Create Pull Request
+        if: steps.git-check.outputs.changed == 'true'
+        run: |
           gh pr create --title "chore: sync patchright version with onstarjs2" \
             --body "This PR was automatically created by the manual sync-patchright workflow to update the patchright override to match the version expected by onstarjs2." \
-            --base main
+            --base main \
+            --head "${{ steps.create-branch.outputs.branch }}" \
+            --label "dependencies" \
+            --label "javascript"
         env:
           GITHUB_TOKEN: ${{ secrets.PAT_TOKEN }}
 

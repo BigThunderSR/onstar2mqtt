@@ -18,6 +18,14 @@ A service that utilizes the [OnStarJS](https://github.com/BigThunderSR/OnStarJS)
 
 There is no affiliation with this project and GM, Chevrolet nor OnStar. In fact, it would be nice if they'd even respond to development requests so we wouldn't have to reverse engineer their API.
 
+## Requirements
+
+- **Active OnStar Subscription:** You must have an active and valid OnStar plan that includes the features you want to use. Different OnStar plan tiers provide access to different features:
+  - **Remote commands** (start, lock, unlock, etc.) require a plan that includes Remote Access
+  - **Vehicle diagnostics** (fuel level, tire pressure, oil life, etc.) require a plan that includes Vehicle Diagnostics
+- **Supported Region:** Only US and Canadian OnStar accounts are known to work with this integration
+- **Valid Credentials:** OnStar username, password, PIN, and TOTP key (see setup instructions below)
+
 ## What's New in v2.x
 
 **Important Update:** This version includes OnStar API v3 changes that may affect some sensors.
@@ -48,6 +56,7 @@ After upgrading to v2.0.0, you will need to **manually remove deprecated sensors
 First, delete the related retained MQTT topics from your MQTT broker to prevent deprecated sensors from being recreated. **Both config and state topics must be removed:**
 
 - **Using MQTT Explorer or similar tool:**
+
   - Connect to your MQTT broker
   - Navigate to `homeassistant/sensor/YOUR_VIN/` and `homeassistant/binary_sensor/YOUR_VIN/`
   - For each deprecated sensor, delete **both**:
@@ -59,7 +68,7 @@ First, delete the related retained MQTT topics from your MQTT broker to prevent 
   ```bash
   # Delete config topic
   mosquitto_pub -h YOUR_MQTT_HOST -u YOUR_MQTT_USER -P YOUR_MQTT_PASS -t "homeassistant/sensor/YOUR_VIN/deprecated_sensor/config" -n -r
-  
+
   # Delete state topic
   mosquitto_pub -h YOUR_MQTT_HOST -u YOUR_MQTT_USER -P YOUR_MQTT_PASS -t "homeassistant/sensor/YOUR_VIN/deprecated_sensor/state" -n -r
   ```

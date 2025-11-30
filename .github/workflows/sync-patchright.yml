@@ -125,7 +125,9 @@ jobs:
             --base main \
             --head "${{ steps.create-branch.outputs.branch }}" \
             --label "patchright-sync" \
-            --label "onstarjs2-dependency"
+            --label "onstarjs2-dependency" \
+            --label "dependencies" \
+            --label "javascript"
         env:
           GITHUB_TOKEN: ${{ secrets.PAT_TOKEN }}
 

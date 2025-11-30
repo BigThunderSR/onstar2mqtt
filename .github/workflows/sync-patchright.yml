@@ -36,7 +36,7 @@ jobs:
 
       - name: Checkout code
         if: steps.check-onstarjs2.outputs.result == 'true'
-        uses: actions/checkout@v4
+        uses: actions/checkout@v6
         with:
           ref: ${{ github.head_ref }}
           token: ${{ secrets.PAT_TOKEN }}
@@ -82,7 +82,7 @@ jobs:
     
     steps:
       - name: Checkout code
-        uses: actions/checkout@v4
+        uses: actions/checkout@v6
         with:
           ref: main
           token: ${{ secrets.PAT_TOKEN }}

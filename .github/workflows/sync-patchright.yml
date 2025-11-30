@@ -124,8 +124,8 @@ jobs:
             --body "This PR was automatically created by the manual sync-patchright workflow to update the patchright override to match the version expected by onstarjs2." \
             --base main \
             --head "${{ steps.create-branch.outputs.branch }}" \
-            --label "dependencies" \
-            --label "javascript"
+            --label "patchright-sync" \
+            --label "onstarjs2-dependency"
         env:
           GITHUB_TOKEN: ${{ secrets.PAT_TOKEN }}
 

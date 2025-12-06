@@ -52,19 +52,20 @@ jobs:
         if: steps.check-onstarjs2.outputs.result == 'true'
         run: npm run sync-patchright
 
-      - name: Update package-lock.json
-        if: steps.check-onstarjs2.outputs.result == 'true'
-        run: npm install
-
       - name: Check for changes
         if: steps.check-onstarjs2.outputs.result == 'true'
         id: git-check
         run: |
-          git diff --exit-code package.json package-lock.json || echo "changed=true" >> $GITHUB_OUTPUT
+          # Only commit if package.json changed (patchright override updated)
+          # Ignore package-lock.json changes from npm install regeneration
+          git diff --exit-code package.json || echo "changed=true" >> $GITHUB_OUTPUT
 
       - name: Stage changes
         if: steps.check-onstarjs2.outputs.result == 'true' && steps.git-check.outputs.changed == 'true'
-        run: git add package.json package-lock.json
+        run: |
+          # Regenerate lock file with the updated override
+          npm install
+          git add package.json package-lock.json
 
       - name: Commit and push changes
         if: steps.check-onstarjs2.outputs.result == 'true' && steps.git-check.outputs.changed == 'true'
@@ -96,13 +97,16 @@ jobs:
       - name: Run sync-patchright
         run: npm run sync-patchright
 
-      - name: Update package-lock.json
-        run: npm install
-
       - name: Check for changes
         id: git-check
         run: |
-          git diff --exit-code package.json package-lock.json || echo "changed=true" >> $GITHUB_OUTPUT
+          # Only proceed if package.json changed (patchright override updated)
+          # Ignore package-lock.json changes from npm install regeneration
+          git diff --exit-code package.json || echo "changed=true" >> $GITHUB_OUTPUT
+
+      - name: Update package-lock.json
+        if: steps.git-check.outputs.changed == 'true'
+        run: npm install
 
       - name: Create branch and commit
         if: steps.git-check.outputs.changed == 'true'

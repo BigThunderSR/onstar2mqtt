@@ -543,7 +543,7 @@ describe('State Cache for Partial API Responses (Enabled)', () => {
     afterEach(() => {
         // Clean up disk cache after tests
         if (fs.existsSync(STATE_CACHE_FILE)) {
-            try { fs.unlinkSync(STATE_CACHE_FILE); } catch (e) { /* ignore */ }
+            try { fs.unlinkSync(STATE_CACHE_FILE); } catch { /* ignore */ }
         }
     });
 
@@ -905,7 +905,7 @@ describe('State Cache for Partial API Responses (Enabled)', () => {
 // ============================================================================
 
 describe('State Cache for Partial API Responses (Disabled)', () => {
-    let mergeState, getCachedState, clearStateCache, isStateCacheEnabled, getStateCacheStats;
+    let mergeState, getCachedState, isStateCacheEnabled, getStateCacheStats;
     const STATE_CACHE_FILE = path.join(process.cwd(), `.state_cache_${VIN}.json`);
     
     before(() => {
@@ -915,7 +915,6 @@ describe('State Cache for Partial API Responses (Disabled)', () => {
         const diagnostic = require('../src/diagnostic');
         mergeState = diagnostic.mergeState;
         getCachedState = diagnostic.getCachedState;
-        clearStateCache = diagnostic.clearStateCache;
         isStateCacheEnabled = diagnostic.isStateCacheEnabled;
         getStateCacheStats = diagnostic.getStateCacheStats;
     });
@@ -923,7 +922,7 @@ describe('State Cache for Partial API Responses (Disabled)', () => {
     after(() => {
         // Clean up
         if (fs.existsSync(STATE_CACHE_FILE)) {
-            try { fs.unlinkSync(STATE_CACHE_FILE); } catch (e) { /* ignore */ }
+            try { fs.unlinkSync(STATE_CACHE_FILE); } catch { /* ignore */ }
         }
     });
 

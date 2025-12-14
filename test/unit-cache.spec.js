@@ -505,15 +505,36 @@ describe('Unit Cache for v3 API Stability', () => {
 });
 
 // ============================================================================
-// State Cache Tests
+// State Cache Tests (with ONSTAR_STATE_CACHE=true)
 // ============================================================================
 
-describe('State Cache for Partial API Responses', () => {
-    // Import state cache functions from diagnostic module
-    const { mergeState, getCachedState, clearStateCache, isStateCacheEnabled, getStateCacheStats } = require('../src/diagnostic');
-    
+describe('State Cache for Partial API Responses (Enabled)', () => {
+    // These tests run with state cache ENABLED by reloading the module
+    let mergeState, getCachedState, clearStateCache, isStateCacheEnabled, getStateCacheStats;
     const STATE_CACHE_FILE = path.join(process.cwd(), `.state_cache_${VIN}.json`);
     
+    before(() => {
+        // Enable state cache and reload module
+        process.env.ONSTAR_STATE_CACHE = 'true';
+        delete require.cache[require.resolve('../src/diagnostic')];
+        const diagnostic = require('../src/diagnostic');
+        mergeState = diagnostic.mergeState;
+        getCachedState = diagnostic.getCachedState;
+        clearStateCache = diagnostic.clearStateCache;
+        isStateCacheEnabled = diagnostic.isStateCacheEnabled;
+        getStateCacheStats = diagnostic.getStateCacheStats;
+    });
+    
+    after(() => {
+        // Clean up and restore
+        if (fs.existsSync(STATE_CACHE_FILE)) {
+            fs.unlinkSync(STATE_CACHE_FILE);
+        }
+        delete process.env.ONSTAR_STATE_CACHE;
+        delete require.cache[require.resolve('../src/diagnostic')];
+        require('../src/diagnostic');
+    });
+
     beforeEach(() => {
         // Clear cache before each test
         clearStateCache(true);
@@ -522,35 +543,32 @@ describe('State Cache for Partial API Responses', () => {
     afterEach(() => {
         // Clean up disk cache after tests
         if (fs.existsSync(STATE_CACHE_FILE)) {
-            fs.unlinkSync(STATE_CACHE_FILE);
+            try { fs.unlinkSync(STATE_CACHE_FILE); } catch (e) { /* ignore */ }
         }
     });
 
+    describe('isStateCacheEnabled', () => {
+        it('should return true when ONSTAR_STATE_CACHE=true', () => {
+            assert.strictEqual(isStateCacheEnabled(), true);
+        });
+    });
+
     describe('mergeState', () => {
-        it('should return new state as-is when cache is empty', () => {
+        it('should return new state with merge timestamp when cache is empty', () => {
             const topic = 'homeassistant/sensor/TESTVIN/FUEL_ECONOMY/state';
             const newState = {
                 fuel_economy: 10.5,
-                fuel_economy_status: 'GOOD',
-                fuel_economy_last_updated: '2025-12-14T15:00:00.000Z'
+                fuel_economy_status: 'GOOD'
             };
 
             const merged = mergeState(topic, newState);
 
             assert.strictEqual(merged.fuel_economy, 10.5);
             assert.strictEqual(merged.fuel_economy_status, 'GOOD');
-            // When cache is enabled, should have merge timestamp
-            if (isStateCacheEnabled()) {
-                assert.ok(merged._cache_last_merge);
-            }
+            assert.ok(merged._cache_last_merge, 'Should have merge timestamp');
         });
 
-        it('should merge new state with cached state when enabled', () => {
-            if (!isStateCacheEnabled()) {
-                // Skip this test if state cache is disabled
-                return;
-            }
-            
+        it('should merge new state with cached state preserving missing fields', () => {
             const topic = 'homeassistant/sensor/TESTVIN/FUEL_ECONOMY/state';
             
             // First update with complete data
@@ -582,77 +600,54 @@ describe('State Cache for Partial API Responses', () => {
             const topic = 'homeassistant/sensor/TESTVIN/ODOMETER/state';
             
             // First update
-            const firstState = {
-                odometer: 50000,
-                odometer_status: 'GOOD'
-            };
-            mergeState(topic, firstState);
+            mergeState(topic, { odometer: 50000, odometer_status: 'GOOD' });
 
             // Second update with new odometer reading
-            const secondState = {
-                odometer: 50100,
-                odometer_status: 'GOOD'
-            };
-            const merged = mergeState(topic, secondState);
+            const merged = mergeState(topic, { odometer: 50100, odometer_status: 'GOOD' });
 
-            // New value should overwrite cached value
             assert.strictEqual(merged.odometer, 50100);
         });
 
         it('should handle multiple topics independently', () => {
-            if (!isStateCacheEnabled()) {
-                return;
-            }
-            
             const topic1 = 'homeassistant/sensor/TESTVIN/FUEL_ECONOMY/state';
             const topic2 = 'homeassistant/sensor/TESTVIN/TIRE_PRESSURE/state';
             
-            // Update topic1
             mergeState(topic1, { fuel_economy: 10.5 });
-            
-            // Update topic2
             mergeState(topic2, { tire_pressure_lf: 240 });
 
-            // Get cached states
             const cached1 = getCachedState(topic1);
             const cached2 = getCachedState(topic2);
 
             assert.strictEqual(cached1.fuel_economy, 10.5);
             assert.strictEqual(cached2.tire_pressure_lf, 240);
-            
-            // Ensure they don't interfere with each other
             assert.strictEqual(cached1.tire_pressure_lf, undefined);
             assert.strictEqual(cached2.fuel_economy, undefined);
         });
 
         it('should preserve fields across multiple partial updates', () => {
-            if (!isStateCacheEnabled()) {
-                return;
-            }
-            
             const topic = 'homeassistant/sensor/TESTVIN/ENGINE_OIL/state';
             
-            // First update
-            mergeState(topic, {
-                engine_oil_life: 75,
-                last_oil_change_date: '2025-06-01'
-            });
+            mergeState(topic, { engine_oil_life: 75, last_oil_change_date: '2025-06-01' });
+            mergeState(topic, { engine_oil_life: 70, engine_type: 'ICE' });
+            const merged = mergeState(topic, { engine_oil_life: 65 });
 
-            // Second update - different partial data
-            mergeState(topic, {
-                engine_oil_life: 70,
-                engine_type: 'ICE'
-            });
+            assert.strictEqual(merged.engine_oil_life, 65);
+            assert.strictEqual(merged.last_oil_change_date, '2025-06-01');
+            assert.strictEqual(merged.engine_type, 'ICE');
+        });
 
-            // Third update - yet another partial
-            const merged = mergeState(topic, {
-                engine_oil_life: 65
-            });
-
-            // Should have data from all updates
-            assert.strictEqual(merged.engine_oil_life, 65);  // Latest
-            assert.strictEqual(merged.last_oil_change_date, '2025-06-01');  // From first
-            assert.strictEqual(merged.engine_type, 'ICE');  // From second
+        it('should log when preserving cached fields', () => {
+            const topic = 'homeassistant/sensor/TESTVIN/LOG_TEST/state';
+            
+            // First with full data
+            mergeState(topic, { a: 1, b: 2, c: 3 });
+            
+            // Second with partial data - should trigger log about preserved fields
+            const merged = mergeState(topic, { a: 10 });
+            
+            assert.strictEqual(merged.a, 10);
+            assert.strictEqual(merged.b, 2);
+            assert.strictEqual(merged.c, 3);
         });
     });
 
@@ -662,11 +657,7 @@ describe('State Cache for Partial API Responses', () => {
             assert.strictEqual(cached, undefined);
         });
 
-        it('should return cached state for known topics when enabled', () => {
-            if (!isStateCacheEnabled()) {
-                return;
-            }
-            
+        it('should return cached state for known topics', () => {
             const topic = 'homeassistant/sensor/TESTVIN/FUEL_LEVEL/state';
             mergeState(topic, { fuel_level: 50 });
 
@@ -677,10 +668,6 @@ describe('State Cache for Partial API Responses', () => {
 
     describe('clearStateCache', () => {
         it('should clear all cached states', () => {
-            if (!isStateCacheEnabled()) {
-                return;
-            }
-            
             const topic1 = 'homeassistant/sensor/TESTVIN/TOPIC1/state';
             const topic2 = 'homeassistant/sensor/TESTVIN/TOPIC2/state';
             
@@ -692,34 +679,183 @@ describe('State Cache for Partial API Responses', () => {
             assert.strictEqual(getCachedState(topic1), undefined);
             assert.strictEqual(getCachedState(topic2), undefined);
         });
+
+        it('should delete disk cache file when deleteDiskCache is true', () => {
+            const topic = 'homeassistant/sensor/TESTVIN/DISK_DELETE/state';
+            mergeState(topic, { value: 1 });
+            
+            assert.ok(fs.existsSync(STATE_CACHE_FILE), 'Cache file should exist before clear');
+            
+            clearStateCache(true);
+            
+            assert.ok(!fs.existsSync(STATE_CACHE_FILE), 'Cache file should be deleted');
+        });
+
+        it('should preserve disk cache file when deleteDiskCache is false', () => {
+            const topic = 'homeassistant/sensor/TESTVIN/DISK_PRESERVE/state';
+            mergeState(topic, { value: 1 });
+            
+            assert.ok(fs.existsSync(STATE_CACHE_FILE), 'Cache file should exist before clear');
+            
+            clearStateCache(false);
+            
+            // Memory cache should be cleared
+            assert.strictEqual(getCachedState(topic), undefined);
+            // But disk file should still exist
+            assert.ok(fs.existsSync(STATE_CACHE_FILE), 'Cache file should still exist');
+        });
     });
 
     describe('getStateCacheStats', () => {
-        it('should return cache statistics', () => {
+        it('should return cache statistics with enabled=true', () => {
             const stats = getStateCacheStats();
 
-            assert.strictEqual(typeof stats.enabled, 'boolean');
+            assert.strictEqual(stats.enabled, true);
             assert.strictEqual(typeof stats.topicCount, 'number');
             assert.ok(stats.cacheFile);
             assert.ok(Array.isArray(stats.topics));
         });
+
+        it('should reflect correct topic count after merges', () => {
+            mergeState('topic1', { a: 1 });
+            mergeState('topic2', { b: 2 });
+            mergeState('topic3', { c: 3 });
+
+            const stats = getStateCacheStats();
+
+            assert.strictEqual(stats.topicCount, 3);
+            assert.ok(stats.topics.includes('topic1'));
+            assert.ok(stats.topics.includes('topic2'));
+            assert.ok(stats.topics.includes('topic3'));
+        });
     });
 
     describe('disk persistence', () => {
-        it('should save cache to disk after merge when enabled', () => {
-            if (!isStateCacheEnabled()) {
-                return;
-            }
-            
+        it('should save cache to disk after merge', () => {
             const topic = 'homeassistant/sensor/TESTVIN/PERSIST_TEST/state';
             mergeState(topic, { persisted_value: 42 });
 
-            // Check that cache file exists
             assert.ok(fs.existsSync(STATE_CACHE_FILE), 'Cache file should exist');
 
-            // Read and verify contents
             const diskData = JSON.parse(fs.readFileSync(STATE_CACHE_FILE, 'utf8'));
             assert.strictEqual(diskData[topic].persisted_value, 42);
+        });
+
+        it('should load cache from disk on module reload', () => {
+            const topic = 'homeassistant/sensor/TESTVIN/RELOAD_TEST/state';
+            mergeState(topic, { reload_value: 123 });
+
+            // Clear memory cache only
+            clearStateCache(false);
+            assert.strictEqual(getCachedState(topic), undefined);
+
+            // Reload module - should load from disk
+            delete require.cache[require.resolve('../src/diagnostic')];
+            const reloaded = require('../src/diagnostic');
+
+            const cached = reloaded.getCachedState(topic);
+            assert.ok(cached, 'Should have loaded cached state from disk');
+            assert.strictEqual(cached.reload_value, 123);
+        });
+
+        it('should handle multiple topics in disk persistence', () => {
+            mergeState('topic/a', { a: 1 });
+            mergeState('topic/b', { b: 2 });
+            mergeState('topic/c', { c: 3 });
+
+            const diskData = JSON.parse(fs.readFileSync(STATE_CACHE_FILE, 'utf8'));
+            
+            assert.strictEqual(diskData['topic/a'].a, 1);
+            assert.strictEqual(diskData['topic/b'].b, 2);
+            assert.strictEqual(diskData['topic/c'].c, 3);
+        });
+    });
+});
+
+// ============================================================================
+// State Cache Tests (with ONSTAR_STATE_CACHE=false - default behavior)
+// ============================================================================
+
+describe('State Cache for Partial API Responses (Disabled)', () => {
+    let mergeState, getCachedState, clearStateCache, isStateCacheEnabled, getStateCacheStats;
+    const STATE_CACHE_FILE = path.join(process.cwd(), `.state_cache_${VIN}.json`);
+    
+    before(() => {
+        // Ensure state cache is disabled and reload module
+        delete process.env.ONSTAR_STATE_CACHE;
+        delete require.cache[require.resolve('../src/diagnostic')];
+        const diagnostic = require('../src/diagnostic');
+        mergeState = diagnostic.mergeState;
+        getCachedState = diagnostic.getCachedState;
+        clearStateCache = diagnostic.clearStateCache;
+        isStateCacheEnabled = diagnostic.isStateCacheEnabled;
+        getStateCacheStats = diagnostic.getStateCacheStats;
+    });
+    
+    after(() => {
+        // Clean up
+        if (fs.existsSync(STATE_CACHE_FILE)) {
+            try { fs.unlinkSync(STATE_CACHE_FILE); } catch (e) { /* ignore */ }
+        }
+    });
+
+    describe('isStateCacheEnabled', () => {
+        it('should return false when ONSTAR_STATE_CACHE is not set', () => {
+            assert.strictEqual(isStateCacheEnabled(), false);
+        });
+    });
+
+    describe('mergeState', () => {
+        it('should return new state as-is without merge timestamp', () => {
+            const topic = 'homeassistant/sensor/TESTVIN/DISABLED_TEST/state';
+            const newState = { fuel_economy: 10.5, fuel_economy_status: 'GOOD' };
+
+            const merged = mergeState(topic, newState);
+
+            assert.strictEqual(merged.fuel_economy, 10.5);
+            assert.strictEqual(merged.fuel_economy_status, 'GOOD');
+            assert.strictEqual(merged._cache_last_merge, undefined, 'Should NOT have merge timestamp when disabled');
+        });
+
+        it('should NOT preserve fields from previous updates', () => {
+            const topic = 'homeassistant/sensor/TESTVIN/NO_PRESERVE/state';
+            
+            // First update with full data
+            mergeState(topic, { a: 1, b: 2, c: 3 });
+            
+            // Second update with partial data - field b should be LOST
+            const merged = mergeState(topic, { a: 10 });
+            
+            assert.strictEqual(merged.a, 10);
+            assert.strictEqual(merged.b, undefined, 'Field b should be lost when cache is disabled');
+            assert.strictEqual(merged.c, undefined, 'Field c should be lost when cache is disabled');
+        });
+
+        it('should not write to disk when disabled', () => {
+            // Clean up any existing file
+            if (fs.existsSync(STATE_CACHE_FILE)) {
+                fs.unlinkSync(STATE_CACHE_FILE);
+            }
+
+            const topic = 'homeassistant/sensor/TESTVIN/NO_DISK/state';
+            mergeState(topic, { value: 42 });
+
+            assert.ok(!fs.existsSync(STATE_CACHE_FILE), 'Should NOT create cache file when disabled');
+        });
+    });
+
+    describe('getCachedState', () => {
+        it('should return undefined since caching is disabled', () => {
+            mergeState('some/topic', { value: 1 });
+            const cached = getCachedState('some/topic');
+            assert.strictEqual(cached, undefined);
+        });
+    });
+
+    describe('getStateCacheStats', () => {
+        it('should return enabled=false', () => {
+            const stats = getStateCacheStats();
+            assert.strictEqual(stats.enabled, false);
         });
     });
 });

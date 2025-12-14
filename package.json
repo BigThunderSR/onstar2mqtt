@@ -37,7 +37,7 @@
     "jsonwebtoken": "^9.0.3",
     "lodash": "^4.17.21",
     "mqtt": "^5.14.1",
-    "onstarjs2": "^2.14.3",
+    "onstarjs2": "^2.15.0",
     "uuid": "^11.1.0",
     "winston": "^3.19.0"
   },

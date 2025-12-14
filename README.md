@@ -38,6 +38,7 @@ There is no affiliation with this project and GM, Chevrolet nor OnStar. In fact,
 - **OnStar API v3 Support** - Updated to OnStarJS 2.14.0+ with full API v3 compatibility
 - **Enhanced Reliability** - Improved handling of OnStar API field naming variations
 - **Unit Stability Fix** - Automatic caching of sensor units to handle API instability where units intermittently return as null, preventing Home Assistant unit conversion errors
+- **State Cache (Optional)** - Enable `ONSTAR_STATE_CACHE=true` to merge partial API responses with cached data, preventing Home Assistant template warnings when the API returns incomplete data on refresh cycles. **Note:** On first run with an empty cache, you may still see template warnings until the cache builds up over a few refresh cycles.
 - **New EV Commands** - Added refreshEVChargingMetrics for live charging data, setChargeLevelTarget, stopCharging, and comprehensive EV metrics
 
 **What This Means for You:**
@@ -262,6 +263,7 @@ docker run \
   -v ~/onstar2mqtt-tokens:/app/tokens \
   -v ~/onstar2mqtt-data:/app/data \
   --env UNIT_CACHE_DIR=/app/data \
+  --env ONSTAR_STATE_CACHE=true \
   bigthundersr/onstar2mqtt:latest
 ```
 
@@ -270,6 +272,7 @@ docker run \
 - TOKEN_LOCATION is optional, but STRONGLY RECOMMENDED and allows you to save/read tokens from persistent storage
 - UNIT_CACHE_DIR volume mount is optional but recommended for persistent unit caching across container restarts (prevents unit conversion errors during API instability)
 - If UNIT_CACHE_DIR is not set, cache files will use TOKEN_LOCATION automatically
+- ONSTAR_STATE_CACHE is optional (default: false) - enable to merge partial API responses with cached data, preventing Home Assistant template warnings. The cache builds up over a few refresh cycles, so you may still see warnings initially after enabling.
 
 [GitHub Container Registry](https://github.com/BigThunderSR/onstar2mqtt/pkgs/container/onstar2mqtt)
 
@@ -289,6 +292,7 @@ docker run \
   -v ~/onstar2mqtt-tokens:/app/tokens \
   -v ~/onstar2mqtt-data:/app/data \
   --env UNIT_CACHE_DIR=/app/data \
+  --env ONSTAR_STATE_CACHE=true \
   ghcr.io/bigthundersr/onstar2mqtt:latest
 ```
 
@@ -308,6 +312,7 @@ onstar2mqtt:
     - ONSTAR_VIN=
     - MQTT_HOST=
     - UNIT_CACHE_DIR=/app/data
+    - ONSTAR_STATE_CACHE=true
   volumes:
     - ~/onstar2mqtt-tokens:/app/tokens
     - ~/onstar2mqtt-data:/app/data
@@ -327,6 +332,7 @@ onstar2mqtt:
     - ONSTAR_VIN=
     - MQTT_HOST=
     - UNIT_CACHE_DIR=/app/data
+    - ONSTAR_STATE_CACHE=true
   volumes:
     - ~/onstar2mqtt-tokens:/app/tokens
     - ~/onstar2mqtt-data:/app/data
@@ -341,6 +347,7 @@ ONSTAR_TOTP=
 ONSTAR_PIN=
 TOKEN_LOCATION=/app/tokens  # (NOTE: This is optional and allows you to save/read tokens from persistent storage)
 UNIT_CACHE_DIR=/app/data  # (NOTE: This is optional but recommended for persistent unit caching across container restarts)
+ONSTAR_STATE_CACHE=true  # (NOTE: Optional - merges partial API responses with cached data to prevent HA template warnings)
 MQTT_USERNAME=
 MQTT_PASSWORD=
 MQTT_ONSTAR_POLLING_STATUS_TOPIC=

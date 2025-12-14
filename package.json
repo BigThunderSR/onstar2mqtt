@@ -30,13 +30,13 @@
   },
   "homepage": "https://github.com/BigThunderSR/onstar2mqtt#readme",
   "dependencies": {
-    "mqtt": "^5.14.1",
     "axios": "^1.13.2",
     "chromium-bidi": "^12.0.0",
     "convert-units": "^2.3.4",
     "dotenv": "^17.2.3",
     "jsonwebtoken": "^9.0.3",
     "lodash": "^4.17.21",
+    "mqtt": "^5.14.1",
     "onstarjs2": "^2.14.3",
     "uuid": "^11.1.0",
     "winston": "^3.19.0"

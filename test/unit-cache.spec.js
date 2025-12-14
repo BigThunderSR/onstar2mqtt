@@ -649,6 +649,134 @@ describe('State Cache for Partial API Responses (Enabled)', () => {
             assert.strictEqual(merged.b, 2);
             assert.strictEqual(merged.c, 3);
         });
+
+        it('should handle all sensor value types correctly', () => {
+            const topic = 'homeassistant/sensor/TESTVIN/MIXED_TYPES/state';
+            
+            // First update with all different value types (simulating real sensor data)
+            const firstState = {
+                // Numbers (tire pressure, fuel level, odometer)
+                tire_pressure_lf: 240,
+                fuel_level: 75.5,
+                odometer: 50000,
+                // Booleans (binary sensors)
+                ev_plug_state: true,
+                ev_charge_state: false,
+                priority_charge_indicator: true,
+                // Strings (status fields, engine type, etc.)
+                engine_type: 'ICE',
+                tire_pressure_status: 'GOOD',
+                oil_life_status_color: 'GREEN',
+                // Timestamps
+                tire_pressure_last_updated: '2025-12-14T15:00:00.000Z',
+                // Null values (unavailable sensors)
+                charge_voltage: null
+            };
+            mergeState(topic, firstState);
+
+            // Second update with only some fields (partial API response)
+            const partialState = {
+                tire_pressure_lf: 242,  // Updated number
+                ev_plug_state: false,   // Updated boolean
+                tire_pressure_status: 'LOW'  // Updated string
+            };
+            const merged = mergeState(topic, partialState);
+
+            // Verify updated values
+            assert.strictEqual(merged.tire_pressure_lf, 242);
+            assert.strictEqual(merged.ev_plug_state, false);
+            assert.strictEqual(merged.tire_pressure_status, 'LOW');
+
+            // Verify preserved numbers
+            assert.strictEqual(merged.fuel_level, 75.5);
+            assert.strictEqual(merged.odometer, 50000);
+
+            // Verify preserved booleans
+            assert.strictEqual(merged.ev_charge_state, false);
+            assert.strictEqual(merged.priority_charge_indicator, true);
+
+            // Verify preserved strings
+            assert.strictEqual(merged.engine_type, 'ICE');
+            assert.strictEqual(merged.oil_life_status_color, 'GREEN');
+
+            // Verify preserved timestamps
+            assert.strictEqual(merged.tire_pressure_last_updated, '2025-12-14T15:00:00.000Z');
+
+            // Verify preserved null values
+            assert.strictEqual(merged.charge_voltage, null);
+        });
+
+        it('should handle null values correctly in merges', () => {
+            const topic = 'homeassistant/sensor/TESTVIN/NULL_HANDLING/state';
+            
+            // First update with value
+            mergeState(topic, { charge_voltage: 240, charging: true });
+
+            // Second update where API returns null (sensor became unavailable)
+            const merged = mergeState(topic, { charge_voltage: null });
+
+            // Null should overwrite the previous value (API explicitly said it's unavailable now)
+            assert.strictEqual(merged.charge_voltage, null);
+            // But other fields should be preserved
+            assert.strictEqual(merged.charging, true);
+        });
+
+        it('should preserve boolean false values (not treat as missing)', () => {
+            const topic = 'homeassistant/sensor/TESTVIN/BOOL_FALSE/state';
+            
+            // First update with false values
+            mergeState(topic, { 
+                ev_plug_state: false, 
+                ev_charge_state: false,
+                some_number: 100
+            });
+
+            // Second update without the boolean fields
+            const merged = mergeState(topic, { some_number: 200 });
+
+            // Boolean false values should be preserved, not treated as missing
+            assert.strictEqual(merged.ev_plug_state, false);
+            assert.strictEqual(merged.ev_charge_state, false);
+            assert.strictEqual(merged.some_number, 200);
+        });
+
+        it('should preserve zero values (not treat as missing)', () => {
+            const topic = 'homeassistant/sensor/TESTVIN/ZERO_VALUES/state';
+            
+            // First update with zero values
+            mergeState(topic, { 
+                fuel_level: 0,  // Empty tank
+                ev_battery: 0,  // Depleted battery
+                charge_rate: 0, // Not charging
+                some_string: 'test'
+            });
+
+            // Second update without the zero fields
+            const merged = mergeState(topic, { some_string: 'updated' });
+
+            // Zero values should be preserved
+            assert.strictEqual(merged.fuel_level, 0);
+            assert.strictEqual(merged.ev_battery, 0);
+            assert.strictEqual(merged.charge_rate, 0);
+            assert.strictEqual(merged.some_string, 'updated');
+        });
+
+        it('should preserve empty string values', () => {
+            const topic = 'homeassistant/sensor/TESTVIN/EMPTY_STRING/state';
+            
+            // First update with empty string
+            mergeState(topic, { 
+                status_message: '',
+                some_value: 42
+            });
+
+            // Second update without the empty string field
+            const merged = mergeState(topic, { some_value: 100 });
+
+            // Empty string should be preserved
+            assert.strictEqual(merged.status_message, '');
+            assert.strictEqual(merged.some_value, 100);
+        });
     });
 
     describe('getCachedState', () => {

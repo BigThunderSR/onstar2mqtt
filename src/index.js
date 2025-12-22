@@ -47,7 +47,7 @@ for (let prop in onstarRequiredProperties) {
 }
 
 // Validate VIN
-if (!/^[A-HJ-NPR-Z0-9]{17}$/i.test(onstarConfig.vin)) {
+if (!/^([A-HJ-NPR-Z0-9]{17}|J\d{1}W\d{10})$/i.test(onstarConfig.vin)) {
     throw new Error('Invalid VIN. Please check the value entered for VIN in ONSTAR_VIN.');
 }
 

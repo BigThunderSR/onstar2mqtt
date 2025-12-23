@@ -33,7 +33,7 @@ on:
 
 jobs:
   test_build_push:
-    name: "ci: ${{ github.event.head_commit.message || github.event.pull_request.title || github.event.workflow_run.head_commit.message || format('{0} - {1} - {2}', matrix.node-version, github.event.workflow_run.head_branch || github.ref_name, github.event_name == 'workflow_run' && 'codeql-pass' || github.event_name) }}"
+    name: ci - test, build, push (${{ matrix.node-version }})
     runs-on: ubuntu-latest
 
     strategy:

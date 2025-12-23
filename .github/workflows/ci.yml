@@ -7,6 +7,8 @@ on:
       - main
       - 'test/**'
       - 'beta/**'
+      - 'dependabot/**'
+      - 'renovate/**'
   pull_request:
   workflow_run:
     workflows: ["CodeQL"]

@@ -5,7 +5,7 @@
 # For more information, see:
 # https://github.com/github/super-linter
 name: Lint Code Base
-run-name: "lint: ${{ github.event.workflow_run.head_commit.message || format('{0} - {1}', github.ref_name, github.event_name) }}"
+run-name: "${{ github.event.workflow_run.head_commit.message || format('{0} - {1}', github.ref_name, github.event_name) }}"
 
 on:
   workflow_dispatch:

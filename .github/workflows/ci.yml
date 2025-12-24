@@ -1,5 +1,5 @@
 name: ci
-run-name: "ci: ${{ github.event.head_commit.message || github.event.pull_request.title || github.event.workflow_run.head_commit.message || format('{0} - {1}', github.ref_name, github.event_name) }}"
+run-name: "${{ github.event.head_commit.message || github.event.pull_request.title || github.event.workflow_run.head_commit.message || format('{0} - {1}', github.ref_name, github.event_name) }}"
 
 on:
   push:

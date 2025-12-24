@@ -267,6 +267,8 @@ docker run \
   bigthundersr/onstar2mqtt:latest
 ```
 
+**Recommendation:** Use a specific version tag (e.g., `bigthundersr/onstar2mqtt:2.5.0`) instead of `:latest`. The `:latest` tag updates frequently and may change your setup unexpectedly.
+
 **NOTE:**
 
 - TOKEN_LOCATION is optional, but STRONGLY RECOMMENDED and allows you to save/read tokens from persistent storage
@@ -358,7 +360,9 @@ MQTT_ONSTAR_POLLING_STATUS_TOPIC=
 
 To monitor multiple vehicles from the same OnStar account, run multiple containers with different VINs. Each container operates independently and publishes to separate MQTT topics (keyed by VIN), so they won't interfere with each other.
 
-**Note:** Use either [Docker Hub](https://hub.docker.com/r/bigthundersr/onstar2mqtt) (`bigthundersr/onstar2mqtt:latest`) or [GitHub Container Registry](https://github.com/BigThunderSR/onstar2mqtt/pkgs/container/onstar2mqtt) (`ghcr.io/bigthundersr/onstar2mqtt:latest`) for the image.
+**Note:** Use either [Docker Hub](https://hub.docker.com/r/bigthundersr/onstar2mqtt) or [GitHub Container Registry](https://github.com/BigThunderSR/onstar2mqtt/pkgs/container/onstar2mqtt) for the image.
+
+**Recommendation:** Use a specific version tag (e.g., `bigthundersr/onstar2mqtt:2.5.0`) instead of `:latest`. The `:latest` tag updates frequently and may change your setup unexpectedly.
 
 ```yaml
 version: '3'

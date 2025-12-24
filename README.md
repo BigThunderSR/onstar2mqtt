@@ -354,6 +354,90 @@ MQTT_ONSTAR_POLLING_STATUS_TOPIC=
 
 ```
 
+### Running Multiple Vehicles
+
+To monitor multiple vehicles from the same OnStar account, run multiple containers with different VINs. Each container operates independently and publishes to separate MQTT topics (keyed by VIN), so they won't interfere with each other.
+
+**docker-compose example with multiple vehicles:**
+
+```yaml
+version: '3'
+services:
+  # Optional: Run your own MQTT broker
+  mqtt:
+    image: eclipse-mosquitto
+    container_name: mqtt
+    restart: unless-stopped
+    ports:
+      - "1883:1883"
+
+  # First vehicle
+  onstar2mqtt-vehicle1:
+    container_name: onstar2mqtt-vehicle1
+    image: bigthundersr/onstar2mqtt:latest
+    restart: unless-stopped
+    environment:
+      - ONSTAR_DEVICEID=xxxxxxxx-xxxx-xxxx-xxxx-xxxxxxxxxxxx  # Generate unique UUID
+      - ONSTAR_VIN=YOUR_FIRST_VIN_HERE  # Replace with your actual VIN
+      - ONSTAR_USERNAME=${ONSTAR_USERNAME}
+      - ONSTAR_PASSWORD=${ONSTAR_PASSWORD}
+      - ONSTAR_TOTP=${ONSTAR_TOTP}
+      - ONSTAR_PIN=${ONSTAR_PIN}
+      - TOKEN_LOCATION=/app/tokens
+      - MQTT_HOST=mqtt  # Change to your MQTT broker hostname if not using the mqtt service above
+      - MQTT_USERNAME=${MQTT_USERNAME}
+      - MQTT_PASSWORD=${MQTT_PASSWORD}
+      - UNIT_CACHE_DIR=/app/data
+      - ONSTAR_STATE_CACHE=true
+    volumes:
+      - ./onstar2mqtt-vehicle1-tokens:/app/tokens
+      - ./onstar2mqtt-vehicle1-data:/app/data
+
+  # Second vehicle
+  onstar2mqtt-vehicle2:
+    container_name: onstar2mqtt-vehicle2
+    image: bigthundersr/onstar2mqtt:latest
+    restart: unless-stopped
+    environment:
+      - ONSTAR_DEVICEID=yyyyyyyy-yyyy-yyyy-yyyy-yyyyyyyyyyyy  # Generate unique UUID
+      - ONSTAR_VIN=YOUR_SECOND_VIN_HERE  # Replace with your actual VIN
+      - ONSTAR_USERNAME=${ONSTAR_USERNAME}
+      - ONSTAR_PASSWORD=${ONSTAR_PASSWORD}
+      - ONSTAR_TOTP=${ONSTAR_TOTP}
+      - ONSTAR_PIN=${ONSTAR_PIN}
+      - TOKEN_LOCATION=/app/tokens
+      - MQTT_HOST=mqtt  # Change to your MQTT broker hostname if not using the mqtt service above
+      - MQTT_USERNAME=${MQTT_USERNAME}
+      - MQTT_PASSWORD=${MQTT_PASSWORD}
+      - UNIT_CACHE_DIR=/app/data
+      - ONSTAR_STATE_CACHE=true
+    volumes:
+      - ./onstar2mqtt-vehicle2-tokens:/app/tokens
+      - ./onstar2mqtt-vehicle2-data:/app/data
+
+  # Add more vehicles as needed following the same pattern
+```
+
+**Create a `.env` file in the same directory:**
+
+```shell
+ONSTAR_USERNAME=your-email@example.com
+ONSTAR_PASSWORD=your-password
+ONSTAR_TOTP=your-totp-key
+ONSTAR_PIN=1234
+MQTT_USERNAME=mqtt-user
+MQTT_PASSWORD=mqtt-password
+```
+
+**Important:**
+
+- Generate unique UUIDs for each `ONSTAR_DEVICEID` ([generator](https://www.uuidgenerator.net/version4))
+- Use separate volume mounts for each vehicle to prevent token/cache conflicts
+- All vehicles can share the same OnStar credentials if on the same account
+- Each vehicle appears as a separate device in Home Assistant
+
+**To run:** `docker-compose up -d`
+
 ### Node.js
 
 It's a typical node.js application, define the same environment values as described in the docker sections and run with:

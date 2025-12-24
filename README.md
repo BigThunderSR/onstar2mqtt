@@ -358,7 +358,7 @@ MQTT_ONSTAR_POLLING_STATUS_TOPIC=
 
 To monitor multiple vehicles from the same OnStar account, run multiple containers with different VINs. Each container operates independently and publishes to separate MQTT topics (keyed by VIN), so they won't interfere with each other.
 
-**docker-compose.yml example with multiple vehicles:**
+**Note:** Use either [Docker Hub](https://hub.docker.com/r/bigthundersr/onstar2mqtt) (`bigthundersr/onstar2mqtt:latest`) or [GitHub Container Registry](https://github.com/BigThunderSR/onstar2mqtt/pkgs/container/onstar2mqtt) (`ghcr.io/bigthundersr/onstar2mqtt:latest`) for the image.
 
 ```yaml
 version: '3'
@@ -366,7 +366,7 @@ services:
   # First vehicle
   onstar2mqtt-vehicle1:
     container_name: onstar2mqtt-vehicle1
-    image: bigthundersr/onstar2mqtt:latest
+    image: bigthundersr/onstar2mqtt:latest  # Or use: ghcr.io/bigthundersr/onstar2mqtt:latest
     restart: unless-stopped
     env_file:
       - /srv/containers/secrets/onstar2mqtt.env
@@ -383,7 +383,7 @@ services:
   # Second vehicle
   onstar2mqtt-vehicle2:
     container_name: onstar2mqtt-vehicle2
-    image: bigthundersr/onstar2mqtt:latest
+    image: bigthundersr/onstar2mqtt:latest  # Or use: ghcr.io/bigthundersr/onstar2mqtt:latest
     restart: unless-stopped
     env_file:
       - /srv/containers/secrets/onstar2mqtt.env

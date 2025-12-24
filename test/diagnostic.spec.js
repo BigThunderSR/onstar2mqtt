@@ -1,5 +1,4 @@
 const assert = require('assert');
-const _ = require('lodash');
 
 const { Diagnostic, DiagnosticElement, AdvancedDiagnostic, DiagnosticSystem } = require('../src/diagnostic');
 const apiResponse = require('./diagnostic.sample.json');
@@ -13,7 +12,7 @@ describe('Diagnostics', () => {
         // Old: commandResponse.body.diagnosticResponse[0] with diagnosticElement field
         // New: diagnostics[0] with diagnosticElements field
         // The Diagnostic class now supports both formats
-        beforeEach(() => d = new Diagnostic(_.get(apiResponse, 'commandResponse.body.diagnosticResponse[0]')));
+        beforeEach(() => d = new Diagnostic(apiResponse?.commandResponse?.body?.diagnosticResponse?.[0]));
 
         it('should parse a diagnostic response', () => {
             assert.strictEqual(d.name, 'AMBIENT AIR TEMPERATURE');
@@ -46,10 +45,10 @@ describe('Diagnostics', () => {
     });
 
     describe('DiagnosticElement', () => {
-        beforeEach(() => d = new Diagnostic(_.get(apiResponse, 'commandResponse.body.diagnosticResponse[8]')));
+        beforeEach(() => d = new Diagnostic(apiResponse?.commandResponse?.body?.diagnosticResponse?.[8]));
         it('should parse a diagnostic element', () => {
             assert.strictEqual(d.name, 'TIRE PRESSURE');
-            assert.ok(_.isArray(d.diagnosticElements));
+            assert.ok(Array.isArray(d.diagnosticElements));
             assert.strictEqual(d.diagnosticElements.length, 12);
         });
 
@@ -70,7 +69,7 @@ describe('Diagnostics', () => {
         let advDiag;
 
         beforeEach(() => {
-            const advDiagnosticsResponse = _.get(apiV3Response, 'response.data.advDiagnostics');
+            const advDiagnosticsResponse = apiV3Response?.response?.data?.advDiagnostics;
             advDiag = new AdvancedDiagnostic(advDiagnosticsResponse);
         });
 
@@ -78,7 +77,7 @@ describe('Diagnostics', () => {
             assert.strictEqual(advDiag.advDiagnosticsStatus, 'NO_ACTION_REQUIRED');
             assert.strictEqual(advDiag.advDiagnosticsStatusColor, 'GREEN');
             assert.strictEqual(advDiag.cts, '2024-03-13T14:11:06.466+00:00');
-            assert.ok(_.isArray(advDiag.diagnosticSystems));
+            assert.ok(Array.isArray(advDiag.diagnosticSystems));
         });
 
         it('should parse all diagnostic systems', () => {
@@ -127,7 +126,7 @@ describe('Diagnostics', () => {
         let system;
 
         beforeEach(() => {
-            const advDiagnosticsResponse = _.get(apiV3Response, 'response.data.advDiagnostics');
+            const advDiagnosticsResponse = apiV3Response?.response?.data?.advDiagnostics;
             const advDiag = new AdvancedDiagnostic(advDiagnosticsResponse);
             system = advDiag.diagnosticSystems[0]; // Engine and Transmission System
         });
@@ -141,7 +140,7 @@ describe('Diagnostics', () => {
         });
 
         it('should parse all subsystems', () => {
-            assert.ok(_.isArray(system.subsystems));
+            assert.ok(Array.isArray(system.subsystems));
             assert.strictEqual(system.subsystems.length, 11);
         });
 
@@ -163,12 +162,12 @@ describe('Diagnostics', () => {
 
         it('should count DTCs correctly', () => {
             assert.strictEqual(system.dtcCount, 0);
-            assert.ok(_.isArray(system.dtcs));
+            assert.ok(Array.isArray(system.dtcs));
             assert.strictEqual(system.dtcs.length, 0);
         });
 
         it('should identify subsystems with issues', () => {
-            assert.ok(_.isArray(system.subsystemsWithIssues));
+            assert.ok(Array.isArray(system.subsystemsWithIssues));
             assert.strictEqual(system.subsystemsWithIssues.length, 0);
         });
 

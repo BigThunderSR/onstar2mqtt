@@ -1,5 +1,4 @@
 const assert = require('assert');
-const _ = require('lodash');
 
 const { Diagnostic, AdvancedDiagnostic } = require('../src/diagnostic');
 const MQTT = require('../src/mqtt');
@@ -68,7 +67,7 @@ describe('MQTT', () => {
         });
 
         describe('sensor', () => {
-            beforeEach(() => d = new Diagnostic(_.get(apiResponse, 'commandResponse.body.diagnosticResponse[0]')));
+            beforeEach(() => d = new Diagnostic(apiResponse?.commandResponse?.body?.diagnosticResponse?.[0]));
 
             it('should generate config topics', () => {
                 assert.strictEqual(mqtt.getConfigTopic(d), 'homeassistant/sensor/XXX/ambient_air_temperature/config');
@@ -79,7 +78,7 @@ describe('MQTT', () => {
         });
 
         describe('binary_sensor', () => {
-            beforeEach(() => d = new Diagnostic(_.get(apiResponse, 'commandResponse.body.diagnosticResponse[3]')));
+            beforeEach(() => d = new Diagnostic(apiResponse?.commandResponse?.body?.diagnosticResponse?.[3]));
             it('should generate config topics', () => {
                 assert.strictEqual(mqtt.getConfigTopic(d), 'homeassistant/binary_sensor/XXX/ev_charge_state/config');
             });
@@ -109,7 +108,7 @@ describe('MQTT', () => {
     describe('payloads', () => {
         let d;
         describe('sensor', () => {
-            beforeEach(() => d = new Diagnostic(_.get(apiResponse, 'commandResponse.body.diagnosticResponse[0]')));
+            beforeEach(() => d = new Diagnostic(apiResponse?.commandResponse?.body?.diagnosticResponse?.[0]));
             it('should generate config payloads', () => {
                 assert.deepStrictEqual(mqtt.getConfigPayload(d, d.diagnosticElements[0]), {
                     availability_topic: 'homeassistant/XXX/available',
@@ -177,7 +176,7 @@ describe('MQTT', () => {
         });
 
         describe('sensor', () => {
-            beforeEach(() => d = new Diagnostic(_.get(apiResponse, 'commandResponse.body.diagnosticResponse[7]')));
+            beforeEach(() => d = new Diagnostic(apiResponse?.commandResponse?.body?.diagnosticResponse?.[7]));
             it('should generate config payloads', () => {
                 assert.deepStrictEqual(mqtt.getConfigPayload(d, d.diagnosticElements[0]), {
                     availability_topic: 'homeassistant/XXX/available',
@@ -241,7 +240,7 @@ describe('MQTT', () => {
         });
 
         describe('binary_sensor', () => { // TODO maybe not needed, payloads not diff
-            beforeEach(() => d = new Diagnostic(_.get(apiResponse, 'commandResponse.body.diagnosticResponse[3]')));
+            beforeEach(() => d = new Diagnostic(apiResponse?.commandResponse?.body?.diagnosticResponse?.[3]));
             it('should generate config payloads', () => {
                 assert.deepStrictEqual(mqtt.getConfigPayload(d, d.diagnosticElements[1]), {
                     availability_topic: 'homeassistant/XXX/available',
@@ -289,7 +288,7 @@ describe('MQTT', () => {
         });
 
         /*        describe('attributes', () => {
-                    beforeEach(() => d = new Diagnostic(_.get(apiResponse, 'commandResponse.body.diagnosticResponse[8]')));
+                    beforeEach(() => d = new Diagnostic(apiResponse?.commandResponse?.body?.diagnosticResponse?.[8]));
                     it('should generate payloads with an attribute', () => {
                         assert.deepStrictEqual(mqtt.getConfigPayload(d, d.diagnosticElements[0]), {
                             availability_topic: 'homeassistant/XXX/available',
@@ -318,7 +317,7 @@ describe('MQTT', () => {
                 }); */
 
         describe('attributes', () => {
-            beforeEach(() => d = new Diagnostic(_.get(apiResponse, 'commandResponse.body.diagnosticResponse[8]')));
+            beforeEach(() => d = new Diagnostic(apiResponse?.commandResponse?.body?.diagnosticResponse?.[8]));
             it('should generate payloads with an attribute for left front tire', () => {
                 assert.deepStrictEqual(mqtt.getConfigPayload(d, d.diagnosticElements[0]), {
                     availability_topic: 'homeassistant/XXX/available',
@@ -430,7 +429,7 @@ describe('MQTT', () => {
         });
 
         describe('attributes', () => {
-            beforeEach(() => d = new Diagnostic(_.get(apiResponse, 'commandResponse.body.diagnosticResponse[10]')));
+            beforeEach(() => d = new Diagnostic(apiResponse?.commandResponse?.body?.diagnosticResponse?.[10]));
             it('should generate payloads with an attribute', () => {
                 assert.deepStrictEqual(mqtt.getConfigPayload(d, d.diagnosticElements[0]), {
                     availability_topic: 'homeassistant/XXX/available',
@@ -461,7 +460,7 @@ describe('MQTT', () => {
         });
 
         describe('sensor', () => {
-            beforeEach(() => d = new Diagnostic(_.get(apiResponse, 'commandResponse.body.diagnosticResponse[11]')));
+            beforeEach(() => d = new Diagnostic(apiResponse?.commandResponse?.body?.diagnosticResponse?.[11]));
             it('should generate config payloads', () => {
                 assert.deepStrictEqual(mqtt.getConfigPayload(d, d.diagnosticElements[0]), {
                     availability_topic: 'homeassistant/XXX/available',
@@ -564,7 +563,7 @@ describe('MQTT', () => {
         });
 
         describe('attributes', () => {
-            beforeEach(() => d = new Diagnostic(_.get(apiResponse, 'commandResponse.body.diagnosticResponse[12]')));
+            beforeEach(() => d = new Diagnostic(apiResponse?.commandResponse?.body?.diagnosticResponse?.[12]));
             it('should generate payloads with an attribute', () => {
                 assert.deepStrictEqual(mqtt.getConfigPayload(d, d.diagnosticElements[0]), {
                     availability_topic: 'homeassistant/XXX/available',
@@ -604,7 +603,7 @@ describe('MQTT', () => {
         });
 
         describe('attributes', () => {
-            beforeEach(() => d = new Diagnostic(_.get(apiResponse, 'commandResponse.body.diagnosticResponse[13]')));
+            beforeEach(() => d = new Diagnostic(apiResponse?.commandResponse?.body?.diagnosticResponse?.[13]));
             it('should generate payloads with an attribute', () => {
                 assert.deepStrictEqual(mqtt.getConfigPayload(d, d.diagnosticElements[0]), {
                     availability_topic: 'homeassistant/XXX/available',
@@ -644,7 +643,7 @@ describe('MQTT', () => {
         });
 
         describe('attributes', () => {
-            beforeEach(() => d = new Diagnostic(_.get(apiResponse, 'commandResponse.body.diagnosticResponse[4]')));
+            beforeEach(() => d = new Diagnostic(apiResponse?.commandResponse?.body?.diagnosticResponse?.[4]));
             it('should generate payloads with an attribute', () => {
                 assert.deepStrictEqual(mqtt.getConfigPayload(d, d.diagnosticElements[0]), {
                     availability_topic: 'homeassistant/XXX/available',
@@ -682,7 +681,7 @@ describe('MQTT', () => {
         });
 
         describe('attributes', () => {
-            beforeEach(() => d = new Diagnostic(_.get(apiResponse, 'commandResponse.body.diagnosticResponse[1]')));
+            beforeEach(() => d = new Diagnostic(apiResponse?.commandResponse?.body?.diagnosticResponse?.[1]));
             it('should generate payloads with an attribute', () => {
                 assert.deepStrictEqual(mqtt.getConfigPayload(d, d.diagnosticElements[0]), {
                     availability_topic: 'homeassistant/XXX/available',
@@ -719,7 +718,7 @@ describe('MQTT', () => {
         });
 
         describe('attributes', () => {
-            beforeEach(() => d = new Diagnostic(_.get(apiResponse, 'commandResponse.body.diagnosticResponse[2]')));
+            beforeEach(() => d = new Diagnostic(apiResponse?.commandResponse?.body?.diagnosticResponse?.[2]));
             it('should generate payloads with an attribute', () => {
                 assert.deepStrictEqual(mqtt.getConfigPayload(d, d.diagnosticElements[0]), {
                     availability_topic: 'homeassistant/XXX/available',
@@ -771,7 +770,7 @@ describe('MQTT', () => {
         });
 
         describe('attributes', () => {
-            beforeEach(() => d = new Diagnostic(_.get(apiResponse, 'commandResponse.body.diagnosticResponse[9]')));
+            beforeEach(() => d = new Diagnostic(apiResponse?.commandResponse?.body?.diagnosticResponse?.[9]));
             it('should generate payloads with an attribute', () => {
                 assert.deepStrictEqual(mqtt.getConfigPayload(d, d.diagnosticElements[0]), {
                     availability_topic: 'homeassistant/XXX/available',
@@ -811,7 +810,7 @@ describe('MQTT', () => {
         });
 
         describe('attributes', () => {
-            beforeEach(() => d = new Diagnostic(_.get(apiResponse, 'commandResponse.body.diagnosticResponse[3]')));
+            beforeEach(() => d = new Diagnostic(apiResponse?.commandResponse?.body?.diagnosticResponse?.[3]));
             it('should generate payloads with an attribute', () => {
                 assert.deepStrictEqual(mqtt.getConfigPayload(d, d.diagnosticElements[0]), {
                     availability_topic: 'homeassistant/XXX/available',
@@ -3266,7 +3265,7 @@ describe('MQTT', () => {
         beforeEach(() => {
             vehicle = new Vehicle({ make: 'Test', model: 'Car', vin: 'TEST123', year: 2024 });
             mqtt = new MQTT(vehicle);
-            const advDiagnosticsResponse = _.get(apiV3Response, 'response.data.advDiagnostics');
+            const advDiagnosticsResponse = apiV3Response?.response?.data?.advDiagnostics;
             advDiag = new AdvancedDiagnostic(advDiagnosticsResponse);
         });
 

@@ -365,18 +365,18 @@ To monitor multiple vehicles from the same OnStar account, run multiple containe
 **Recommendation:** Use a specific version tag (e.g., `bigthundersr/onstar2mqtt:2.5.0`) instead of `:latest`. The `:latest` tag updates frequently and may change your setup unexpectedly.
 
 ```yaml
-version: '3'
+version: "3"
 services:
   # First vehicle
   onstar2mqtt-vehicle1:
     container_name: onstar2mqtt-vehicle1
-    image: bigthundersr/onstar2mqtt:latest  # Or use: ghcr.io/bigthundersr/onstar2mqtt:latest
+    image: bigthundersr/onstar2mqtt:latest # Or use: ghcr.io/bigthundersr/onstar2mqtt:latest
     restart: unless-stopped
     env_file:
       - /srv/containers/secrets/onstar2mqtt.env
     environment:
-      - ONSTAR_DEVICEID=xxxxxxxx-xxxx-xxxx-xxxx-xxxxxxxxxxxx  # Generate unique UUID
-      - ONSTAR_VIN=YOUR_FIRST_VIN_HERE  # Replace with your actual VIN
+      - ONSTAR_DEVICEID=xxxxxxxx-xxxx-xxxx-xxxx-xxxxxxxxxxxx # Generate unique UUID
+      - ONSTAR_VIN=YOUR_FIRST_VIN_HERE # Replace with your actual VIN
       - MQTT_HOST=
       - UNIT_CACHE_DIR=/app/data
       - ONSTAR_STATE_CACHE=true
@@ -387,13 +387,13 @@ services:
   # Second vehicle
   onstar2mqtt-vehicle2:
     container_name: onstar2mqtt-vehicle2
-    image: bigthundersr/onstar2mqtt:latest  # Or use: ghcr.io/bigthundersr/onstar2mqtt:latest
+    image: bigthundersr/onstar2mqtt:latest # Or use: ghcr.io/bigthundersr/onstar2mqtt:latest
     restart: unless-stopped
     env_file:
       - /srv/containers/secrets/onstar2mqtt.env
     environment:
-      - ONSTAR_DEVICEID=yyyyyyyy-yyyy-yyyy-yyyy-yyyyyyyyyyyy  # Generate unique UUID
-      - ONSTAR_VIN=YOUR_SECOND_VIN_HERE  # Replace with your actual VIN
+      - ONSTAR_DEVICEID=yyyyyyyy-yyyy-yyyy-yyyy-yyyyyyyyyyyy # Generate unique UUID
+      - ONSTAR_VIN=YOUR_SECOND_VIN_HERE # Replace with your actual VIN
       - MQTT_HOST=
       - UNIT_CACHE_DIR=/app/data
       - ONSTAR_STATE_CACHE=true

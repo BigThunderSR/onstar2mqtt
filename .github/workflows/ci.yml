@@ -9,6 +9,11 @@ on:
       - 'beta/**'
       - 'dependabot/**'
       - 'renovate/**'
+      - 'fix/**'
+      - 'feature/**'
+      - 'feat/**'
+      - 'refactor/**'
+      - 'security/**'
   pull_request:
   workflow_run:
     workflows: ["CodeQL"]

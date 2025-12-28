@@ -6,8 +6,30 @@ body:
   - type: markdown
     attributes:
       value: |
-        Thank you for taking the time to fill out this request for your issue! Please use the [Discussions](https://github.com/BigThunderSR/onstar2mqtt/discussions) tab for general questions or help with the project.
-        NOTE: This repo is for users who use the standalone Docker container version of onstar2mqtt. If you are using the Home Assistant add-on version, please submit your issue [here](https://github.com/BigThunderSR/homeassistant-addons-onstar2mqtt)
+        ## 📍 Please confirm which version you're using
+        
+        This repository supports the **standalone Docker container** version of onstar2mqtt.
+        
+        **You're in the right place if you:**
+        - Running onstar2mqtt with `docker run` or `docker-compose`
+        - Using direct Node.js installation
+        - Running onstar2mqtt outside of Home Assistant
+        
+        **If you're using the Home Assistant Add-on version**, please submit your issue at [BigThunderSR/homeassistant-addons-onstar2mqtt](https://github.com/BigThunderSR/homeassistant-addons-onstar2mqtt/issues/new) instead — that repo is specifically for the Home Assistant add-on.
+        
+        ---
+        
+        For general questions or help, please use the [Discussions](https://github.com/BigThunderSR/onstar2mqtt/discussions) tab.
+
+  - type: checkboxes
+    id: version-confirmation
+    attributes:
+      label: "Version Confirmation"
+      description: "Please confirm which version you're using"
+      options:
+        - label: "I'm using the standalone Docker/Node.js version (not the Home Assistant add-on)"
+          required: true
+
   - type: textarea
     id: description
     attributes:

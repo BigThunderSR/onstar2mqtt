@@ -34,8 +34,8 @@ body:
     id: version
     attributes:
       label: OnStar2MQTT Version
-      description: Which version are you using? (e.g., 2.5.0) - Check package.json or Docker image tag
-      placeholder: e.g., 2.5.0
+      description: Which version are you using? (e.g., 2.5.0, latest) - Check package.json or Docker image tag
+      placeholder: e.g., 2.5.0 or latest
     validations:
       required: true
 

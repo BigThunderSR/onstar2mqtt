@@ -30,15 +30,6 @@ body:
         - label: "I'm using the standalone Docker/Node.js version (not the Home Assistant add-on)"
           required: true
 
-  - type: textarea
-    id: description
-    attributes:
-      label: Describe the Issue
-      description: A clear and concise description of what the issue is.
-      placeholder: Describe the issue
-    validations:
-      required: true
-
   - type: input
     id: version
     attributes:
@@ -73,9 +64,18 @@ body:
         - --- Please select an option ---
         - Bug (regression - was working before)
         - Bug (never worked)
-        - Feature request
-        - Enhancement
+        - Feature Request / Enhancement
+        - Documentation
         - Other
+    validations:
+      required: true
+
+  - type: textarea
+    id: description
+    attributes:
+      label: Describe the Issue
+      description: A clear and concise description of what the issue is.
+      placeholder: Describe the issue
     validations:
       required: true
 

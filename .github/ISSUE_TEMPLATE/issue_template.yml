@@ -40,21 +40,6 @@ body:
       required: true
 
   - type: dropdown
-    id: deployment
-    attributes:
-      label: Deployment Method
-      description: How are you running OnStar2MQTT?
-      multiple: false
-      options:
-        - --- Please select an option ---
-        - Docker Container (standalone)
-        - Docker Compose
-        - Direct Node.js Installation
-        - Other
-    validations:
-      required: true
-
-  - type: dropdown
     id: type
     attributes:
       label: Type of Issue
@@ -131,6 +116,21 @@ body:
     attributes:
       value: |
         ## Environment Information
+
+  - type: dropdown
+    id: deployment
+    attributes:
+      label: Deployment Method
+      description: How are you running OnStar2MQTT?
+      multiple: false
+      options:
+        - --- Please select an option ---
+        - Docker Container (standalone)
+        - Docker Compose
+        - Direct Node.js Installation
+        - Other
+    validations:
+      required: true
 
   - type: input
     id: os

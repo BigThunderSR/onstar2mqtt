@@ -10,7 +10,7 @@ body:
         
         This repository supports the **standalone Docker container** version of onstar2mqtt.
         
-        **You're in the right place if you:**
+        **You're in the right place if you are:**
         - Running onstar2mqtt with `docker run` or `docker-compose`
         - Using direct Node.js installation
         - Running onstar2mqtt outside of Home Assistant

@@ -194,6 +194,38 @@ describe('EV Charging Metrics', () => {
             assert.strictEqual(disEnabledSensor.state, true);
         });
 
+        it('should produce states that can be safely converted to strings for MQTT', () => {
+            // This test ensures all state values can be converted to strings
+            // MQTT publish requires string or Buffer, not raw booleans
+            const metricsData = {
+                data: {
+                    results: [{
+                        tcl: 80,
+                        kwh: 65.5,
+                        clocSet: true,
+                        clocAt: false,
+                        disEnabled: true,
+                        ign: 'on'
+                    }]
+                }
+            };
+
+            const configs = mqtt.getEVChargingMetricsConfigs(metricsData);
+            
+            // All states must be convertible to string without error
+            for (const config of configs) {
+                const stateValue = String(config.state);
+                assert.ok(typeof stateValue === 'string', `State for ${config.topic} should convert to string`);
+                assert.ok(stateValue !== '[object Object]', `State for ${config.topic} should not be an unconverted object`);
+                // Verify boolean conversions produce expected strings
+                if (config.state === true) {
+                    assert.strictEqual(stateValue, 'true', 'Boolean true should convert to "true"');
+                } else if (config.state === false) {
+                    assert.strictEqual(stateValue, 'false', 'Boolean false should convert to "false"');
+                }
+            }
+        });
+
         it('should include device and availability payloads for all sensors', () => {
             const metricsData = {
                 data: {

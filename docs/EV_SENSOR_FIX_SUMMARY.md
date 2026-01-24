@@ -82,7 +82,7 @@ Improved null/undefined handling to show sensors as "Unavailable" in HA instead 
 
 ```javascript
 if (e.value === null || e.value === undefined) {
-    value = null;
+  value = null;
 }
 ```
 
@@ -150,18 +150,18 @@ The fixes address the following reported errors from live systems:
 
 Using real API v3 EV diagnostic data (`diagnostic-sample-v3-ev-1.json`) and live Home Assistant logs:
 
-| Sensor | Raw Value | Processed Value | Status |
-|--------|-----------|-----------------|--------|
-| CHARGE_VOLTAGE | "Unavailable" | null | ✓ Shows as "Unavailable" in HA |
-| EV_PLUG_STATE | "Disconnect" | false | ✓ Correctly shows unplugged |
-| EV_PLUG_STATE | "Connected" | true | ✓ Correctly shows plugged (from HA logs) |
-| EV_CHARGE_STATE | "UNCONNECTED" | false | ✓ Correctly shows not charging |
-| EV_CHARGE_STATE | "CHARGING" | true | ✓ Correctly shows charging |
-| EV_CHARGE_STATE | "Active" | true | ✓ Correctly shows charging (from HA logs) |
-| CHARGE_STATE | "70" | 70 | ✓ Battery percentage |
-| EV_RANGE | "317.98" | 317.98 | ✓ Electric range in KM |
-| AMBIENT_AIR_TEMPERATURE | "17.5" | 17.5 | ✓ Temperature in Celsius |
-| LIFETIME_ENERGY_USED | "2620.50" | 2620.50 | ✓ Energy usage in kWh |
+| Sensor                  | Raw Value     | Processed Value | Status                                    |
+| ----------------------- | ------------- | --------------- | ----------------------------------------- |
+| CHARGE_VOLTAGE          | "Unavailable" | null            | ✓ Shows as "Unavailable" in HA            |
+| EV_PLUG_STATE           | "Disconnect"  | false           | ✓ Correctly shows unplugged               |
+| EV_PLUG_STATE           | "Connected"   | true            | ✓ Correctly shows plugged (from HA logs)  |
+| EV_CHARGE_STATE         | "UNCONNECTED" | false           | ✓ Correctly shows not charging            |
+| EV_CHARGE_STATE         | "CHARGING"    | true            | ✓ Correctly shows charging                |
+| EV_CHARGE_STATE         | "Active"      | true            | ✓ Correctly shows charging (from HA logs) |
+| CHARGE_STATE            | "70"          | 70              | ✓ Battery percentage                      |
+| EV_RANGE                | "317.98"      | 317.98          | ✓ Electric range in KM                    |
+| AMBIENT_AIR_TEMPERATURE | "17.5"        | 17.5            | ✓ Temperature in Celsius                  |
+| LIFETIME_ENERGY_USED    | "2620.50"     | 2620.50         | ✓ Energy usage in kWh                     |
 
 ## Backward Compatibility
 
@@ -184,7 +184,49 @@ All changes maintain full backward compatibility:
 2. **test/mqtt.spec.js**
    - Added 3 new test cases for API v3 EV sensors
 
-## Branch Information
+## EV Charging Metrics Diagnostic Updates (Issue BigThunderSR/homeassistant-addons-onstar2mqtt#1584)
+
+### Issue Description
+
+When users called `refreshEVChargingMetrics` or `getEVChargingMetrics`, the response data was only published to dedicated EV metrics sensors. The existing diagnostic sensors (like `charge_state`, `ev_range`) were not updated until the next scheduled diagnostic poll, causing confusion as users saw updated data in logs but stale values in Home Assistant.
+
+### Solution
+
+Added `getEVChargingMetricsDiagnosticUpdates()` to map EV charging metrics fields to existing diagnostic sensor fields:
+
+| EV Metrics Field | Diagnostic Field          | Sensor Topic         |
+| ---------------- | ------------------------- | -------------------- |
+| `soc`            | `charge_state`            | HIGH_VOLTAGE_BATTERY |
+| `ravg`           | `ev_range`                | HIGH_VOLTAGE_BATTERY |
+| `cstate`         | `ev_charge_state`         | HIGH_VOLTAGE_BATTERY |
+| `cplug`          | `ev_plug_state`           | HIGH_VOLTAGE_BATTERY |
+| `temp`           | `ambient_air_temperature` | HIGH_VOLTAGE_BATTERY |
+| `odo`            | `odo_read`                | ODOMETER             |
+
+### Implementation Details
+
+1. **In-Memory State Tracking**: Added `diagnosticStateTracker` Map to track diagnostic state independently of the `STATE_CACHE_ENABLED` setting.
+
+2. **Guard Against Orphan Data**: Only updates sensors that already exist in the tracker (were published by diagnostics). This prevents:
+   - Publishing to non-existent topics
+   - Issues with ICE vehicles
+   - Edge cases where EV metrics runs before diagnostics
+
+3. **State Merging**: New EV metrics values are merged into existing diagnostic state, preserving all other fields.
+
+### Changed Files
+
+- **src/index.js**: Added `diagnosticStateTracker`, EV metrics merge logic
+- **src/mqtt.js**: Added `getEVChargingMetricsDiagnosticUpdates()` method
+- **test/ev-charging-metrics.spec.js**: Added 19 new tests
+
+### Branch Information
+
+- Branch: `fix/ev-charging-metrics-async-publish`
+- Commits: 2 commits (async fix + diagnostic updates)
+- Related to: Issue BigThunderSR/homeassistant-addons-onstar2mqtt#1584
+
+## Original Branch Information
 
 - Branch: `fix-ev-sensors-for-v3-api`
 - Commits: 1 commit with all fixes

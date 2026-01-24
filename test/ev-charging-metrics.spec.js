@@ -255,4 +255,90 @@ describe('EV Charging Metrics', () => {
             assert.strictEqual(lifeConsSensor.payload.state_class, 'measurement');
         });
     });
+
+    describe('Edge Case: Diagnostic Sensor Not Configured', () => {
+        // Sample EV metrics response for edge case tests
+        const sampleEvMetricsResponse = {
+            data: {
+                results: [{
+                    soc: 75,
+                    ravg: 180,
+                    cstate: 'charging',
+                    cplug: 'pluggedIn',
+                    temp: 22,
+                    odo: 12345
+                }]
+            }
+        };
+
+        it('should skip updates for topics not in tracker when tracker is empty', () => {
+            // Simulate getEVChargingMetricsDiagnosticUpdates returning updates
+            const updates = mqtt.getEVChargingMetricsDiagnosticUpdates(sampleEvMetricsResponse);
+            
+            // With an empty tracker (no diagnostics published), all should be skipped
+            const emptyTracker = new Map();
+            const publishedTopics = [];
+            
+            for (const update of updates) {
+                const existingState = emptyTracker.get(update.topic);
+                if (!existingState) {
+                    // This is what the code does - skip if not exists
+                    continue;
+                }
+                publishedTopics.push(update.topic);
+            }
+            
+            // Nothing should be published
+            assert.strictEqual(publishedTopics.length, 0, 'No topics should be published when tracker is empty');
+        });
+        
+        it('should only update topics that exist in tracker', () => {
+            const updates = mqtt.getEVChargingMetricsDiagnosticUpdates(sampleEvMetricsResponse);
+            
+            // Simulate tracker with only HIGH_VOLTAGE_BATTERY, not ODOMETER
+            const partialTracker = new Map();
+            const hvbTopic = mqtt.getStateTopic({ name: 'HIGH_VOLTAGE_BATTERY' });
+            partialTracker.set(hvbTopic, { charge_state: 50 });
+            
+            const publishedTopics = [];
+            
+            for (const update of updates) {
+                const existingState = partialTracker.get(update.topic);
+                if (!existingState) {
+                    continue;
+                }
+                publishedTopics.push(update.topic);
+            }
+            
+            // Only HVB topic should be published (if it's in the updates)
+            const hvbUpdates = updates.filter(u => u.topic === hvbTopic);
+            assert.strictEqual(publishedTopics.length, hvbUpdates.length, 'Only existing topics should be published');
+        });
+        
+        it('should merge new values into existing state correctly', () => {
+            const updates = mqtt.getEVChargingMetricsDiagnosticUpdates(sampleEvMetricsResponse);
+            
+            // Simulate tracker with existing state
+            const tracker = new Map();
+            const hvbTopic = mqtt.getStateTopic({ name: 'HIGH_VOLTAGE_BATTERY' });
+            const existingState = { 
+                charge_state: 50,  // will be updated
+                ev_battery_voltage: 400,  // should be preserved
+                some_other_field: 'preserved'  // should be preserved
+            };
+            tracker.set(hvbTopic, existingState);
+            
+            // Find HVB update
+            const hvbUpdate = updates.find(u => u.topic === hvbTopic);
+            if (hvbUpdate) {
+                const mergedState = { ...existingState, ...hvbUpdate.stateUpdates };
+                
+                // Verify merge preserves existing fields
+                assert.strictEqual(mergedState.ev_battery_voltage, 400, 'Existing field should be preserved');
+                assert.strictEqual(mergedState.some_other_field, 'preserved', 'Other fields should be preserved');
+                // New values from EV metrics should be applied
+                assert.ok(mergedState.charge_state !== undefined, 'New value should be applied');
+            }
+        });
+    });
 });

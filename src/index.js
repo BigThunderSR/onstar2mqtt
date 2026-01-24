@@ -862,7 +862,7 @@ const configureMQTT = async (commands, client, mqttHA) => {
                     "completionTimestamp": new Date().toISOString()
                 }), { retain: true });
             commandFn(options || {})
-                .then(data => {
+                .then(async data => {
                     // refactor the response handling for commands - Done!
                     const completionTimestamp = new Date().toISOString();
                     logger.debug(`Completion Timestamp: ${completionTimestamp}`);
@@ -906,12 +906,18 @@ const configureMQTT = async (commands, client, mqttHA) => {
                             const evMetricsConfigs = mqttHA.getEVChargingMetricsConfigs(data.response);
                             
                             logger.info(`Publishing ${evMetricsConfigs.length} EV charging metric sensors...`);
-                            evMetricsConfigs.forEach(config => {
+                            
+                            // Use Promise.all with publishAsync to ensure all publishes complete
+                            // This ensures sensors update immediately when refreshEVChargingMetrics is called
+                            const evPublishes = [];
+                            for (const config of evMetricsConfigs) {
                                 // Publish config
-                                client.publish(config.topic, JSON.stringify(config.payload), { retain: true });
-                                // Publish state
-                                client.publish(config.payload.state_topic, JSON.stringify(config.state), { retain: true });
-                            });
+                                evPublishes.push(publishAsync(client, config.topic, JSON.stringify(config.payload), { retain: true }));
+                                // Publish state - convert state to string for MQTT
+                                const stateValue = typeof config.state === 'boolean' ? config.state : String(config.state);
+                                evPublishes.push(publishAsync(client, config.payload.state_topic, stateValue, { retain: true }));
+                            }
+                            await Promise.all(evPublishes);
                             
                             logger.info(`EV charging metrics updated: ${evMetricsConfigs.length} sensors published`);
                         }

@@ -40,6 +40,8 @@ There is no affiliation with this project and GM, Chevrolet nor OnStar. In fact,
 - **Unit Stability Fix** - Automatic caching of sensor units to handle API instability where units intermittently return as null, preventing Home Assistant unit conversion errors
 - **State Cache (Optional)** - Enable `ONSTAR_STATE_CACHE=true` to merge partial API responses with cached data, preventing Home Assistant template warnings when the API returns incomplete data on refresh cycles. **Note:** On first run with an empty cache, you may still see template warnings until the cache builds up over a few refresh cycles.
 - **New EV Commands** - Added refreshEVChargingMetrics for live charging data, setChargeLevelTarget, stopCharging, and comprehensive EV metrics
+- **Instant EV Metrics Updates (v2.6.0)** - When using `refreshEVChargingMetrics` or `getEVChargingMetrics`, diagnostic sensors (battery level, EV range, charge state, plug state) now update immediately instead of waiting for the next polling cycle
+- **New EV Ignition Sensor (v2.6.0)** - Added `ev_ignition` binary sensor from EV charging metrics data
 
 **What This Means for You:**
 

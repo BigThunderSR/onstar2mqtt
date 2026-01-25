@@ -184,7 +184,9 @@ All changes maintain full backward compatibility:
 2. **test/mqtt.spec.js**
    - Added 3 new test cases for API v3 EV sensors
 
-## EV Charging Metrics Diagnostic Updates (Issue BigThunderSR/homeassistant-addons-onstar2mqtt#1584)
+## EV Charging Metrics Diagnostic Updates (v2.6.0)
+
+Related to: BigThunderSR/homeassistant-addons-onstar2mqtt#1584
 
 ### Issue Description
 

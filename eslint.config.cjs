@@ -16,6 +16,8 @@ module.exports = [
             ecmaVersion: 2022,
             sourceType: "commonjs",
         },
-        rules: {},
+        rules: {
+            "no-useless-assignment": "off",
+        },
     },
 ];

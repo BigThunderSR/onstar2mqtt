@@ -36,7 +36,7 @@ jobs:
       - name: Install Dependencies
         run: npm install --include=dev
       - name: Lint Code Base
-        uses: super-linter/super-linter@v7
+        uses: super-linter/super-linter@v8
         #uses: super-linter/super-linter@latest
         env:
           VALIDATE_ALL_CODEBASE: true

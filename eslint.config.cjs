@@ -1,50 +1,21 @@
-const babel = require("@babel/eslint-plugin");
 const globals = require("globals");
-const babelParser = require("@babel/eslint-parser");
 const js = require("@eslint/js");
 
-const {
-    FlatCompat,
-} = require("@eslint/eslintrc");
-
-const { fixupPluginRules } = require("@eslint/compat");
-const eslintPluginImport = require("eslint-plugin-import");
-
-const compat = new FlatCompat({
-    baseDirectory: __dirname,
-    recommendedConfig: js.configs.recommended,
-    allConfig: js.configs.all
-});
-
-module.exports = [{
-    ignores: ["**/index.cjs"],
-}, ...compat.extends("eslint:recommended"), {
-    plugins: {
-        "@babel": babel,
-        "eslintPluginImport": fixupPluginRules(eslintPluginImport),
+module.exports = [
+    {
+        ignores: ["**/index.cjs"],
     },
-
-    languageOptions: {
-        globals: {
-            ...globals.node,
-            ...globals.browser,
-            ...Object.fromEntries(Object.entries(globals.browser).map(([key]) => [key, "off"])),
-            ...globals.commonjs,
-            ...globals.mocha,
-            setInterval: "readonly",
-            clearInterval: "readonly",
-        },
-
-        parser: babelParser,
-        ecmaVersion: 2018,
-        sourceType: "module",
-
-        parserOptions: {
-            babelOptions: {
-                configFile: "./.babelrc",
+    js.configs.recommended,
+    {
+        languageOptions: {
+            globals: {
+                ...globals.node,
+                ...globals.commonjs,
+                ...globals.mocha,
             },
+            ecmaVersion: 2022,
+            sourceType: "commonjs",
         },
+        rules: {},
     },
-
-    rules: {},
-}];
+];

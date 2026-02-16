@@ -137,7 +137,9 @@ This modernization removes the primary blockers for a future ESLint v10 upgrade:
 
 **Remaining v10 considerations** (for when upgrading `eslint` and `@eslint/js` to v10):
 
-- `eslint:recommended` adds 3 new rules: `no-unassigned-vars`, `no-useless-assignment`, `preserve-caught-error` — may surface new lint errors that need fixing or disabling.
+- `eslint:recommended` adds 3 new rules: `no-unassigned-vars`, `no-useless-assignment`, `preserve-caught-error`.
+  - `no-useless-assignment` has been disabled in `eslint.config.cjs` to preserve intentional clarity assignments in `src/index.js`.
+  - The other two rules produced no violations in the current codebase.
 - Config lookup algorithm changes (searches from file, not cwd) — unlikely to affect this project since `eslint.config.cjs` is at the repo root.
 
 ## Additional Notes

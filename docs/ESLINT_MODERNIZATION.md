@@ -97,7 +97,12 @@ globals: {
 
 ### 6. Fixed Super-Linter CI Workflow
 
-Removed `ESLINT_USE_FLAT_CONFIG: false` from `.github/workflows/super-linter.yml`. This line was forcing ESLint to look for the legacy `.eslintrc.*` format, which conflicts with the project's `eslint.config.cjs`. Flat config is the default in ESLint v9+.
+Upgraded from `github/super-linter@v7` to `super-linter/super-linter@v8`:
+
+- **v7 → v8**: v7 bundled ESLint 8 (crashed with `ERR_UNKNOWN_FILE_EXTENSION` on `.yml` config) and has a high severity security vulnerability. v8 bundles ESLint 9+ with native flat config support.
+- **`USE_FIND_ALGORITHM: true`**: v8 doesn't support the `workflow_run` event type. Since `VALIDATE_ALL_CODEBASE: true` already lints all files, `USE_FIND_ALGORITHM` tells super-linter to discover files via filesystem scan instead of `git diff`, bypassing event validation entirely.
+- **Removed `DEFAULT_BRANCH`**: Incompatible with `USE_FIND_ALGORITHM` (and unnecessary when validating all files).
+- **`JAVASCRIPT_ES_CONFIG_FILE: eslint.config.cjs`**: Points super-linter's ESLint at the project's flat config.
 
 ## DevDependencies Before vs After
 
@@ -130,7 +135,7 @@ This modernization removes the primary blockers for a future ESLint v10 upgrade:
 | ESLint v10 Requirement               | Status                               |
 | ------------------------------------ | ------------------------------------ |
 | No old config format / `FlatCompat`  | Solved                               |
-| No `ESLINT_USE_FLAT_CONFIG=false`    | Solved                               |
+| Super-linter v8 with ESLint 9+       | Solved                               |
 | No `eslint-env` comments in source   | Already clean                        |
 | Node.js >= v20.19                    | Using Node.js 22                     |
 | Plugin peer dependency compatibility | No third-party ESLint plugins remain |

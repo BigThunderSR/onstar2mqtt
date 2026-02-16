@@ -36,15 +36,14 @@ jobs:
       - name: Install Dependencies
         run: npm install --include=dev
       - name: Lint Code Base
-        uses: super-linter/super-linter@v7
+        uses: super-linter/super-linter@v8
         #uses: super-linter/super-linter@latest
         env:
           VALIDATE_ALL_CODEBASE: true
-          DEFAULT_BRANCH: "main"
+          USE_FIND_ALGORITHM: true
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
           #FILTER_REGEX_EXCLUDE: (onstar.js|onstar.html|vehicle.js)
           LINTER_RULES_PATH: /
           #JAVASCRIPT_ES_CONFIG_FILE: .eslintrc.yml #Prior to ESLint V9
           JAVASCRIPT_ES_CONFIG_FILE: eslint.config.cjs
-          ESLINT_USE_FLAT_CONFIG: "true"
           VALIDATE_JAVASCRIPT_ES: true

@@ -54,14 +54,22 @@ describe('EV Charging Metrics', () => {
                         clocSet: true,
                         clocAt: false,
                         disEnabled: true,
-                        disMinSoc: 20
+                        disMinSoc: 20,
+                        soc: 75.5,
+                        meterkwh: 14213.1,
+                        ravg: 260,
+                        cstate: 'ACTIVE',
+                        cplug: 'plugged',
+                        odo: 58062.09,
+                        temp: 2,
+                        ceta: '2026-02-17T10:00:00.000-08:00'
                     }]
                 }
             };
 
             const configs = mqtt.getEVChargingMetricsConfigs(metricsData);
             
-            assert.strictEqual(configs.length, 10);
+            assert.strictEqual(configs.length, 18);
             
             // Check target charge level sensor
             const tclSensor = configs.find(c => c.topic.includes('ev_target_charge_level'));
@@ -130,6 +138,68 @@ describe('EV Charging Metrics', () => {
             assert.strictEqual(disMinSocSensor.payload.name, 'EV Discharge Minimum SoC');
             assert.strictEqual(disMinSocSensor.payload.device_class, 'battery');
             assert.strictEqual(disMinSocSensor.state, 20);
+
+            // Check EV Charging Battery Level sensor
+            const batteryLevelSensor = configs.find(c => c.topic.includes('ev_charging_battery_level'));
+            assert.ok(batteryLevelSensor);
+            assert.strictEqual(batteryLevelSensor.payload.name, 'EV Charging Battery Level');
+            assert.strictEqual(batteryLevelSensor.payload.device_class, 'battery');
+            assert.strictEqual(batteryLevelSensor.payload.unit_of_measurement, '%');
+            assert.strictEqual(batteryLevelSensor.payload.state_class, 'measurement');
+            assert.strictEqual(batteryLevelSensor.state, 75.5);
+
+            // Check EV Charging Lifetime Energy sensor
+            const lifetimeEnergySensor = configs.find(c => c.topic.includes('ev_charging_lifetime_energy'));
+            assert.ok(lifetimeEnergySensor);
+            assert.strictEqual(lifetimeEnergySensor.payload.name, 'EV Charging Lifetime Energy');
+            assert.strictEqual(lifetimeEnergySensor.payload.device_class, 'energy');
+            assert.strictEqual(lifetimeEnergySensor.payload.unit_of_measurement, 'kWh');
+            assert.strictEqual(lifetimeEnergySensor.payload.state_class, 'total_increasing');
+            assert.strictEqual(lifetimeEnergySensor.state, 14213.1);
+
+            // Check EV Charging Range sensor
+            const rangeSensor = configs.find(c => c.topic.includes('ev_charging_range'));
+            assert.ok(rangeSensor);
+            assert.strictEqual(rangeSensor.payload.name, 'EV Charging Range');
+            assert.strictEqual(rangeSensor.payload.device_class, 'distance');
+            assert.strictEqual(rangeSensor.payload.unit_of_measurement, 'km');
+            assert.strictEqual(rangeSensor.state, 260);
+
+            // Check EV Charging State sensor
+            const chargingStateSensor = configs.find(c => c.topic.includes('ev_charging_state'));
+            assert.ok(chargingStateSensor);
+            assert.strictEqual(chargingStateSensor.payload.name, 'EV Charging State');
+            assert.strictEqual(chargingStateSensor.state, 'ACTIVE');
+
+            // Check EV Charging Plug State sensor
+            const plugStateSensor = configs.find(c => c.topic.includes('ev_charging_plug_state'));
+            assert.ok(plugStateSensor);
+            assert.strictEqual(plugStateSensor.payload.name, 'EV Charging Plug State');
+            assert.strictEqual(plugStateSensor.state, 'plugged');
+
+            // Check EV Charging Odometer sensor
+            const odometerSensor = configs.find(c => c.topic.includes('ev_charging_odometer'));
+            assert.ok(odometerSensor);
+            assert.strictEqual(odometerSensor.payload.name, 'EV Charging Odometer');
+            assert.strictEqual(odometerSensor.payload.device_class, 'distance');
+            assert.strictEqual(odometerSensor.payload.unit_of_measurement, 'km');
+            assert.strictEqual(odometerSensor.payload.state_class, 'total_increasing');
+            assert.strictEqual(odometerSensor.state, 58062.09);
+
+            // Check EV Charging Temperature sensor
+            const temperatureSensor = configs.find(c => c.topic.includes('ev_charging_temperature'));
+            assert.ok(temperatureSensor);
+            assert.strictEqual(temperatureSensor.payload.name, 'EV Charging Temperature');
+            assert.strictEqual(temperatureSensor.payload.device_class, 'temperature');
+            assert.strictEqual(temperatureSensor.payload.unit_of_measurement, '°C');
+            assert.strictEqual(temperatureSensor.state, 2);
+
+            // Check EV Charging ETA sensor
+            const etaSensor = configs.find(c => c.topic.includes('ev_charging_eta'));
+            assert.ok(etaSensor);
+            assert.strictEqual(etaSensor.payload.name, 'EV Charging ETA');
+            assert.strictEqual(etaSensor.payload.device_class, 'timestamp');
+            assert.strictEqual(etaSensor.state, '2026-02-17T10:00:00.000-08:00');
         });
 
         it('should handle missing or null values gracefully', () => {
@@ -139,6 +209,14 @@ describe('EV Charging Metrics', () => {
                         tcl: 80,
                         kwh: null,
                         tripodo: 123.4,
+                        soc: null,
+                        meterkwh: undefined,
+                        ravg: null,
+                        cstate: null,
+                        cplug: null,
+                        odo: null,
+                        temp: null,
+                        ceta: null
                         // Other fields missing
                     }]
                 }
@@ -205,7 +283,15 @@ describe('EV Charging Metrics', () => {
                         clocSet: true,
                         clocAt: false,
                         disEnabled: true,
-                        ign: 'on'
+                        ign: 'on',
+                        soc: 75.5,
+                        meterkwh: 14213.1,
+                        ravg: 260,
+                        cstate: 'ACTIVE',
+                        cplug: 'plugged',
+                        odo: 58062.09,
+                        temp: 2,
+                        ceta: '2026-02-17T10:00:00.000-08:00'
                     }]
                 }
             };
@@ -271,7 +357,12 @@ describe('EV Charging Metrics', () => {
                     results: [{
                         tcl: 80,
                         tripodo: 123.4,
-                        lifecons: 14.8
+                        lifecons: 14.8,
+                        soc: 75.5,
+                        meterkwh: 14213.1,
+                        ravg: 260,
+                        odo: 58062.09,
+                        temp: 2
                     }]
                 }
             };
@@ -281,10 +372,232 @@ describe('EV Charging Metrics', () => {
             const tclSensor = configs.find(c => c.topic.includes('ev_target_charge_level'));
             const tripOdoSensor = configs.find(c => c.topic.includes('ev_trip_odometer'));
             const lifeConsSensor = configs.find(c => c.topic.includes('ev_lifetime_consumption'));
+            const batteryLevelSensor = configs.find(c => c.topic.includes('ev_charging_battery_level'));
+            const lifetimeEnergySensor = configs.find(c => c.topic.includes('ev_charging_lifetime_energy'));
+            const rangeSensor = configs.find(c => c.topic.includes('ev_charging_range'));
+            const odometerSensor = configs.find(c => c.topic.includes('ev_charging_odometer'));
+            const temperatureSensor = configs.find(c => c.topic.includes('ev_charging_temperature'));
             
             assert.strictEqual(tclSensor.payload.state_class, 'measurement');
             assert.strictEqual(tripOdoSensor.payload.state_class, 'total_increasing');
             assert.strictEqual(lifeConsSensor.payload.state_class, 'measurement');
+            assert.strictEqual(batteryLevelSensor.payload.state_class, 'measurement');
+            assert.strictEqual(lifetimeEnergySensor.payload.state_class, 'total_increasing');
+            assert.strictEqual(rangeSensor.payload.state_class, 'measurement');
+            assert.strictEqual(odometerSensor.payload.state_class, 'total_increasing');
+            assert.strictEqual(temperatureSensor.payload.state_class, 'measurement');
+        });
+    });
+
+    describe('Topic Collision Prevention', () => {
+        it('should use ev_charging_ prefix to avoid collisions with diagnostic sensor topics', () => {
+            const metricsData = {
+                data: {
+                    results: [{
+                        soc: 75.5,
+                        ravg: 260,
+                        cstate: 'ACTIVE',
+                        cplug: 'plugged',
+                        odo: 58062.09,
+                        temp: 2,
+                        meterkwh: 14213.1,
+                        ceta: '2026-02-17T10:00:00.000-08:00'
+                    }]
+                }
+            };
+
+            const configs = mqtt.getEVChargingMetricsConfigs(metricsData);
+
+            // These diagnostic topic segments already exist via getConfigTopic():
+            //   sensor/.../ev_battery_level/config
+            //   sensor/.../ev_range/config
+            //   binary_sensor/.../ev_charge_state/config
+            //   binary_sensor/.../ev_plug_state/config
+            //
+            // Verify NONE of our new sensors use those exact topic segments
+            const newSensorTopics = configs.map(c => c.topic);
+            assert.ok(!newSensorTopics.some(t => t.includes('/ev_battery_level/')),
+                'Should NOT use ev_battery_level topic (collides with diagnostic)');
+            assert.ok(!newSensorTopics.some(t => t.includes('/ev_range/')),
+                'Should NOT use ev_range topic (collides with diagnostic)');
+            assert.ok(!newSensorTopics.some(t => t.includes('/ev_charge_state/')),
+                'Should NOT use ev_charge_state topic (collides with diagnostic)');
+            assert.ok(!newSensorTopics.some(t => t.includes('/ev_plug_state/')),
+                'Should NOT use ev_plug_state topic (collides with diagnostic)');
+
+            // Verify they use the ev_charging_ prefix instead
+            assert.ok(newSensorTopics.some(t => t.includes('/ev_charging_battery_level/')));
+            assert.ok(newSensorTopics.some(t => t.includes('/ev_charging_range/')));
+            assert.ok(newSensorTopics.some(t => t.includes('/ev_charging_state/')));
+            assert.ok(newSensorTopics.some(t => t.includes('/ev_charging_plug_state/')));
+        });
+
+        it('should use unique_ids that do not collide with diagnostic unique_ids', () => {
+            const metricsData = {
+                data: {
+                    results: [{
+                        soc: 75.5,
+                        ravg: 260,
+                        cstate: 'ACTIVE',
+                        cplug: 'plugged'
+                    }]
+                }
+            };
+
+            const configs = mqtt.getEVChargingMetricsConfigs(metricsData);
+            const uniqueIds = configs.map(c => c.payload.unique_id);
+
+            // Diagnostic unique_ids use hyphen separator: {VIN}-ev-battery-level or {VIN}-ev_battery_level
+            // EV metrics unique_ids use underscore separator: {VIN}_ev_charging_battery_level
+            // Verify no collision with the diagnostic patterns
+            for (const uid of uniqueIds) {
+                assert.ok(!uid.match(/^[A-Z0-9]+-ev[_-]battery[_-]level$/i),
+                    `unique_id ${uid} should not collide with diagnostic ev_battery_level`);
+                assert.ok(!uid.match(/^[A-Z0-9]+-ev[_-]range$/i),
+                    `unique_id ${uid} should not collide with diagnostic ev_range`);
+                assert.ok(!uid.match(/^[A-Z0-9]+-ev[_-]charge[_-]state$/i),
+                    `unique_id ${uid} should not collide with diagnostic ev_charge_state`);
+                assert.ok(!uid.match(/^[A-Z0-9]+-ev[_-]plug[_-]state$/i),
+                    `unique_id ${uid} should not collide with diagnostic ev_plug_state`);
+            }
+        });
+
+        it('should produce all new sensors as sensor/ type (not binary_sensor/)', () => {
+            const metricsData = {
+                data: {
+                    results: [{
+                        soc: 75.5,
+                        meterkwh: 14213.1,
+                        ravg: 260,
+                        cstate: 'ACTIVE',
+                        cplug: 'plugged',
+                        odo: 58062.09,
+                        temp: 2,
+                        ceta: '2026-02-17T10:00:00.000-08:00'
+                    }]
+                }
+            };
+
+            const configs = mqtt.getEVChargingMetricsConfigs(metricsData);
+
+            // All 8 new sensors should be regular sensors (not binary_sensor)
+            const newSensorNames = [
+                'ev_charging_battery_level', 'ev_charging_lifetime_energy',
+                'ev_charging_range', 'ev_charging_state',
+                'ev_charging_plug_state', 'ev_charging_odometer',
+                'ev_charging_temperature', 'ev_charging_eta'
+            ];
+
+            for (const name of newSensorNames) {
+                const config = configs.find(c => c.topic.includes(`/${name}/`));
+                assert.ok(config, `Sensor ${name} should exist`);
+                assert.ok(config.topic.includes('/sensor/'),
+                    `${name} should be under sensor/ topic, got: ${config.topic}`);
+                assert.ok(!config.topic.includes('/binary_sensor/'),
+                    `${name} should NOT be under binary_sensor/ topic`);
+            }
+        });
+    });
+
+    describe('Issue #848 Scenario: Diagnostics 403, EV Metrics Only', () => {
+        it('should publish battery/range/energy sensors from EV metrics alone', () => {
+            // This simulates the issue reporter's exact data - Connected Access plan
+            // where diagnostics returns 403 but refreshEVChargingMetrics works
+            const metricsData = {
+                data: {
+                    results: [{
+                        soc: 96.8,
+                        meterkwh: 14213.1,
+                        ravg: 260,
+                        tclRavg: 270,
+                        cstate: 'ACTIVE',
+                        cplug: 'plugged',
+                        ctype: 'cord',
+                        cmode: 'immediate',
+                        ceta: '2026-02-17T10:00:00.000-08:00',
+                        odo: 58062.09,
+                        tripodo: 61.22,
+                        temp: 2,
+                        ign: 'off',
+                        gpsspd: 0,
+                        // Many fields null - typical for Connected Access plan
+                        tcl: null,
+                        kwh: null,
+                        lifecons: null,
+                        tripcons: null,
+                        lifekwh: null,
+                        disEnabled: null,
+                        disMinSoc: null,
+                        cpwr: null
+                    }]
+                }
+            };
+
+            const configs = mqtt.getEVChargingMetricsConfigs(metricsData);
+
+            // With old code, only 5 sensors would be created: cmode, tripodo, clocAt(?), clocSet(?), ign
+            // With new code, we should get the 8 new sensors plus the non-null existing ones
+            const sensorNames = configs.map(c => {
+                const match = c.topic.match(/\/([^/]+)\/config$/);
+                return match ? match[1] : c.topic;
+            });
+
+            // Verify the critical sensors the issue reporter needs are present
+            assert.ok(sensorNames.includes('ev_charging_battery_level'), 'Battery level sensor should exist');
+            assert.ok(sensorNames.includes('ev_charging_lifetime_energy'), 'Lifetime energy sensor should exist');
+            assert.ok(sensorNames.includes('ev_charging_range'), 'Range sensor should exist');
+            assert.ok(sensorNames.includes('ev_charging_state'), 'Charge state sensor should exist');
+            assert.ok(sensorNames.includes('ev_charging_plug_state'), 'Plug state sensor should exist');
+            assert.ok(sensorNames.includes('ev_charging_odometer'), 'Odometer sensor should exist');
+            assert.ok(sensorNames.includes('ev_charging_temperature'), 'Temperature sensor should exist');
+            assert.ok(sensorNames.includes('ev_charging_eta'), 'Charge ETA sensor should exist');
+
+            // Verify the correct values
+            const battSensor = configs.find(c => c.topic.includes('ev_charging_battery_level'));
+            assert.strictEqual(battSensor.state, 96.8);
+            const energySensor = configs.find(c => c.topic.includes('ev_charging_lifetime_energy'));
+            assert.strictEqual(energySensor.state, 14213.1);
+
+            // Verify null fields did NOT create sensors (no regression)
+            assert.ok(!sensorNames.includes('ev_target_charge_level'), 'tcl is null, should not create sensor');
+            assert.ok(!sensorNames.includes('ev_battery_capacity'), 'kwh is null, should not create sensor');
+            assert.ok(!sensorNames.includes('ev_lifetime_consumption'), 'lifecons is null, should not create sensor');
+            assert.ok(!sensorNames.includes('ev_trip_consumption'), 'tripcons is null, should not create sensor');
+            assert.ok(!sensorNames.includes('ev_discharge_enabled'), 'disEnabled is null, should not create sensor');
+            assert.ok(!sensorNames.includes('ev_discharge_min_soc'), 'disMinSoc is null, should not create sensor');
+        });
+
+        it('should produce correct sensor count for issue reporter scenario', () => {
+            const metricsData = {
+                data: {
+                    results: [{
+                        soc: 96.8,
+                        meterkwh: 14213.1,
+                        ravg: 260,
+                        cstate: 'ACTIVE',
+                        cplug: 'plugged',
+                        cmode: 'immediate',
+                        ceta: '2026-02-17T10:00:00.000-08:00',
+                        odo: 58062.09,
+                        tripodo: 61.22,
+                        temp: 2,
+                        ign: 'off',
+                        clocSet: false,
+                        clocAt: false,
+                        // Null fields
+                        tcl: null, kwh: null, lifecons: null, tripcons: null,
+                        lifekwh: null, disEnabled: null, disMinSoc: null
+                    }]
+                }
+            };
+
+            const configs = mqtt.getEVChargingMetricsConfigs(metricsData);
+
+            // Non-null existing sensors: tripodo, cmode, clocSet, clocAt, ign = 5
+            // New sensors: soc, meterkwh, ravg, cstate, cplug, odo, temp, ceta = 8
+            // Total = 13
+            assert.strictEqual(configs.length, 13,
+                `Expected 13 sensors (5 existing + 8 new), got ${configs.length}: ${configs.map(c => c.topic.match(/\/([^/]+)\/config$/)?.[1]).join(', ')}`);
         });
     });
 

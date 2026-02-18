@@ -36,6 +36,7 @@
           "tripcons": 18.87,
           "disEnabled": false,
           "disMinSoc": 20,
+          "ceta": "2025-10-11T18:30:00.000-05:00",
           "extraMetrics": {
             "cpwrEst": null,
             "bprecond": "INACTIVE",

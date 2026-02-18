@@ -16,37 +16,31 @@ Starting with the API v3 implementation, the application now provides detailed d
 ### Diagnostic Systems Available
 
 1. **Engine & Transmission** (11 subsystems)
-
    - Sensor: `sensor.<vehicle_name>_adv_diag_engine_transmission`
    - Icon: `mdi:engine`
    - Subsystems: displacement_on_demand, fuel_management, transmission, ignition, emissions, cooling, fuel_injection, fuel_system_air_induction, starting_charging, engine_controls_feedback, exhaust_system
 
 2. **Antilock Braking System** (3 subsystems)
-
    - Sensor: `sensor.<vehicle_name>_adv_diag_antilock_braking_system`
    - Icon: `mdi:car-brake-abs`
    - Subsystems: abs, traction_control_system, electronic_brake_control_module
 
 3. **StabiliTrak** (1 subsystem)
-
    - Sensor: `sensor.<vehicle_name>_adv_diag_stabilitrak`
    - Icon: `mdi:car-esp`
    - Subsystems: electronic_stability_control
 
 4. **Air Bag** (4 subsystems)
-
    - Sensor: `sensor.<vehicle_name>_adv_diag_air_bag`
    - Icon: `mdi:airbag`
    - Subsystems: occupant_restraints, sensing_diagnostic_module, side_air_bag, front_air_bag
 
 5. **Emissions System** (2 subsystems)
-
    - Sensor: `sensor.<vehicle_name>_adv_diag_emissions_system`
    - Icon: `mdi:weather-fog`
    - Subsystems: exhaust_gas_recirculation, evaporative_emissions
 
 6. **OnStar System** (3 subsystems)
-
    - Sensor: `sensor.<vehicle_name>_adv_diag_onstar_system`
    - Icon: `mdi:car-connected`
    - Subsystems: onstar, network_communication, body_control_module
@@ -297,21 +291,18 @@ In addition to creating the EV-specific sensors below, these commands now also i
 ### Sensors Created
 
 1. **EV Target Charge Level** (`sensor.<vehicle_name>_ev_target_charge_level`)
-
    - **Unit**: `%` (percentage)
    - **Icon**: `mdi:battery-charging-80`
    - **Description**: User's configured charge limit setting (e.g., 80%)
    - **Device Class**: Battery
 
 2. **EV Battery Capacity** (`sensor.<vehicle_name>_ev_battery_capacity`)
-
    - **Unit**: `kWh` (kilowatt-hours)
    - **Icon**: `mdi:battery-high`
    - **Description**: Actual usable battery capacity
    - **Device Class**: Energy Storage
 
 3. **EV Trip Odometer** (`sensor.<vehicle_name>_ev_trip_odometer`)
-
    - **Unit**: `km` (kilometers)
    - **Icon**: `mdi:map-marker-distance`
    - **Description**: Current trip distance
@@ -319,39 +310,33 @@ In addition to creating the EV-specific sensors below, these commands now also i
    - **State Class**: Total Increasing
 
 4. **EV Trip Consumption** (`sensor.<vehicle_name>_ev_trip_consumption`)
-
    - **Unit**: `kWh/100km`
    - **Icon**: `mdi:speedometer`
    - **Description**: Energy efficiency for current trip
    - **State Class**: Measurement
 
 5. **EV Lifetime Consumption** (`sensor.<vehicle_name>_ev_lifetime_consumption`)
-
    - **Unit**: `kWh/100km`
    - **Icon**: `mdi:chart-line`
    - **Description**: Average lifetime energy efficiency
    - **State Class**: Measurement
 
 6. **EV Charge Mode** (`sensor.<vehicle_name>_ev_charge_mode`)
-
    - **Icon**: `mdi:ev-station`
    - **Description**: Current charging mode (e.g., "immediate")
    - **Values**: `immediate`, `departure`, etc.
 
 7. **EV Charge Location Set** (`binary_sensor.<vehicle_name>_ev_charge_location_set`)
-
    - **Icon**: `mdi:map-marker-check`
    - **Description**: Whether home charging location is configured
    - **Values**: `on` (set), `off` (not set)
 
 8. **EV At Charge Location** (`binary_sensor.<vehicle_name>_ev_at_charge_location`)
-
    - **Icon**: `mdi:map-marker`
    - **Description**: Whether vehicle is currently at the configured charging location
    - **Values**: `on` (at location), `off` (away)
 
 9. **EV Discharge Enabled** (`binary_sensor.<vehicle_name>_ev_discharge_enabled`)
-
    - **Icon**: `mdi:transmission-tower-export`
    - **Description**: Whether vehicle-to-grid discharge is enabled
    - **Values**: `on` (enabled), `off` (disabled)
@@ -417,6 +402,21 @@ In addition to creating the EV-specific sensors below, these commands now also i
     - **Icon**: `mdi:clock-end`
     - **Description**: Estimated time when charging will complete (ISO 8601 timestamp)
     - **Device Class**: Timestamp
+
+### Note on Sensor Overlap
+
+If your vehicle's **diagnostics** command works (i.e., you have a full OnStar plan), 4 of the new `ev_charging_*` sensors will show the same data as existing diagnostic sensors:
+
+| EV Charging Metrics Sensor  | Diagnostic Sensor                    | Data              |
+| --------------------------- | ------------------------------------ | ----------------- |
+| `ev_charging_battery_level` | `ev_battery_level`                   | Battery %         |
+| `ev_charging_range`         | `ev_range`                           | Range in km       |
+| `ev_charging_odometer`      | `odometer` group                     | Odometer in km    |
+| `ev_charging_temperature`   | `hybrid_battery_minimum_temperature` | Temperature in °C |
+
+This is expected and harmless — they publish to separate MQTT topics and do not interfere with each other. The remaining 4 new sensors (`ev_charging_lifetime_energy`, `ev_charging_eta`, `ev_charging_state`, `ev_charging_plug_state`) provide data that diagnostics either does not have or presents differently (e.g., diagnostics converts charge/plug state to boolean, while EV metrics preserves the raw string like "ACTIVE" or "plugged").
+
+For **Connected Access plan** users whose diagnostics returns 403, these 8 sensors are the **only** source of battery level, range, and charging status data.
 
 ### Update Frequency
 
@@ -530,16 +530,13 @@ Buttons are added **disabled by default** because it's easy to accidentally pres
 Since the buttons are created but disabled by default, follow these steps to enable the ones you want to use:
 
 1. **Navigate to MQTT Integration:**
-
    - Go to `Settings` → `Devices & Services` → `MQTT`
 
 2. **Find Your Vehicle Device:**
-
    - Look for your vehicle device in the MQTT device list (it will be named with your vehicle name)
    - Click on the device to view all entities
 
 3. **Enable Desired Buttons:**
-
    - Scroll through the list of entities to find the buttons (they will have a button icon)
    - Click on each button entity you want to enable
    - Click the settings/gear icon in the entity details

@@ -485,13 +485,13 @@ entities:
 
 All standard diagnostic sensors (odometer, tire pressures, fuel level, oil life, EV battery, etc.) automatically include the following entity attributes:
 
-- **status**: The diagnostic status text from the OnStar API (e.g., `OK`, `CHECK`, `null`)
-- **status_color**: Color-coded status indicator from the API (e.g., `GREEN`, `YELLOW`, `RED`, `null`)
+- **status**: The diagnostic status text from the OnStar API (e.g., `OK`, `CHECK`, or `Unknown` when not available)
+- **status_color**: Color-coded status indicator from the API (e.g., `GREEN`, `YELLOW`, `RED`, or `Unknown` when not available)
 - **last_updated**: Timestamp of the last diagnostic update
 
 These attributes are available on every diagnostic sensor and can be used in templates, automations, and Lovelace cards for color-coded status displays.
 
-> **Note:** Some sensors may have `null` for `status` and `status_color` if the API does not provide status information for that particular diagnostic element. Your templates should handle this gracefully.
+> **Note:** Some sensors will show `Unknown` for `status` and `status_color` if the OnStar API does not provide status information for that particular diagnostic element. This is normal — not all diagnostic elements have status data. Your templates should handle this gracefully (see examples below).
 
 ### Using Status Color in Templates
 

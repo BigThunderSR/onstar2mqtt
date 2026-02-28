@@ -53,13 +53,13 @@ All changes have been successfully implemented and tested. All 190 tests pass.
 
 ### API Structure Changes Handled
 
-| Component | Old Format | New Format | Solution |
-|-----------|------------|------------|----------|
-| Vehicles array | `response.data.vehicles.vehicle` | `response.data.vehicles` | Updated path |
-| Commands object | `vehicle.commands.command` | Not present | Null check with fallback |
-| Diagnostic field | `diagnosticElement` | `diagnosticElements` | Try both (fallback) |
-| Unit field | `unit` | `uom` | Try both (fallback) |
-| Diagnostic path | `commandResponse.body.diagnosticResponse` | `data.diagnostics` or `diagnostics` | Multi-path fallback |
+| Component        | Old Format                                | New Format                          | Solution                 |
+| ---------------- | ----------------------------------------- | ----------------------------------- | ------------------------ |
+| Vehicles array   | `response.data.vehicles.vehicle`          | `response.data.vehicles`            | Updated path             |
+| Commands object  | `vehicle.commands.command`                | Not present                         | Null check with fallback |
+| Diagnostic field | `diagnosticElement`                       | `diagnosticElements`                | Try both (fallback)      |
+| Unit field       | `unit`                                    | `uom`                               | Try both (fallback)      |
+| Diagnostic path  | `commandResponse.body.diagnosticResponse` | `data.diagnostics` or `diagnostics` | Multi-path fallback      |
 
 ### New Units/Formats Supported
 
@@ -95,20 +95,22 @@ All existing tests pass without modification, demonstrating perfect backward com
 - No breaking changes to public APIs
 - Test sample data files unchanged (maintain old format for compatibility testing)
 
-## Future Enhancements Available
+## API Feature Implementation Status
 
-The new API provides additional fields that could be utilized:
+The new API provides additional fields. The following are now implemented:
+
+- ✅ `status` - Diagnostic status text — exposed as `status` entity attribute on all diagnostic sensors via `json_attributes_template`
+- ✅ `statusColor` - Visual indicators (GREEN/YELLOW/RED) — exposed as `status_color` entity attribute on all diagnostic sensors via `json_attributes_template`
+- ✅ `cts` - Timestamps for readings — exposed as `last_updated` entity attribute on all diagnostic sensors
+- ✅ `advDiagnostics` - Advanced diagnostic information — exposed as 7 dedicated advanced diagnostic sensors
+- ✅ `vehicleId` - New vehicle identifier
+- ✅ `imageUrl` - Vehicle images — used for vehicle image entity
+
+The following are accessible but not yet utilized:
 
 - `displayName` - Human-readable diagnostic names
-- `description` - Detailed descriptions  
-- `statusColor` - Visual indicators (GREEN/YELLOW/RED)
-- `cts` - Timestamps for readings
+- `description` - Detailed descriptions
 - `recommendedAction` - Maintenance recommendations
-- `advDiagnostics` - Advanced diagnostic information
-- `vehicleId` - New vehicle identifier
-- `imageUrl` - Vehicle images
-
-These fields are now accessible in the vehicle and diagnostic objects but not yet utilized by the application.
 
 ## Migration Path
 

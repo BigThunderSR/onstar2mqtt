@@ -146,6 +146,10 @@ MQTT auto discovery is enabled. For further integrations and screenshots see [HA
 - Topic format: `MQTT_PREFIX/YOUR_CAR_VIN/command/{commandName}/state`
   - Note: Unless defined, default `MQTT_PREFIX=homeassistant`
 
+### Universal Status & Status Color Attributes
+
+**NEW** - All diagnostic sensors now include `status`, `status_color`, and `last_updated` as entity attributes. These expose the OnStar API's color-coded status indicators (GREEN, YELLOW, RED) directly on every sensor, enabling color-coded dashboards and status-based automations in Home Assistant. See [HA-MQTT.md](HA-MQTT.md#diagnostic-sensor-attributes-status--status-color) for template examples.
+
 ### Sensor-Specific Messages as Attributes
 
 **NEW** - Sensor specific messages are now published to MQTT as sensor attributes which are visible in HA

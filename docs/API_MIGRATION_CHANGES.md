@@ -355,16 +355,20 @@ All changes maintain backward compatibility with the old API format:
 4. **Response Paths**: Tries old path first, then falls back to new paths
 5. **Null Handling**: All methods gracefully handle null values for missing fields
 
-## New API Features Available (Not Yet Utilized)
+## New API Features - Implementation Status
 
-The new API provides additional fields that could be utilized in future updates:
+The new API provides additional fields. The following are now utilized:
+
+- ✅ `status` - Diagnostic status text (e.g., OK, CHECK) — exposed as `status` entity attribute on all diagnostic sensors
+- ✅ `statusColor` - Visual status indicators (GREEN, YELLOW, RED) — exposed as `status_color` entity attribute on all diagnostic sensors
+- ✅ `cts` - Timestamps for each reading — exposed as `last_updated` entity attribute on all diagnostic sensors
+- ✅ `advDiagnostics` - Advanced diagnostic system information — exposed as 7 dedicated advanced diagnostic sensors
+
+The following are available but not yet utilized:
 
 - `displayName` - Human-readable names for diagnostics
 - `description` - Detailed descriptions
-- `statusColor` - Visual status indicators (GREEN, YELLOW, RED)
-- `cts` - Timestamps for each reading
 - `recommendedAction` - Maintenance recommendations
-- `advDiagnostics` - Advanced diagnostic system information with nested structure
 
 ## Testing Recommendations
 

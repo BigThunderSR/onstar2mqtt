@@ -22,15 +22,15 @@ OnStar2MQTT now has simple, effective patchright version management that prevent
 
 This ensures Docker builds always get the Chromium version that onstarjs2 expects.
 
-### Renovate Integration - Maintenance
+### GitHub Actions Workflow - Maintenance
 
 **What**: Automatically updates patchright override when onstarjs2 updates.
 
 **How**:
 
-- Runs `npm run sync-patchright` during onstarjs2 updates
-- Includes the updated override in the same Renovate PR
-- Labeled with `patchright-sync` and `onstarjs2-dependency`
+- A GitHub Actions workflow (`.github/workflows/sync-patchright.yml`) triggers on Renovate/Dependabot PRs that change `package.json`
+- Detects if `onstarjs2` was updated and runs `npm run sync-patchright`
+- Commits the updated override back to the PR branch
 
 ## Benefits
 

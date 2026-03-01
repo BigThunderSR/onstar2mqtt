@@ -26,18 +26,32 @@ The solution is simple and effective:
 
 **Why**: This ensures all dependencies use the patchright version that onstarjs2 expects, regardless of what version npm would normally install.
 
-### Renovate Integration - Maintenance Automation
+### GitHub Actions Workflow - Maintenance Automation
 
 **What**: Automatically update the patchright override when onstarjs2 updates.
 
 **How**:
 
-- Renovate runs `npm run sync-patchright` when onstarjs2 is updated
+- A GitHub Actions workflow (`.github/workflows/sync-patchright.yml`) triggers on PRs from Renovate or Dependabot that change `package.json`
+- It checks if `onstarjs2` was updated, then runs `npm run sync-patchright`
 - The sync script queries npm registry for onstarjs2's patchright dependency
-- Updates the override in the same Renovate PR
-- Labeled with `patchright-sync` and `onstarjs2-dependency`
+- Commits the updated override back to the PR branch
 
-**File**: `renovate.json`
+> **Note**: Previously, Renovate's `postUpgradeTasks` was used for this, but the Mend Renovate hosted app does not support custom post-upgrade commands (requires `allowedCommands` at the host level). The GitHub Actions workflow approach is more reliable and works with both Renovate and Dependabot.
+>
+> Original `renovate.json` block (removed March 2026):
+>
+> ```json
+> {
+>   "matchPackageNames": ["onstarjs2"],
+>   "postUpgradeTasks": {
+>     "commands": ["npm run sync-patchright"],
+>     "fileFilters": ["package.json"],
+>     "executionMode": "update"
+>   },
+>   "addLabels": ["patchright-sync", "onstarjs2-dependency"]
+> }
+> ```
 
 ## Manual Command
 

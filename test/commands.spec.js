@@ -34,6 +34,8 @@ describe('Commands', () => {
             getEVChargingMetrics: () => Promise.resolve(),
             refreshEVChargingMetrics: () => Promise.resolve(refreshEVChargingMetricsSampleData),
             getVehicleRecallInfo: () => Promise.resolve(),
+            getWarrantyInfo: () => Promise.resolve(),
+            getSxmSubscriptionInfo: () => Promise.resolve(),
         };
 
         commands = new Commands(onstarMock);
@@ -196,6 +198,16 @@ describe('Commands', () => {
 
     it('should call getVehicleRecallInfo method', async () => {
         const result = await commands.getVehicleRecallInfo();
+        assert.strictEqual(result, undefined);
+    });
+
+    it('should call getWarrantyInfo method', async () => {
+        const result = await commands.getWarrantyInfo();
+        assert.strictEqual(result, undefined);
+    });
+
+    it('should call getSxmSubscriptionInfo method', async () => {
+        const result = await commands.getSxmSubscriptionInfo();
         assert.strictEqual(result, undefined);
     });
 });

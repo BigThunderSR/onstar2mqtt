@@ -13,7 +13,9 @@ describe('New Commands (OnStarJS 2.12.0)', () => {
             vehicleDetails: JSON.parse(fs.readFileSync(path.join(__dirname, 'command-sample-getVehicleDetails.json'), 'utf8')),
             onstarPlan: JSON.parse(fs.readFileSync(path.join(__dirname, 'command-sample-getOnstarPlan.json'), 'utf8')),
             evChargingMetrics: JSON.parse(fs.readFileSync(path.join(__dirname, 'command-sample-getEVChargingMetrics.json'), 'utf8')),
-            vehicleRecallInfo: JSON.parse(fs.readFileSync(path.join(__dirname, 'command-sample-getVehicleRecallInfo.json'), 'utf8'))
+            vehicleRecallInfo: JSON.parse(fs.readFileSync(path.join(__dirname, 'command-sample-getVehicleRecallInfo.json'), 'utf8')),
+            warrantyInfo: JSON.parse(fs.readFileSync(path.join(__dirname, 'command-sample-getWarrantyInfo.json'), 'utf8')),
+            sxmSubscriptionInfo: JSON.parse(fs.readFileSync(path.join(__dirname, 'command-sample-getSxmSubscriptionInfo.json'), 'utf8'))
         };
     });
 
@@ -24,6 +26,8 @@ describe('New Commands (OnStarJS 2.12.0)', () => {
             getOnstarPlan: () => Promise.resolve(sampleData.onstarPlan),
             getEVChargingMetrics: () => Promise.resolve(sampleData.evChargingMetrics),
             getVehicleRecallInfo: () => Promise.resolve(sampleData.vehicleRecallInfo),
+            getWarrantyInfo: () => Promise.resolve(sampleData.warrantyInfo),
+            getSxmSubscriptionInfo: () => Promise.resolve(sampleData.sxmSubscriptionInfo),
         };
 
         commands = new Commands(onstarMock);
@@ -228,12 +232,126 @@ describe('New Commands (OnStarJS 2.12.0)', () => {
         });
     });
 
+    describe('getWarrantyInfo', () => {
+        it('should return warranty information', async () => {
+            const result = await commands.getWarrantyInfo();
+            assert(result);
+            assert.strictEqual(result.errors.length, 0);
+            assert(result.data);
+            assert(result.data.vehicleDetails);
+        });
+
+        it('should return warranty info array', async () => {
+            const result = await commands.getWarrantyInfo();
+            const vehicle = result.data.vehicleDetails;
+            assert(Array.isArray(vehicle.warrantyInfo));
+            assert(vehicle.warrantyInfo.length > 0);
+        });
+
+        it('should have valid warranty structure', async () => {
+            const result = await commands.getWarrantyInfo();
+            const warranties = result.data.vehicleDetails.warrantyInfo;
+            const warranty = warranties[0];
+            assert(warranty.typeDescription);
+            assert(warranty.status);
+            assert(warranty.startDate);
+            assert(warranty.expirationDate);
+            assert('startMileage' in warranty);
+            assert('endMileage' in warranty);
+            assert(warranty.mileageUnit);
+        });
+
+        it('should contain applicable warranties', async () => {
+            const result = await commands.getWarrantyInfo();
+            const warranties = result.data.vehicleDetails.warrantyInfo;
+            const applicableCount = warranties.filter(w => w.status === 'APPLICABLE').length;
+            assert(applicableCount > 0);
+        });
+
+        it('should have uppercase status values', async () => {
+            const result = await commands.getWarrantyInfo();
+            const warranties = result.data.vehicleDetails.warrantyInfo;
+            warranties.forEach(w => {
+                assert(['APPLICABLE', 'EXPIRED'].includes(w.status), `Unexpected status: ${w.status}`);
+            });
+        });
+
+        it('should indicate data presence', async () => {
+            const result = await commands.getWarrantyInfo();
+            assert.strictEqual(result.dataPresent, true);
+        });
+    });
+
+    describe('getSxmSubscriptionInfo', () => {
+        it('should return SXM subscription information', async () => {
+            const result = await commands.getSxmSubscriptionInfo();
+            assert(result);
+            assert.strictEqual(result.errors.length, 0);
+            assert(result.data);
+            assert(result.data.vehicleDetails);
+        });
+
+        it('should return sxmSubscriptionInfo object', async () => {
+            const result = await commands.getSxmSubscriptionInfo();
+            const vehicle = result.data.vehicleDetails;
+            assert(vehicle.sxmSubscriptionInfo);
+            assert(typeof vehicle.sxmSubscriptionInfo === 'object');
+        });
+
+        it('should return radio ID', async () => {
+            const result = await commands.getSxmSubscriptionInfo();
+            const sxmInfo = result.data.vehicleDetails.sxmSubscriptionInfo;
+            assert(sxmInfo.radioId);
+            assert(typeof sxmInfo.radioId === 'string');
+        });
+
+        it('should return subscriptions array', async () => {
+            const result = await commands.getSxmSubscriptionInfo();
+            const sxmInfo = result.data.vehicleDetails.sxmSubscriptionInfo;
+            assert(Array.isArray(sxmInfo.subscriptions));
+            assert(sxmInfo.subscriptions.length > 0);
+        });
+
+        it('should have valid subscription structure', async () => {
+            const result = await commands.getSxmSubscriptionInfo();
+            const sub = result.data.vehicleDetails.sxmSubscriptionInfo.subscriptions[0];
+            assert(sub.subscriptionName);
+            assert(sub.marketType);
+            assert(sub.packageId);
+            assert(sub.startDate);
+            assert('endDate' in sub);
+            assert(Array.isArray(sub.services));
+        });
+
+        it('should have SUBSCRIBED market type for active subscriptions', async () => {
+            const result = await commands.getSxmSubscriptionInfo();
+            const subs = result.data.vehicleDetails.sxmSubscriptionInfo.subscriptions;
+            const subscribedCount = subs.filter(s => s.marketType === 'SUBSCRIBED').length;
+            assert(subscribedCount > 0);
+        });
+
+        it('should return channel account info with radioId', async () => {
+            const result = await commands.getSxmSubscriptionInfo();
+            const sxmInfo = result.data.vehicleDetails.sxmSubscriptionInfo;
+            assert(sxmInfo.channelAccountInfo);
+            assert(sxmInfo.channelAccountInfo.radioId);
+            assert(sxmInfo.channelAccountInfo.packageName);
+        });
+
+        it('should indicate data presence', async () => {
+            const result = await commands.getSxmSubscriptionInfo();
+            assert.strictEqual(result.dataPresent, true);
+        });
+    });
+
     describe('Command Integration', () => {
         it('all new commands should be callable', async () => {
             assert(typeof commands.getVehicleDetails === 'function');
             assert(typeof commands.getOnstarPlan === 'function');
             assert(typeof commands.getEVChargingMetrics === 'function');
             assert(typeof commands.getVehicleRecallInfo === 'function');
+            assert(typeof commands.getWarrantyInfo === 'function');
+            assert(typeof commands.getSxmSubscriptionInfo === 'function');
         });
 
         it('all new commands should return promises', () => {
@@ -241,6 +359,8 @@ describe('New Commands (OnStarJS 2.12.0)', () => {
             assert(commands.getOnstarPlan() instanceof Promise);
             assert(commands.getEVChargingMetrics() instanceof Promise);
             assert(commands.getVehicleRecallInfo() instanceof Promise);
+            assert(commands.getWarrantyInfo() instanceof Promise);
+            assert(commands.getSxmSubscriptionInfo() instanceof Promise);
         });
     });
 });

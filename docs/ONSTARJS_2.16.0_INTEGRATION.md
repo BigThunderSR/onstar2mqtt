@@ -34,7 +34,7 @@ Additionally, this release includes important upstream changes to the existing `
 
 - **Entity:** `sensor.<vehicle_name>_warranty_info`
 - **State:** Count string (e.g., `3 Applicable`)
-- **Log Output:** `Warranty sensor updated: X applicable of Y total (Z expired)`
+- **Log Output:** Dynamic field-by-field enumeration via `logResponseData()` (adapts automatically to API changes)
 
 **MQTT Command:**
 
@@ -75,7 +75,7 @@ data:
 
 - **Entity:** `sensor.<vehicle_name>_sxm_subscription`
 - **State:** Count string (e.g., `2 Subscribed`) or `None`
-- **Log Output:** `SXM subscription sensor updated: X subscribed of Y total`
+- **Log Output:** Dynamic field-by-field enumeration via `logResponseData()` (adapts automatically to API changes)
 
 **MQTT Command:**
 
@@ -98,7 +98,7 @@ The following upstream changes in OnStarJS 2.16.0 affect the existing `getOnstar
 
 3. **New fields added** — `onstarInfo`, `activePlans`, and `orders` are now included in the response. These are additive and non-breaking.
 
-**Impact on OnStar2MQTT:** The `getOnstarPlan` handler already uses dynamic logging that adapts to whatever fields the API returns. No code changes were required for these upstream changes — they are handled transparently.
+**Impact on OnStar2MQTT:** The `getOnstarPlan` handler uses the shared `logResponseData()` helper which dynamically enumerates all API response fields via `Object.entries()`. No code changes were required for these upstream changes — new/removed fields are logged automatically.
 
 **Impact on Users:**
 
@@ -139,12 +139,12 @@ GetSxmSubscriptionInfo: {
 
 ### 3. Command Handlers (`src/index.js`)
 
-Added 2 new command handlers with dynamic logging:
+Added 2 new command handlers with dynamic logging via the shared `logResponseData()` helper:
 
-- **getWarrantyInfo handler** — Publishes warranty data to MQTT, counts applicable/expired warranties dynamically
-- **getSxmSubscriptionInfo handler** — Publishes SXM subscription data to MQTT, counts active subscriptions dynamically
+- **getWarrantyInfo handler** — Publishes warranty data to MQTT, counts applicable/expired warranties dynamically. Logs all `vehicleDetails` fields at info level; `warrantyInfo` array items enumerated individually.
+- **getSxmSubscriptionInfo handler** — Publishes SXM subscription data to MQTT, counts active subscriptions dynamically. Logs all `sxmSubscriptionInfo` fields at info level; `subscriptions` array items enumerated individually.
 
-Both handlers use dynamic single-line summary logging that adapts to API response changes without requiring code modifications.
+Both handlers use `logResponseData()` which iterates `Object.entries()` at runtime — new/removed API fields are logged automatically without code changes. Large nested objects and arrays show key/item counts at info level with full detail at debug level.
 
 ### 4. Test Suite Updates
 

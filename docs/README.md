@@ -1,8 +1,30 @@
 # OnStar2MQTT Documentation
 
-This directory contains documentation for OnStar2MQTT's patchright version management.
+This directory contains documentation for OnStar2MQTT's development history and technical details.
 
 ## Files
+
+### [ONSTARJS_2.16.0_INTEGRATION.md](./ONSTARJS_2.16.0_INTEGRATION.md)
+
+**Integration summary** for OnStarJS 2.16.0 new commands and upstream caveats.
+
+- **New commands**: `getWarrantyInfo()` and `getSxmSubscriptionInfo()`
+- **Upstream caveats**: `getOnstarPlan` field name fixes, partial error tolerance, new fields
+- **Test coverage**: 22 new tests, 457 total passing
+- **MQTT buttons**: Auto-discovered in Home Assistant
+
+**Audience**: Developers, maintainers, users upgrading to OnStarJS 2.16.0
+
+### [ONSTARJS_2.12.0_INTEGRATION.md](./ONSTARJS_2.12.0_INTEGRATION.md)
+
+**Integration summary** for OnStarJS 2.12.0+ new commands.
+
+- **New commands**: 9 new commands, 4 deprecated
+- **MQTT buttons**: Auto-discovered in Home Assistant
+- **Recall sensor**: Automatic recall monitoring
+- **Vehicle image**: Manufacturer photo entity
+
+**Audience**: Developers, maintainers
 
 ### [PATCHRIGHT_AUTOMATION.md](./PATCHRIGHT_AUTOMATION.md)
 

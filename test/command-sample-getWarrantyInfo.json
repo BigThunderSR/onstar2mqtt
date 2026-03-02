@@ -1,0 +1,51 @@
+{
+  "errors": [],
+  "data": {
+    "vehicleDetails": {
+      "warrantyInfo": [
+        {
+          "startMileage": 0,
+          "endMileage": 36000,
+          "startDate": "2024-03-15",
+          "expirationDate": "2027-03-15",
+          "typeDescription": "Bumper-to-Bumper Basic Warranty",
+          "status": "APPLICABLE",
+          "mileageUnit": "M",
+          "notes": "00000000000000001234"
+        },
+        {
+          "startMileage": 0,
+          "endMileage": 60000,
+          "startDate": "2024-03-15",
+          "expirationDate": "2029-03-15",
+          "typeDescription": "Powertrain Limited Warranty",
+          "status": "APPLICABLE",
+          "mileageUnit": "M",
+          "notes": "00000000000000001235"
+        },
+        {
+          "startMileage": 50,
+          "endMileage": 70050,
+          "startDate": "2019-03-29",
+          "expirationDate": "2025-03-29",
+          "typeDescription": "Emissions Limited Warranty",
+          "status": "EXPIRED",
+          "mileageUnit": "M",
+          "notes": "00000000000000000881"
+        },
+        {
+          "startMileage": 0,
+          "endMileage": null,
+          "startDate": "2024-03-15",
+          "expirationDate": "2030-03-15",
+          "typeDescription": "Corrosion Protection Warranty",
+          "status": "APPLICABLE",
+          "mileageUnit": "M",
+          "notes": "00000000000000001236"
+        }
+      ]
+    }
+  },
+  "extensions": null,
+  "dataPresent": true
+}

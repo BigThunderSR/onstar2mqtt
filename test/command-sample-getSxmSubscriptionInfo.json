@@ -1,0 +1,45 @@
+{
+  "errors": [],
+  "data": {
+    "vehicleDetails": {
+      "sxmSubscriptionInfo": {
+        "radioId": "ABCD12345678",
+        "is360Device": true,
+        "channelAccountInfo": {
+          "radioId": "ABCD12345678",
+          "marketType": "SUBSCRIBED",
+          "packageName": "SiriusXM Music & Entertainment",
+          "expiryDate": null,
+          "phoneNumber": "+15555551234",
+          "message": ""
+        },
+        "subscriptions": [
+          {
+            "subscriptionName": "Music&Ent",
+            "packageId": "1_SIR_AUD_EVT",
+            "marketType": "SUBSCRIBED",
+            "startDate": "2024-03-15T04:00:00Z",
+            "endDate": null,
+            "services": [
+              "Internet Radio",
+              "Audio"
+            ]
+          },
+          {
+            "subscriptionName": "Traffic",
+            "packageId": "2_SIR_TRF_LNK",
+            "marketType": "SUBSCRIBED",
+            "startDate": "2024-03-15T04:00:00Z",
+            "endDate": null,
+            "services": [
+              "Traffic",
+              "Travel Link"
+            ]
+          }
+        ]
+      }
+    }
+  },
+  "extensions": null,
+  "dataPresent": true
+}

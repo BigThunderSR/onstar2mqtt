@@ -42,6 +42,7 @@ There is no affiliation with this project and GM, Chevrolet nor OnStar. In fact,
 - **New EV Commands** - Added refreshEVChargingMetrics for live charging data, setChargeLevelTarget, stopCharging, and comprehensive EV metrics
 - **Instant EV Metrics Updates (v2.6.0)** - When using `refreshEVChargingMetrics` or `getEVChargingMetrics`, diagnostic sensors (battery level, EV range, charge state, plug state) now update immediately instead of waiting for the next polling cycle
 - **New EV Ignition Sensor (v2.6.0)** - Added `ev_ignition` binary sensor from EV charging metrics data
+- **New Warranty & SXM Commands (v2.8.0)** - Added `getWarrantyInfo` for vehicle warranty coverage details and `getSxmSubscriptionInfo` for SiriusXM subscription status. Both available as MQTT buttons in Home Assistant. Requires OnStarJS 2.16.0+.
 
 **What This Means for You:**
 
@@ -99,6 +100,10 @@ First, delete the related retained MQTT topics from your MQTT broker to prevent 
 **Recommendation:** Test in a sandbox/test environment first if possible, or be prepared to update your Home Assistant configurations after upgrading.
 
 For technical details, see [docs/API_MIGRATION_CHANGES.md](docs/API_MIGRATION_CHANGES.md)
+
+### OnStar API Changes
+
+The OnStar API now only returns full plan details from `getOnstarPlan` for **primary account holders**; shared accounts will receive partial data.
 
 ## Running
 
@@ -195,6 +200,8 @@ MQTT auto discovery is enabled. For further integrations and screenshots see [HA
   - `{"command": "flashLights"}`
   - `{"command": "stopLights"}`
   - `{"command": "refreshEVChargingMetrics"}` (get live charging data)
+  - `{"command": "getWarrantyInfo"}` (get vehicle warranty details)
+  - `{"command": "getSxmSubscriptionInfo"}` (get SiriusXM subscription info)
 
 ### MQTT Button Auto-Discovery
 

@@ -715,6 +715,12 @@ Potential improvements for future versions:
 - All commands respect OnStar API rate limiting
 - Vehicle image requires manufacturer image URL in getAccountVehicles response
 
+## Later Versions
+
+For commands added in later OnStarJS versions, see:
+
+- [ONSTARJS_2.16.0_INTEGRATION.md](./ONSTARJS_2.16.0_INTEGRATION.md) — `getWarrantyInfo()` and `getSxmSubscriptionInfo()` commands, plus `getOnstarPlan` upstream caveats
+
 ## Compatibility
 
 - OnStarJS: 2.12.0+

@@ -11,7 +11,7 @@ WORKDIR /app
 COPY ["package.json", "/app/"]
 COPY ["package-lock.json", "/app/"]
 RUN npm -v
-RUN npm update -g --no-fund
+RUN npx --yes npm@latest install -g npm@latest --no-fund
 RUN npm -v
 RUN npm ci --omit=dev --no-fund --legacy-peer-deps
 RUN npx patchright install chromium --with-deps

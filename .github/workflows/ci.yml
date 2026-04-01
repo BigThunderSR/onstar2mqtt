@@ -39,13 +39,40 @@ on:
 #  cancel-in-progress: false
 
 jobs:
-  test_build_push:
-    name: ci - test, build, push (${{ matrix.node-version }})
+  test:
+    name: ci - test (${{ matrix.node-version }})
     runs-on: ubuntu-latest
 
     strategy:
       matrix:
         node-version: [22.x]
+
+    steps:
+      - name: Check out the repo
+        uses: actions/checkout@v6
+        with:
+          ref: ${{ github.event.workflow_run.head_branch || github.ref }}
+
+      - name: Use Node.js ${{ matrix.node-version }}
+        uses: actions/setup-node@v6
+        with:
+          node-version: ${{ matrix.node-version }}
+      - run: npm ci
+      - run: npm run build --if-present
+      - run: npm run lint
+      - run: npm test
+      - run: npx c8 --reporter=lcov npm test
+      - name: Upload coverage to Codacy
+        uses: codacy/codacy-coverage-reporter-action@89d6c85cfafaec52c72b6c5e8b2878d33104c699 # v1.3.0
+        with:
+          project-token: ${{ secrets.CODACY_PROJECT_TOKEN }}
+          coverage-reports: coverage/lcov.info
+
+  build_push:
+    name: ci - build, push
+    needs: test
+    runs-on: ubuntu-latest
+    if: always() && needs.test.result == 'success'
 
     steps:
       - name: Check out the repo
@@ -66,21 +93,6 @@ jobs:
             type=ref,event=branch
             type=schedule,pattern=weekly
             type=raw,value=latest,enable={{is_default_branch}}
-
-      - name: Use Node.js ${{ matrix.node-version }}
-        uses: actions/setup-node@v6
-        with:
-          node-version: ${{ matrix.node-version }}
-      - run: npm ci
-      - run: npm run build --if-present
-      - run: npm run lint
-      - run: npm test
-      - run: npx c8 --reporter=lcov npm test
-      - name: Upload coverage to Codacy
-        uses: codacy/codacy-coverage-reporter-action@89d6c85cfafaec52c72b6c5e8b2878d33104c699 # v1.3.0
-        with:
-          project-token: ${{ secrets.CODACY_PROJECT_TOKEN }}
-          coverage-reports: coverage/lcov.info
 
       - name: Set up QEMU
         uses: docker/setup-qemu-action@v4.0.0

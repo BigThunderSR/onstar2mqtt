@@ -53,7 +53,11 @@ jobs:
       - run: npm run lint
       - run: npm test
       - run: npx c8 --reporter=lcov npm test
-      - run: bash <(curl -Ls https://coverage.codacy.com/get.sh) report --project-token ${{ secrets.CODACY_PROJECT_TOKEN }}
+      - name: Upload coverage to Codacy
+        uses: codacy/codacy-coverage-reporter-action@89d6c85cfafaec52c72b6c5e8b2878d33104c699 # v1.3.0
+        with:
+          project-token: ${{ secrets.CODACY_PROJECT_TOKEN }}
+          coverage-reports: coverage/lcov.info
 
       - name: Set up QEMU
         uses: docker/setup-qemu-action@v4.0.0

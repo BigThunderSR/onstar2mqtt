@@ -5,20 +5,17 @@ FROM node:22-bookworm-slim
 # Install tini for proper signal handling
 RUN apt-get update && apt-get install -y --no-install-recommends tini && rm -rf /var/lib/apt/lists/*
 
-RUN mkdir /app
 WORKDIR /app
 
-COPY ["package.json", "/app/"]
-COPY ["package-lock.json", "/app/"]
-RUN npm -v
-RUN npx --yes npm@latest install -g npm@latest --no-fund
-RUN npm -v
-RUN npm ci --omit=dev --no-fund --legacy-peer-deps
-RUN npx patchright install chromium --with-deps
+COPY package.json package-lock.json ./
 
-COPY ["src", "/app/src"]
-COPY ["docker-entrypoint.sh", "/app/"]
-RUN chmod +x /app/docker-entrypoint.sh
+RUN npm ci --omit=dev --no-fund --legacy-peer-deps \
+ && npm cache clean --force \
+ && npx patchright install chromium --with-deps \
+ && rm -rf /root/.npm /tmp/* /var/tmp/* /var/lib/apt/lists/*
+
+COPY src ./src
+COPY --chmod=755 docker-entrypoint.sh ./
 
 ENTRYPOINT ["/usr/bin/tini", "--", "/app/docker-entrypoint.sh"]
 CMD ["node", "src/index.js"]

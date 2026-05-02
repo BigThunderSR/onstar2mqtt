@@ -3214,6 +3214,36 @@ describe('MQTT', () => {
             assert.strictEqual(config.icon, 'mdi:wiper-wash');
         });
 
+        it('should map EE_BPLM correctly', () => {
+            const diagResponse = {
+                name: 'EE_BPLM',
+                diagnosticElements: [{ name: 'EE_BPLM', value: 'GOOD', uom: 'N/A' }]
+            };
+            const d = new Diagnostic(diagResponse);
+            const config = mqtt.getConfigPayload(d, d.diagnosticElements[0]);
+            assert.strictEqual(config.icon, 'mdi:car-brake-worn-linings');
+        });
+
+        it('should map BRAKE_PAD_LIFE correctly', () => {
+            const diagResponse = {
+                name: 'EE_BPLM',
+                diagnosticElements: [{ name: 'BRAKE_PAD_LIFE', value: 'GOOD', uom: 'N/A' }]
+            };
+            const d = new Diagnostic(diagResponse);
+            const config = mqtt.getConfigPayload(d, d.diagnosticElements[0]);
+            assert.strictEqual(config.icon, 'mdi:car-brake-worn-linings');
+        });
+
+        it('should map OTHER correctly', () => {
+            const diagResponse = {
+                name: 'EE_BPLM',
+                diagnosticElements: [{ name: 'OTHER', value: 'NO_ACTION_REQUIRED', uom: 'N/A' }]
+            };
+            const d = new Diagnostic(diagResponse);
+            const config = mqtt.getConfigPayload(d, d.diagnosticElements[0]);
+            assert.strictEqual(config.icon, 'mdi:help-circle-outline');
+        });
+
         it('should map BATTERY_STATE_OF_CHARGE_CRITICALLY_LOW correctly', () => {
             const diagResponse = {
                 name: 'BATTERY_STATE_OF_CHARGE_CRITICALLY_LOW',

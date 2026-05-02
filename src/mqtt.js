@@ -2084,6 +2084,14 @@ class MQTT {
             case 'CHARGE_ABORT_REASON_PID':
             case 'CHARGE ABORT REASON PID':
                 return this.mapSensorConfigPayload(diag, diagEl, undefined, undefined, undefined, undefined, 'mdi:alert-circle');
+            case 'EE_BPLM':
+            case 'EE BPLM':
+                return this.mapSensorConfigPayload(diag, diagEl, undefined, undefined, undefined, undefined, 'mdi:car-brake-worn-linings');
+            case 'BRAKE_PAD_LIFE':
+            case 'BRAKE PAD LIFE':
+                return this.mapSensorConfigPayload(diag, diagEl, undefined, undefined, undefined, undefined, 'mdi:car-brake-worn-linings');
+            case 'OTHER':
+                return this.mapSensorConfigPayload(diag, diagEl, undefined, undefined, undefined, undefined, 'mdi:help-circle-outline');
             default:
                 return this.mapSensorConfigPayload(diag, diagEl, 'measurement');
         }

@@ -431,6 +431,49 @@
               "cts": "2025-10-11T03:19:03.350+00:00"
             }
           ]
+        },
+        {
+          "name": "EE_BPLM",
+          "displayName": "Brake Pad Life Monitor",
+          "description": "Brake Pad Life Monitor",
+          "status": "GOOD",
+          "statusColor": "GREEN",
+          "value": null,
+          "uom": null,
+          "cts": "2025-10-11T02:50:31.200+00:00",
+          "recommendedAction": null,
+          "diagnosticElements": [
+            {
+              "name": "EE_BPLM",
+              "displayName": "Brake Pad Life Monitor",
+              "description": "Brake Pad Life Monitor",
+              "status": "GOOD",
+              "statusColor": "GREEN",
+              "value": "GOOD",
+              "uom": "N/A",
+              "cts": "2025-10-11T02:50:31.200+00:00"
+            },
+            {
+              "name": "BRAKE_PAD_LIFE",
+              "displayName": "Brake Pad Life",
+              "description": "Brake Pad Life",
+              "status": "GOOD",
+              "statusColor": "GREEN",
+              "value": "GOOD",
+              "uom": "N/A",
+              "cts": "2025-10-11T02:50:31.200+00:00"
+            },
+            {
+              "name": "OTHER",
+              "displayName": "Other",
+              "description": "Other",
+              "status": "GOOD",
+              "statusColor": "GREEN",
+              "value": "NO_ACTION_REQUIRED",
+              "uom": "N/A",
+              "cts": "2025-10-11T02:50:31.200+00:00"
+            }
+          ]
         }
       ],
       "advDiagnostics": {

@@ -1,0 +1,648 @@
+{
+  "_comment": "2025 Chevrolet Equinox ERS (ICE) - real vehicle diagnostic data",
+  "status": "success",
+  "response": {
+    "data": {
+      "name": "VEHICLE_STATUS",
+      "displayName": "vehicle status",
+      "description": "vehicle status",
+      "status": "GOOD",
+      "statusColor": "GREEN",
+      "recommendedAction": null,
+      "recommendedLiveProbe": false,
+      "cts": "2026-05-02T22:06:23.033+00:00",
+      "diagnostics": [
+        {
+          "name": "BRAKE_FLUID_LOW",
+          "displayName": "Brake Fluid Low",
+          "description": "Brake Fluid Low",
+          "status": "GOOD",
+          "statusColor": "GREEN",
+          "value": null,
+          "uom": null,
+          "cts": "2026-05-02T22:05:52.002+00:00",
+          "recommendedAction": null,
+          "diagnosticElements": [
+            {
+              "name": "BRAKE_FLUID_LOW",
+              "displayName": "Brake Fluid Low",
+              "description": "Brake Fluid Low",
+              "status": "GOOD",
+              "statusColor": "GREEN",
+              "value": "FALSE",
+              "uom": "N/A",
+              "cts": "2026-05-02T22:05:52.002+00:00"
+            }
+          ]
+        },
+        {
+          "name": "BRAKE_PAD_LIFE",
+          "displayName": "Brake Pad Life",
+          "description": "Brake Pad Life",
+          "status": "OK",
+          "statusColor": "GREEN",
+          "value": null,
+          "uom": null,
+          "cts": "2026-05-02T22:06:23.033+00:00",
+          "recommendedAction": null,
+          "diagnosticElements": [
+            {
+              "name": "BRAKE_PAD_LIFE_FRONT",
+              "displayName": "Brake Pad Life Front",
+              "description": "Brake Pad Life Front",
+              "status": null,
+              "statusColor": null,
+              "value": "77",
+              "uom": "%",
+              "cts": "2026-05-02T22:06:23.033+00:00"
+            },
+            {
+              "name": "BRAKE_PAD_LIFE_REAR",
+              "displayName": "Brake Pad Life Rear",
+              "description": "Brake Pad Life Rear",
+              "status": null,
+              "statusColor": null,
+              "value": "80",
+              "uom": "%",
+              "cts": "2026-05-02T22:06:23.033+00:00"
+            },
+            {
+              "name": "BRAKE_PAD_LIFE_STATUS_INDICATION_REQUEST",
+              "displayName": "Brake Pad Life Status Indication Request",
+              "description": "Brake Pad Life Status Indication Request",
+              "status": "OK",
+              "statusColor": "GREEN",
+              "value": "OK",
+              "uom": "N/A",
+              "cts": "2026-05-02T22:06:23.033+00:00"
+            },
+            {
+              "name": "EE_BPLM_DRV_ENABLE",
+              "displayName": "EE BPLM DRV Enable",
+              "description": "EE BPLM DRV Enable",
+              "status": null,
+              "statusColor": null,
+              "value": "TRUE",
+              "uom": "N/A",
+              "cts": "2026-05-02T22:06:21.030+00:00"
+            }
+          ]
+        },
+        {
+          "name": "ENGINE_AIR_FILTER",
+          "displayName": "Engine Air Filter",
+          "description": "Engine Air Filter",
+          "status": "GOOD",
+          "statusColor": "GREEN",
+          "value": null,
+          "uom": null,
+          "cts": "2026-05-02T22:06:17.025+00:00",
+          "recommendedAction": null,
+          "diagnosticElements": [
+            {
+              "name": "ENGINE_AIR_FILTER_LIFE_RMAINING_HMI",
+              "displayName": "Engine Air Filter Life Remaining HMI",
+              "description": "Engine Air Filter Life Remaining HMI",
+              "status": null,
+              "statusColor": null,
+              "value": "80",
+              "uom": "%",
+              "cts": "2026-05-02T22:06:09.023+00:00"
+            },
+            {
+              "name": "ENGINE_AIR_FILTER_DIAGNOSTICS",
+              "displayName": "Engine Air Filter Diagnostics",
+              "description": "Engine Air Filter Diagnostics",
+              "status": null,
+              "statusColor": null,
+              "value": "NO FAULT",
+              "uom": "N/A",
+              "cts": "2026-05-02T22:06:17.025+00:00"
+            },
+            {
+              "name": "ENGINE_AIR_FILTER_MONITOR_STATUS",
+              "displayName": "Engine Air Filter Monitor Status",
+              "description": "Engine Air Filter Monitor Status",
+              "status": "OKAY",
+              "statusColor": "GREEN",
+              "value": "OK",
+              "uom": "N/A",
+              "cts": "2026-05-02T22:06:09.023+00:00"
+            },
+            {
+              "name": "ENGINE_PEAK_POWER_LOSS_HMI",
+              "displayName": "Engine Peak Power Loss HMI",
+              "description": "Engine Peak Power Loss HMI",
+              "status": null,
+              "statusColor": null,
+              "value": "0",
+              "uom": "%",
+              "cts": "2026-05-02T22:06:16.024+00:00"
+            },
+            {
+              "name": "INITIALIZATION_STATUS",
+              "displayName": "Initialization Status",
+              "description": "Initialization Status",
+              "status": null,
+              "statusColor": null,
+              "value": "INITIALIZED",
+              "uom": "N/A",
+              "cts": "2026-05-02T22:06:09.023+00:00"
+            }
+          ]
+        },
+        {
+          "name": "ENGINE_OIL_LIFE",
+          "displayName": "Engine Oil Life",
+          "description": "Engine Oil Life",
+          "status": "GOOD",
+          "statusColor": "GREEN",
+          "value": null,
+          "uom": null,
+          "cts": "2026-05-02T22:05:52.002+00:00",
+          "recommendedAction": null,
+          "diagnosticElements": [
+            {
+              "name": "EOL_READ",
+              "displayName": "Engine Oil Life",
+              "description": "Engine Oil Life",
+              "status": "GOOD",
+              "statusColor": "GREEN",
+              "value": "80.4",
+              "uom": "%",
+              "cts": "2026-05-02T22:05:52.002+00:00"
+            },
+            {
+              "name": "ENGINE_TYPE",
+              "displayName": "Engine Type",
+              "description": "Engine Type",
+              "status": null,
+              "statusColor": null,
+              "value": "ICE",
+              "uom": "N/A",
+              "cts": "2025-07-16T03:07:41.961+00:00"
+            },
+            {
+              "name": "LAST_OIL_CHANGE_DATE",
+              "displayName": "Last Oil Change Date",
+              "description": "Last Oil Change Date",
+              "status": null,
+              "statusColor": null,
+              "value": "2026-03-10",
+              "uom": "N/A",
+              "cts": "2026-03-10T23:37:40.081+00:00"
+            }
+          ]
+        },
+        {
+          "name": "FUEL_ECONOMY",
+          "displayName": "Fuel Economy",
+          "description": "Fuel Economy",
+          "status": "GOOD",
+          "statusColor": "GREEN",
+          "value": null,
+          "uom": null,
+          "cts": "2026-05-02T22:06:00.011+00:00",
+          "recommendedAction": null,
+          "diagnosticElements": [
+            {
+              "name": "AVERAGE_FUEL_ECONOMY",
+              "displayName": "Average Fuel Economy",
+              "description": "Average Fuel Economy",
+              "status": null,
+              "statusColor": null,
+              "value": "9.5448",
+              "uom": "L/100KM",
+              "cts": "2026-05-02T22:06:00.011+00:00"
+            },
+            {
+              "name": "AVERAGE_FUEL_ECONOMY_MPG",
+              "displayName": "Average Fuel Economy MPG",
+              "description": "Average Fuel Economy MPG",
+              "status": null,
+              "statusColor": null,
+              "value": "24.6",
+              "uom": "MPG",
+              "cts": "2026-05-02T22:06:00.011+00:00"
+            },
+            {
+              "name": "LIFETIME_FUEL_ECONOMY",
+              "displayName": "Lifetime Fuel Economy",
+              "description": "Lifetime Fuel Economy",
+              "status": null,
+              "statusColor": null,
+              "value": "0",
+              "uom": "KM/L",
+              "cts": "2026-05-02T22:05:52.002+00:00"
+            },
+            {
+              "name": "LIFETIME_FUEL_ECONOMY_MPG",
+              "displayName": "Lifetime Fuel Economy MPG",
+              "description": "Lifetime Fuel Economy MPG",
+              "status": null,
+              "statusColor": null,
+              "value": "0",
+              "uom": "MPG",
+              "cts": "2026-05-02T22:05:52.002+00:00"
+            }
+          ]
+        },
+        {
+          "name": "FUEL_LEVEL_STATUS",
+          "displayName": "Fuel Level Status",
+          "description": "Fuel Level Status",
+          "status": "GOOD",
+          "statusColor": "GREEN",
+          "value": null,
+          "uom": null,
+          "cts": "2026-05-02T22:06:32.044+00:00",
+          "recommendedAction": null,
+          "diagnosticElements": [
+            {
+              "name": "FUEL_CAPACITY",
+              "displayName": "Fuel Capacity",
+              "description": "Fuel Capacity",
+              "status": null,
+              "statusColor": null,
+              "value": "56",
+              "uom": "L",
+              "cts": "2026-05-02T21:43:05.008+00:00"
+            },
+            {
+              "name": "FUEL_CAPACITY_GAL",
+              "displayName": "Fuel Capacity Gal",
+              "description": "Fuel Capacity Gal",
+              "status": null,
+              "statusColor": null,
+              "value": "14.8",
+              "uom": "GAL",
+              "cts": "2026-05-02T21:43:05.008+00:00"
+            },
+            {
+              "name": "FUEL_LEVEL",
+              "displayName": "Fuel Level",
+              "description": "Fuel Level",
+              "status": null,
+              "statusColor": null,
+              "value": "72",
+              "uom": "%",
+              "cts": "2026-05-02T22:06:32.044+00:00"
+            },
+            {
+              "name": "FUEL_RANGE",
+              "displayName": "Fuel Range",
+              "description": "Fuel Range",
+              "status": null,
+              "statusColor": null,
+              "value": "468.32",
+              "uom": "KM",
+              "cts": "2026-05-02T22:06:00.012+00:00"
+            },
+            {
+              "name": "FUEL_RANGE_MI",
+              "displayName": "Fuel Range Miles",
+              "description": "Fuel Range Miles",
+              "status": null,
+              "statusColor": null,
+              "value": "291",
+              "uom": "MI",
+              "cts": "2026-05-02T22:06:00.012+00:00"
+            },
+            {
+              "name": "FUEL_REMAINING",
+              "displayName": "Fuel Remaining",
+              "description": "Fuel Remaining",
+              "status": null,
+              "statusColor": null,
+              "value": "40.376",
+              "uom": "L",
+              "cts": "2026-05-02T22:07:14.751+00:00"
+            },
+            {
+              "name": "FUEL_REMAINING_GAL",
+              "displayName": "Fuel Remaining Gal",
+              "description": "Fuel Remaining Gal",
+              "status": null,
+              "statusColor": null,
+              "value": "10.7",
+              "uom": "GAL",
+              "cts": "2026-05-02T22:07:14.751+00:00"
+            }
+          ]
+        },
+        {
+          "name": "LV_BATTERY",
+          "displayName": "LV Battery",
+          "description": "LV Battery",
+          "status": "GOOD",
+          "statusColor": "GREEN",
+          "value": null,
+          "uom": null,
+          "cts": "2026-05-02T22:06:03.016+00:00",
+          "recommendedAction": null,
+          "diagnosticElements": [
+            {
+              "name": "BATT_SAVER_MODE_SEV_LVL",
+              "displayName": "Battery Saver Mode Severity Level",
+              "description": "Battery Saver Mode Severity Level",
+              "status": "GOOD",
+              "statusColor": "GREEN",
+              "value": "0",
+              "uom": "N/A",
+              "cts": "2026-05-02T22:06:03.016+00:00"
+            }
+          ]
+        },
+        {
+          "name": "ODOMETER",
+          "displayName": "Odometer",
+          "description": "Odometer",
+          "status": "GOOD",
+          "statusColor": "GREEN",
+          "value": null,
+          "uom": null,
+          "cts": "2026-05-02T22:06:01.013+00:00",
+          "recommendedAction": null,
+          "diagnosticElements": [
+            {
+              "name": "ODO_READ",
+              "displayName": "Odometer Reading",
+              "description": "Odometer Reading",
+              "status": null,
+              "statusColor": null,
+              "value": "19318.859375",
+              "uom": "KM",
+              "cts": "2026-05-02T22:05:52.002+00:00"
+            },
+            {
+              "name": "ODO_READ_MI",
+              "displayName": "Odometer Reading Miles",
+              "description": "Odometer Reading Miles",
+              "status": null,
+              "statusColor": null,
+              "value": "12004.2",
+              "uom": "MI",
+              "cts": "2026-05-02T22:05:52.002+00:00"
+            },
+            {
+              "name": "TRIP_A_ODO",
+              "displayName": "Trip A Odometer",
+              "description": "Trip A Odometer",
+              "status": null,
+              "statusColor": null,
+              "value": "19318.859375",
+              "uom": "KM",
+              "cts": "2026-05-02T22:06:01.013+00:00"
+            },
+            {
+              "name": "TRIP_A_ODO_MI",
+              "displayName": "Trip A Odometer Miles",
+              "description": "Trip A Odometer Miles",
+              "status": null,
+              "statusColor": null,
+              "value": "12004.2",
+              "uom": "MI",
+              "cts": "2026-05-02T22:06:01.013+00:00"
+            }
+          ]
+        },
+        {
+          "name": "TIRE_PRESSURE",
+          "displayName": "Tire Pressure",
+          "description": "Tire Pressure",
+          "status": "GOOD",
+          "statusColor": "GREEN",
+          "value": null,
+          "uom": null,
+          "cts": "2026-05-02T22:05:52.002+00:00",
+          "recommendedAction": null,
+          "diagnosticElements": [
+            {
+              "name": "LEFT_FRONT_TIRE_PRESSURE",
+              "displayName": "Left Front Tire Pressure",
+              "description": "Left Front Tire Pressure",
+              "status": "TPM_STATUS_NOMINAL",
+              "statusColor": "GREEN",
+              "value": "244",
+              "uom": "KPA",
+              "cts": "2026-05-02T22:05:52.002+00:00"
+            },
+            {
+              "name": "LEFT_FRONT_TIRE_PRESSURE_IN_PSI",
+              "displayName": "Left Front Tire Pressure In PSI",
+              "description": "Left Front Tire Pressure In PSI",
+              "status": "NOMINAL",
+              "statusColor": "GREEN",
+              "value": "35",
+              "uom": "PSI",
+              "cts": "2026-05-02T22:05:52.002+00:00"
+            },
+            {
+              "name": "LEFT_REAR_TIRE_PRESSURE",
+              "displayName": "Left Rear Tire Pressure",
+              "description": "Left Rear Tire Pressure",
+              "status": "TPM_STATUS_NOMINAL",
+              "statusColor": "GREEN",
+              "value": "240",
+              "uom": "KPA",
+              "cts": "2026-05-02T22:05:52.002+00:00"
+            },
+            {
+              "name": "LEFT_REAR_TIRE_PRESSURE_IN_PSI",
+              "displayName": "Left Rear Tire Pressure In PSI",
+              "description": "Left Rear Tire Pressure In PSI",
+              "status": "NOMINAL",
+              "statusColor": "GREEN",
+              "value": "35",
+              "uom": "PSI",
+              "cts": "2026-05-02T22:05:52.002+00:00"
+            },
+            {
+              "name": "RIGHT_FRONT_TIRE_PRESSURE",
+              "displayName": "Right Front Tire Pressure",
+              "description": "Right Front Tire Pressure",
+              "status": "TPM_STATUS_NOMINAL",
+              "statusColor": "GREEN",
+              "value": "244",
+              "uom": "KPA",
+              "cts": "2026-05-02T22:05:52.002+00:00"
+            },
+            {
+              "name": "RIGHT_FRONT_TIRE_PRESSURE_IN_PSI",
+              "displayName": "Right Front Tire Pressure In PSI",
+              "description": "Right Front Tire Pressure In PSI",
+              "status": "NOMINAL",
+              "statusColor": "GREEN",
+              "value": "35",
+              "uom": "PSI",
+              "cts": "2026-05-02T22:05:52.002+00:00"
+            },
+            {
+              "name": "RIGHT_REAR_TIRE_PRESSURE",
+              "displayName": "Right Rear Tire Pressure",
+              "description": "Right Rear Tire Pressure",
+              "status": "TPM_STATUS_NOMINAL",
+              "statusColor": "GREEN",
+              "value": "236",
+              "uom": "KPA",
+              "cts": "2026-05-02T22:05:52.002+00:00"
+            },
+            {
+              "name": "RIGHT_REAR_TIRE_PRESSURE_IN_PSI",
+              "displayName": "Right Rear Tire Pressure In PSI",
+              "description": "Right Rear Tire Pressure In PSI",
+              "status": "NOMINAL",
+              "statusColor": "GREEN",
+              "value": "34",
+              "uom": "PSI",
+              "cts": "2026-05-02T22:05:52.002+00:00"
+            },
+            {
+              "name": "FRONT_PLACARD",
+              "displayName": "Front Placard",
+              "description": "Front Placard",
+              "status": null,
+              "statusColor": null,
+              "value": "240",
+              "uom": "KPA",
+              "cts": "2026-05-02T22:05:52.002+00:00"
+            },
+            {
+              "name": "FRONT_PLACARD_IN_PSI",
+              "displayName": "Front Placard In PSI",
+              "description": "Front Placard In PSI",
+              "status": null,
+              "statusColor": null,
+              "value": "35",
+              "uom": "PSI",
+              "cts": "2026-05-02T22:05:52.002+00:00"
+            },
+            {
+              "name": "REAR_PLACARD",
+              "displayName": "Rear Placard",
+              "description": "Rear Placard",
+              "status": null,
+              "statusColor": null,
+              "value": "240",
+              "uom": "KPA",
+              "cts": "2026-05-02T22:05:52.002+00:00"
+            },
+            {
+              "name": "REAR_PLACARD_IN_PSI",
+              "displayName": "Rear Placard In PSI",
+              "description": "Rear Placard In PSI",
+              "status": null,
+              "statusColor": null,
+              "value": "35",
+              "uom": "PSI",
+              "cts": "2026-05-02T22:05:52.002+00:00"
+            },
+            {
+              "name": "LEFT_FRONT_TIRE_PRESSURE_STATUS",
+              "displayName": "Left Front Tire Pressure Status",
+              "description": "Left Front Tire Pressure Status",
+              "status": "NOMINAL",
+              "statusColor": "GREEN",
+              "value": "TPM_STATUS_NOMINAL",
+              "uom": "N/A",
+              "cts": "2026-05-02T22:05:52.002+00:00"
+            },
+            {
+              "name": "LEFT_REAR_TIRE_PRESSURE_STATUS",
+              "displayName": "Left Rear Tire Pressure Status",
+              "description": "Left Rear Tire Pressure Status",
+              "status": "NOMINAL",
+              "statusColor": "GREEN",
+              "value": "TPM_STATUS_NOMINAL",
+              "uom": "N/A",
+              "cts": "2026-05-02T22:05:52.002+00:00"
+            },
+            {
+              "name": "RIGHT_FRONT_TIRE_PRESSURE_STATUS",
+              "displayName": "Right Front Tire Pressure Status",
+              "description": "Right Front Tire Pressure Status",
+              "status": "NOMINAL",
+              "statusColor": "GREEN",
+              "value": "TPM_STATUS_NOMINAL",
+              "uom": "N/A",
+              "cts": "2026-05-02T22:05:52.002+00:00"
+            },
+            {
+              "name": "RIGHT_REAR_TIRE_PRESSURE_STATUS",
+              "displayName": "Right Rear Tire Pressure Status",
+              "description": "Right Rear Tire Pressure Status",
+              "status": "NOMINAL",
+              "statusColor": "GREEN",
+              "value": "TPM_STATUS_NOMINAL",
+              "uom": "N/A",
+              "cts": "2026-05-02T22:05:52.002+00:00"
+            },
+            {
+              "name": "LEFT_FRONT_TIRE_PRESSURE_VALID",
+              "displayName": "Left Front Tire Pressure Valid",
+              "description": "Left Front Tire Pressure Valid",
+              "status": null,
+              "statusColor": null,
+              "value": "0",
+              "uom": "N/A",
+              "cts": "2026-05-02T22:05:52.002+00:00"
+            },
+            {
+              "name": "LEFT_REAR_TIRE_PRESSURE_VALID",
+              "displayName": "Left Rear Tire Pressure Valid",
+              "description": "Left Rear Tire Pressure Valid",
+              "status": null,
+              "statusColor": null,
+              "value": "0",
+              "uom": "N/A",
+              "cts": "2026-05-02T22:05:52.002+00:00"
+            },
+            {
+              "name": "RIGHT_FRONT_TIRE_PRESSURE_VALID",
+              "displayName": "Right Front Tire Pressure Valid",
+              "description": "Right Front Tire Pressure Valid",
+              "status": null,
+              "statusColor": null,
+              "value": "0",
+              "uom": "N/A",
+              "cts": "2026-05-02T22:05:52.002+00:00"
+            },
+            {
+              "name": "RIGHT_REAR_TIRE_PRESSURE_VALID",
+              "displayName": "Right Rear Tire Pressure Valid",
+              "description": "Right Rear Tire Pressure Valid",
+              "status": null,
+              "statusColor": null,
+              "value": "0",
+              "uom": "N/A",
+              "cts": "2026-05-02T22:05:52.002+00:00"
+            }
+          ]
+        },
+        {
+          "name": "WASHER_FLUID_LOW",
+          "displayName": "Washer Fluid Low",
+          "description": "Washer Fluid Low",
+          "status": "GOOD",
+          "statusColor": "GREEN",
+          "value": null,
+          "uom": null,
+          "cts": "2026-05-02T22:05:52.002+00:00",
+          "recommendedAction": null,
+          "diagnosticElements": [
+            {
+              "name": "WASHER_FLUID_LOW",
+              "displayName": "Washer Fluid Low",
+              "description": "Washer Fluid Low",
+              "status": "GOOD",
+              "statusColor": "GREEN",
+              "value": "FALSE",
+              "uom": "N/A",
+              "cts": "2026-05-02T22:05:52.002+00:00"
+            }
+          ]
+        }
+      ]
+    }
+  }
+}

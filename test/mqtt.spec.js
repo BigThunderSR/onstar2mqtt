@@ -3204,6 +3204,50 @@ describe('MQTT', () => {
             assert.strictEqual(config.icon, 'mdi:car-brake-fluid-level');
         });
 
+        it('should map BRAKE_PAD_LIFE_FRONT correctly (numeric %)', () => {
+            const diagResponse = {
+                name: 'BRAKE_PAD_LIFE',
+                diagnosticElements: [{ name: 'BRAKE_PAD_LIFE_FRONT', value: '77', uom: '%' }]
+            };
+            const d = new Diagnostic(diagResponse);
+            const config = mqtt.getConfigPayload(d, d.diagnosticElements[0]);
+            assert.strictEqual(config.icon, 'mdi:car-brake-worn-linings');
+            assert.strictEqual(config.state_class, 'measurement');
+        });
+
+        it('should map BRAKE_PAD_LIFE_REAR correctly (numeric %)', () => {
+            const diagResponse = {
+                name: 'BRAKE_PAD_LIFE',
+                diagnosticElements: [{ name: 'BRAKE_PAD_LIFE_REAR', value: '80', uom: '%' }]
+            };
+            const d = new Diagnostic(diagResponse);
+            const config = mqtt.getConfigPayload(d, d.diagnosticElements[0]);
+            assert.strictEqual(config.icon, 'mdi:car-brake-worn-linings');
+            assert.strictEqual(config.state_class, 'measurement');
+        });
+
+        it('should map BRAKE_PAD_LIFE_STATUS_INDICATION_REQUEST correctly (string, no state_class)', () => {
+            const diagResponse = {
+                name: 'BRAKE_PAD_LIFE',
+                diagnosticElements: [{ name: 'BRAKE_PAD_LIFE_STATUS_INDICATION_REQUEST', value: 'OK', uom: 'N/A' }]
+            };
+            const d = new Diagnostic(diagResponse);
+            const config = mqtt.getConfigPayload(d, d.diagnosticElements[0]);
+            assert.strictEqual(config.icon, 'mdi:car-brake-worn-linings');
+            assert.strictEqual(config.state_class, undefined);
+        });
+
+        it('should map EE_BPLM_DRV_ENABLE correctly (string, no state_class)', () => {
+            const diagResponse = {
+                name: 'BRAKE_PAD_LIFE',
+                diagnosticElements: [{ name: 'EE_BPLM_DRV_ENABLE', value: 'TRUE', uom: 'N/A' }]
+            };
+            const d = new Diagnostic(diagResponse);
+            const config = mqtt.getConfigPayload(d, d.diagnosticElements[0]);
+            assert.strictEqual(config.icon, 'mdi:car-brake-worn-linings');
+            assert.strictEqual(config.state_class, undefined);
+        });
+
         it('should map WASHER_FLUID_LOW correctly', () => {
             const diagResponse = {
                 name: 'WASHER_FLUID_LOW',
@@ -3257,6 +3301,100 @@ describe('MQTT', () => {
         });
     });
 });
+    describe('All V3 sample files - config mapping', () => {
+        const v3SampleFiles = {
+            'v3-ice-1': require('./diagnostic-sample-v3-ice-1.json'),
+            'v3-ice-2': require('./diagnostic-sample-v3-ice-2.json'),
+            'v3-ev-1': require('./diagnostic-sample-v3-ev-1.json'),
+            'v3-ev-2': require('./diagnostic-sample-v3-ev-2.json'),
+            'v3-ice-3': require('./diagnostic-sample-v3-ice-3.json'),
+        };
+        let mqtt;
+        let vehicle;
+
+        beforeEach(() => {
+            vehicle = new Vehicle({ make: 'Test', model: 'Car', vin: 'TESTSAMPLE', year: 2024 });
+            mqtt = new MQTT(vehicle);
+        });
+
+        Object.entries(v3SampleFiles).forEach(([fileName, sampleData]) => {
+            describe(`${fileName}`, () => {
+                const diagnostics = sampleData?.response?.data?.diagnostics || [];
+
+                diagnostics.forEach((diagData) => {
+                    describe(`${diagData.name}`, () => {
+                        it('should produce a valid Diagnostic with elements', () => {
+                            const d = new Diagnostic(diagData);
+                            assert.ok(d.name, 'diagnostic should have a name');
+                            assert.ok(d.diagnosticElements.length > 0, `${diagData.name} should have elements`);
+                        });
+
+                        it('should generate config payloads for all elements without throwing', () => {
+                            const d = new Diagnostic(diagData);
+                            d.diagnosticElements.forEach((el) => {
+                                const config = mqtt.getConfigPayload(d, el);
+                                assert.ok(config, `config should exist for ${el.name}`);
+                                assert.ok(config.name, `config.name should exist for ${el.name}`);
+                                assert.ok(config.unique_id, `config.unique_id should exist for ${el.name}`);
+                                assert.ok(config.state_topic, `config.state_topic should exist for ${el.name}`);
+                            });
+                        });
+
+                        it('should generate state payloads without throwing', () => {
+                            const d = new Diagnostic(diagData);
+                            const state = mqtt.getStatePayload(d);
+                            assert.ok(state, `state payload should exist for ${diagData.name}`);
+                            assert.strictEqual(typeof state, 'object');
+                        });
+                    });
+                });
+            });
+        });
+    });
+
+    describe('2025 Equinox BRAKE_PAD_LIFE specific assertions', () => {
+        let mqtt;
+        let vehicle;
+        const brakePadDiag = require('./diagnostic-sample-v3-ice-3.json').response.data.diagnostics.find(d => d.name === 'BRAKE_PAD_LIFE');
+
+        beforeEach(() => {
+            vehicle = new Vehicle({ make: 'Chevrolet', model: 'Equinox', vin: 'TESTEQUINOX25', year: 2025 });
+            mqtt = new MQTT(vehicle);
+        });
+
+        it('should map BRAKE_PAD_LIFE_FRONT with measurement state_class', () => {
+            const d = new Diagnostic(brakePadDiag);
+            const el = d.diagnosticElements.find(e => e.name === 'BRAKE_PAD_LIFE_FRONT');
+            const config = mqtt.getConfigPayload(d, el);
+            assert.strictEqual(config.icon, 'mdi:car-brake-worn-linings');
+            assert.strictEqual(config.state_class, 'measurement');
+        });
+
+        it('should map BRAKE_PAD_LIFE_REAR with measurement state_class', () => {
+            const d = new Diagnostic(brakePadDiag);
+            const el = d.diagnosticElements.find(e => e.name === 'BRAKE_PAD_LIFE_REAR');
+            const config = mqtt.getConfigPayload(d, el);
+            assert.strictEqual(config.icon, 'mdi:car-brake-worn-linings');
+            assert.strictEqual(config.state_class, 'measurement');
+        });
+
+        it('should map BRAKE_PAD_LIFE_STATUS_INDICATION_REQUEST without state_class', () => {
+            const d = new Diagnostic(brakePadDiag);
+            const el = d.diagnosticElements.find(e => e.name === 'BRAKE_PAD_LIFE_STATUS_INDICATION_REQUEST');
+            const config = mqtt.getConfigPayload(d, el);
+            assert.strictEqual(config.icon, 'mdi:car-brake-worn-linings');
+            assert.strictEqual(config.state_class, undefined);
+        });
+
+        it('should map EE_BPLM_DRV_ENABLE without state_class', () => {
+            const d = new Diagnostic(brakePadDiag);
+            const el = d.diagnosticElements.find(e => e.name === 'EE_BPLM_DRV_ENABLE');
+            const config = mqtt.getConfigPayload(d, el);
+            assert.strictEqual(config.icon, 'mdi:car-brake-worn-linings');
+            assert.strictEqual(config.state_class, undefined);
+        });
+    });
+
     describe('Advanced Diagnostics', () => {
         let advDiag;
         let mqtt;

@@ -11,7 +11,13 @@ All diagnostic-related PRs **must** use real data from the OnStar API. Specifica
 - **Data types** must be verified against real responses. Numeric values get `state_class: measurement`; string values (like `"OK"` or `"TRUE"`) do not.
 - **Sensitive data** (VIN, location, tokens) should be redacted from fixtures, but the structure and field names must remain authentic.
 
+**Proof of authenticity**: PRs adding new diagnostic groups must include an attached diagnostic file or a link to a gist containing the raw API response from your vehicle. This is the only way to verify element names and data types are real. Redact sensitive fields (VIN, location, GPS) but preserve the structure.
+
 If you don't have access to a vehicle with the relevant diagnostic group, open an issue requesting it and someone with access can provide sanitized data.
+
+### Review Process
+
+Maintainers will compare submitted fixtures and element names against the raw API response. PRs that cannot be verified against real data will not be merged regardless of whether CI passes. A green build does not prove correctness — only that the code is internally consistent.
 
 ### Code Quality
 

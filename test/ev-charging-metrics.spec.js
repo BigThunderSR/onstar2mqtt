@@ -154,7 +154,7 @@ describe('EV Charging Metrics', () => {
             assert.strictEqual(lifetimeEnergySensor.payload.name, 'EV Charging Lifetime Energy');
             assert.strictEqual(lifetimeEnergySensor.payload.device_class, 'energy');
             assert.strictEqual(lifetimeEnergySensor.payload.unit_of_measurement, 'kWh');
-            assert.strictEqual(lifetimeEnergySensor.payload.state_class, 'total_increasing');
+            assert.strictEqual(lifetimeEnergySensor.payload.state_class, 'total');
             assert.strictEqual(lifetimeEnergySensor.state, 14213.1);
 
             // Check EV Charging Range sensor
@@ -183,7 +183,7 @@ describe('EV Charging Metrics', () => {
             assert.strictEqual(odometerSensor.payload.name, 'EV Charging Odometer');
             assert.strictEqual(odometerSensor.payload.device_class, 'distance');
             assert.strictEqual(odometerSensor.payload.unit_of_measurement, 'km');
-            assert.strictEqual(odometerSensor.payload.state_class, 'total_increasing');
+            assert.strictEqual(odometerSensor.payload.state_class, 'total');
             assert.strictEqual(odometerSensor.state, 58062.09);
 
             // Check EV Charging Temperature sensor
@@ -379,12 +379,12 @@ describe('EV Charging Metrics', () => {
             const temperatureSensor = configs.find(c => c.topic.includes('ev_charging_temperature'));
             
             assert.strictEqual(tclSensor.payload.state_class, 'measurement');
-            assert.strictEqual(tripOdoSensor.payload.state_class, 'total_increasing');
+            assert.strictEqual(tripOdoSensor.payload.state_class, 'measurement');
             assert.strictEqual(lifeConsSensor.payload.state_class, 'measurement');
             assert.strictEqual(batteryLevelSensor.payload.state_class, 'measurement');
-            assert.strictEqual(lifetimeEnergySensor.payload.state_class, 'total_increasing');
+            assert.strictEqual(lifetimeEnergySensor.payload.state_class, 'total');
             assert.strictEqual(rangeSensor.payload.state_class, 'measurement');
-            assert.strictEqual(odometerSensor.payload.state_class, 'total_increasing');
+            assert.strictEqual(odometerSensor.payload.state_class, 'total');
             assert.strictEqual(temperatureSensor.payload.state_class, 'measurement');
         });
     });

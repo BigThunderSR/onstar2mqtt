@@ -189,7 +189,7 @@ describe('MQTT', () => {
                         name: '2020 foo bar',
                         suggested_area: "2020 foo bar Sensors",
                     },
-                    state_class: 'total_increasing',
+                    state_class: 'total',
                     device_class: 'distance',
                     icon: 'mdi:counter',
                     json_attributes_template: "{{ {'last_updated': value_json.odometer_last_updated, 'status': value_json.odometer_status, 'status_color': value_json.odometer_status_color} | tojson }}",
@@ -213,7 +213,7 @@ describe('MQTT', () => {
                         name: '2020 foo bar',
                         suggested_area: "2020 foo bar Sensors",
                     },
-                    state_class: 'total_increasing',
+                    state_class: 'total',
                     device_class: 'distance',
                     icon: 'mdi:counter',
                     json_attributes_template: "{{ {'last_updated': value_json.odometer_mi_last_updated, 'status': value_json.odometer_mi_status, 'status_color': value_json.odometer_mi_status_color} | tojson }}",
@@ -616,7 +616,7 @@ describe('MQTT', () => {
                         name: '2020 foo bar',
                         suggested_area: "2020 foo bar Sensors",
                     },
-                    state_class: 'total_increasing',
+                    state_class: 'total',
                     device_class: 'volume',
                     icon: 'mdi:gas-station',
                     json_attributes_template: "{{ {'last_updated': value_json.lifetime_fuel_used_last_updated, 'status': value_json.lifetime_fuel_used_status, 'status_color': value_json.lifetime_fuel_used_status_color} | tojson }}",
@@ -2214,7 +2214,7 @@ describe('MQTT', () => {
             };
             const result = mqtt.getConfigMapping(d, diagEl);
             assert.strictEqual(result.device_class, 'energy');
-            assert.strictEqual(result.state_class, 'total_increasing');
+            assert.strictEqual(result.state_class, 'total');
         });
 
         it('should map sensor config payload for battery temperature', () => {
@@ -3096,7 +3096,7 @@ describe('MQTT', () => {
             const d = new Diagnostic(diagResponse);
             const config = mqtt.getConfigPayload(d, d.diagnosticElements[0]);
             assert.strictEqual(config.icon, 'mdi:counter');
-            assert.strictEqual(config.state_class, 'total_increasing');
+            assert.strictEqual(config.state_class, 'total');
             assert.strictEqual(config.device_class, 'distance');
         });
 

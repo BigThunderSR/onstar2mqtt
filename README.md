@@ -430,7 +430,7 @@ services:
 ### Node.js
 
 It's a typical node.js application, define the same environment values as described in the docker sections and run with:
-`npm run start`. Currently, this is tested with Node.js 18.x, 20.x and 22.x.
+`npm run start`. Currently, this is tested with Node.js 24.x.
 
 ## Development
 

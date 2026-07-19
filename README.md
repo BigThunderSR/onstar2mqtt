@@ -25,6 +25,7 @@ There is no affiliation with this project and GM, Chevrolet nor OnStar. In fact,
   - **Vehicle diagnostics** (fuel level, tire pressure, oil life, etc.) require a plan that includes Vehicle Diagnostics
 - **Supported Region:** Only US and Canadian OnStar accounts are known to work with this integration
 - **Valid Credentials:** OnStar username, password, PIN, and TOTP key (see setup instructions below)
+- **Node.js 24.x:** Required when running directly with Node.js (not applicable for Docker users)
 
 ## What's New in v2.x
 
@@ -43,6 +44,7 @@ There is no affiliation with this project and GM, Chevrolet nor OnStar. In fact,
 - **Instant EV Metrics Updates (v2.6.0)** - When using `refreshEVChargingMetrics` or `getEVChargingMetrics`, diagnostic sensors (battery level, EV range, charge state, plug state) now update immediately instead of waiting for the next polling cycle
 - **New EV Ignition Sensor (v2.6.0)** - Added `ev_ignition` binary sensor from EV charging metrics data
 - **New Warranty & SXM Commands (v2.8.0)** - Added `getWarrantyInfo` for vehicle warranty coverage details and `getSxmSubscriptionInfo` for SiriusXM subscription status. Both available as MQTT buttons in Home Assistant. Requires OnStarJS 2.16.0+.
+- **Node.js 24 Minimum Requirement (v2.10.0)** - Node.js 24.x is now the minimum supported version. Users running Node.js < 24 directly must upgrade to Node.js 24.x. Docker users are unaffected.
 
 **What This Means for You:**
 

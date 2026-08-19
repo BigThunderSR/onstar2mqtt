@@ -24,7 +24,7 @@ There is no affiliation with this project and GM, Chevrolet nor OnStar. In fact,
   - **Remote commands** (start, lock, unlock, etc.) require a plan that includes Remote Access
   - **Vehicle diagnostics** (fuel level, tire pressure, oil life, etc.) require a plan that includes Vehicle Diagnostics
 - **Supported Region:** Only US and Canadian OnStar accounts are known to work with this integration
-- **Valid Credentials:** OnStar username, password, PIN, and TOTP key (see setup instructions below)
+- **Valid Credentials:** OnStar username, password, PIN, and TOTP key (see setup instructions below) — or use the [Firefox token procedure](#automated-authentication-consistently-failing--firefox-token-procedure) if TOTP setup is unavailable
 - **Node.js 24.x:** Required when running directly with Node.js (not applicable for Docker users)
 
 ## What's New in v2.x
@@ -112,7 +112,7 @@ The OnStar API now only returns full plan details from `getOnstarPlan` for **pri
 Collect the following minimum information:
 
 1. [Generate](https://www.uuidgenerator.net/version4) a v4 uuid for the device ID
-1. OnStar login: username, password, PIN, [TOTP Key (Please click link for instructions)](https://github.com/BigThunderSR/OnStarJS?tab=readme-ov-file#new-requirement-as-of-2024-11-19)
+1. OnStar login: username, password, PIN, [TOTP Key (Please click link for instructions)](https://github.com/BigThunderSR/OnStarJS?tab=readme-ov-file#new-requirement-as-of-2024-11-19) — if TOTP setup is not possible or automated login is blocked, see the [Firefox token procedure](#automated-authentication-consistently-failing--firefox-token-procedure) below
 1. Your vehicle's VIN which is easily found in the monthly OnStar diagnostic emails, in your OnStar account or in the official OnStar apps
 1. MQTT server information: hostname, username, password
    1. If using TLS, define `MQTT_PORT` and `MQTT_TLS="true"`
@@ -257,6 +257,23 @@ MQTT auto discovery is enabled. For further integrations and screenshots see [HA
   - A common example of this is: "Request Failed with status 504 - Gateway Timeout"
 - After your engine is turned off, the vehicle will respond to about 4 - 5 requests before going into a type of hibernation mode and will not respond to requests or commands until the engine is started up again. If your engine has been off for a while, you may still not be able to get any data from the vehicle or run commands even if it is your first attempt at trying to pull data from your vehicle after the engine was turned off.
   - **Note:** You will see an error of _"Unable to establish packet session to the vehicle"_ when this occurs.
+
+### Authentication Troubleshooting
+
+#### "Access Denied" during login
+
+GM's auth server uses bot detection that can block automated logins unpredictably. If you receive an `Access Denied` error during the authentication flow, **wait several hours before retrying** — retrying immediately makes the block worse.
+
+#### Automated authentication consistently failing — Firefox token procedure
+
+If automated authentication is repeatedly blocked and waiting does not help, you can generate the required token file manually using the [OnStar Auth Token Saver Firefox extension](https://github.com/metheos/onstar_firefox):
+
+1. Install the Firefox extension from the link above and follow its instructions to log in to your OnStar/GM account.
+2. The extension will save a `microsoft_tokens.json` file to your local machine.
+3. Place `microsoft_tokens.json` in the directory specified by your `TOKEN_LOCATION` env var (e.g. `~/onstar2mqtt-tokens/microsoft_tokens.json`).
+4. Start (or restart) OnStar2MQTT — the library will load the token and refresh it automatically for approximately 60 days before another manual re-auth is needed.
+
+**Note:** `TOKEN_LOCATION` must be set and the volume must be mounted for this to work in Docker (see the Docker section below). `ONSTAR_TOTP` is still required as an env var — it is used when the token eventually expires (~60 days) and the library attempts automated re-authentication.
 
 ### Docker
 

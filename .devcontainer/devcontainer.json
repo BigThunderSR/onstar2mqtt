@@ -1,6 +1,6 @@
 {
   "name": "OnStar2MQTT",
-  "image": "mcr.microsoft.com/devcontainers/javascript-node:24-bookworm",
+  "image": "mcr.microsoft.com/devcontainers/javascript-node:26-bookworm",
   "features": {
     "ghcr.io/devcontainers/features/docker-in-docker:4": {},
     "ghcr.io/devcontainers/features/github-cli:1": {}

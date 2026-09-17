@@ -25,6 +25,10 @@ Maintainers will compare submitted fixtures and element names against the raw AP
 - Lint must pass: `npm run lint`
 - New sensor types need test coverage with specific assertions on the generated HA config (icon, device_class, state_class, unit_of_measurement)
 
+### Signed Commits
+
+This repo requires signed commits — unsigned/unverified commits cannot be merged into `main`. Make sure GPG or SSH commit signing is set up in your local git config before opening a PR. If you forgot to sign, squash your changes into a single signed commit or amend the existing commit(s) with a signature. GitHub's web editor signs commits automatically if that's an option for you.
+
 ### AI-Generated Code
 
 AI tools can help write boilerplate, but the final PR must be verified against reality. PRs containing fabricated test data or hallucinated API element names will be closed without merge.

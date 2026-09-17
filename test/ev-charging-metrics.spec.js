@@ -116,20 +116,24 @@ describe('EV Charging Metrics', () => {
             const clocSetSensor = configs.find(c => c.topic.includes('ev_charge_location_set'));
             assert.ok(clocSetSensor);
             assert.strictEqual(clocSetSensor.payload.name, 'EV Charge Location Set');
-            assert.strictEqual(clocSetSensor.payload.payload_on, true);
-            assert.strictEqual(clocSetSensor.payload.payload_off, false);
+            assert.strictEqual(clocSetSensor.payload.payload_on, 'true');
+            assert.strictEqual(clocSetSensor.payload.payload_off, 'false');
             assert.strictEqual(clocSetSensor.state, true);
             
             // Check at charge location binary sensor
             const clocAtSensor = configs.find(c => c.topic.includes('ev_at_charge_location'));
             assert.ok(clocAtSensor);
             assert.strictEqual(clocAtSensor.payload.name, 'EV At Charge Location');
+            assert.strictEqual(clocAtSensor.payload.payload_on, 'true');
+            assert.strictEqual(clocAtSensor.payload.payload_off, 'false');
             assert.strictEqual(clocAtSensor.state, false);
             
             // Check discharge enabled binary sensor
             const disEnabledSensor = configs.find(c => c.topic.includes('ev_discharge_enabled'));
             assert.ok(disEnabledSensor);
             assert.strictEqual(disEnabledSensor.payload.name, 'EV Discharge Enabled');
+            assert.strictEqual(disEnabledSensor.payload.payload_on, 'true');
+            assert.strictEqual(disEnabledSensor.payload.payload_off, 'false');
             assert.strictEqual(disEnabledSensor.state, true);
             
             // Check discharge minimum SoC sensor
@@ -256,7 +260,8 @@ describe('EV Charging Metrics', () => {
                     results: [{
                         clocSet: true,
                         clocAt: false,
-                        disEnabled: true
+                        disEnabled: true,
+                        ign: 'on'
                     }]
                 }
             };
@@ -266,10 +271,24 @@ describe('EV Charging Metrics', () => {
             const clocSetSensor = configs.find(c => c.topic.includes('ev_charge_location_set'));
             const clocAtSensor = configs.find(c => c.topic.includes('ev_at_charge_location'));
             const disEnabledSensor = configs.find(c => c.topic.includes('ev_discharge_enabled'));
+            const ignSensor = configs.find(c => c.topic.includes('ev_ignition'));
             
             assert.strictEqual(clocSetSensor.state, true);
+            assert.strictEqual(clocSetSensor.payload.payload_on, 'true');
+            assert.strictEqual(clocSetSensor.payload.payload_off, 'false');
+
             assert.strictEqual(clocAtSensor.state, false);
+            assert.strictEqual(clocAtSensor.payload.payload_on, 'true');
+            assert.strictEqual(clocAtSensor.payload.payload_off, 'false');
+
             assert.strictEqual(disEnabledSensor.state, true);
+            assert.strictEqual(disEnabledSensor.payload.payload_on, 'true');
+            assert.strictEqual(disEnabledSensor.payload.payload_off, 'false');
+
+            assert.strictEqual(ignSensor.state, true);
+            assert.strictEqual(ignSensor.payload.payload_on, 'true');
+            assert.strictEqual(ignSensor.payload.payload_off, 'false');
+            assert.strictEqual(ignSensor.payload.device_class, 'running');
         });
 
         it('should produce states that can be safely converted to strings for MQTT', () => {

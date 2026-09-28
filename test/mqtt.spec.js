@@ -887,8 +887,9 @@ describe('MQTT', () => {
         // Regression: GM's API v3 omits `status`/`statusColor` entirely for some fuel
         // elements (capacity/range/used/remaining) while the discovery config references
         // those keys unconditionally. When absent from the state payload they render as
-        // Undefined and fail `tojson` in Home Assistant. See issue #1965.
-        describe('fuel group with omitted element status (#1965)', () => {
+        // Undefined and fail `tojson` in Home Assistant. See
+        // BigThunderSR/homeassistant-addons-onstar2mqtt#1965.
+        describe('fuel group with omitted element status (addon repo #1965)', () => {
             let d;
             beforeEach(() => {
                 d = new Diagnostic({
@@ -3395,7 +3396,8 @@ describe('MQTT', () => {
             'v3-ev-2': require('./diagnostic-sample-v3-ev-2.json'),
             'v3-ice-3': require('./diagnostic-sample-v3-ice-3.json'),
             // Captured after GM's API v3 began omitting status/statusColor on some
-            // elements (e.g. fuel_capacity/range/used/remaining) — see issue #1965.
+            // elements (e.g. fuel_capacity/range/used/remaining) — see
+            // BigThunderSR/homeassistant-addons-onstar2mqtt#1965.
             'v3-ice-4': require('./diagnostic-sample-v3-ice-4.json'),
             'v3-ice-5': require('./diagnostic-sample-v3-ice-5.json'),
         };
@@ -3437,7 +3439,7 @@ describe('MQTT', () => {
                             assert.strictEqual(typeof state, 'object');
                         });
 
-                        it('should publish every status/attribute key its config references (#1965)', () => {
+                        it('should publish every status/attribute key its config references (addon repo #1965)', () => {
                             const d = new Diagnostic(diagData);
                             const state = mqtt.getStatePayload(d);
                             d.diagnosticElements.forEach((el) => {

@@ -167,8 +167,10 @@ describe('MQTT', () => {
                     ambient_air_temperature_f: 59,
                     ambient_air_temperature_f_message: 'na',
                     ambient_air_temperature_f_status: 'NA',
+                    ambient_air_temperature_f_status_color: null,
                     ambient_air_temperature_message: 'na',
-                    ambient_air_temperature_status: 'NA'
+                    ambient_air_temperature_status: 'NA',
+                    ambient_air_temperature_status_color: null
                     //ambient_air_temperature: 15,
                     //ambient_air_temperature_f: 59
                 });
@@ -234,7 +236,9 @@ describe('MQTT', () => {
                     odometer_mi: 3736.8,
                     odometer_mi_message: "na",
                     odometer_mi_status: "NA",
-                    odometer_status: "NA"
+                    odometer_mi_status_color: null,
+                    odometer_status: "NA",
+                    odometer_status_color: null
                 });
             });
         });
@@ -274,12 +278,15 @@ describe('MQTT', () => {
                     ev_charge_state: false,
                     ev_charge_state_message: 'charging_complete',
                     ev_charge_state_status: 'NA',
+                    ev_charge_state_status_color: null,
                     priority_charge_indicator: false,
                     priority_charge_indicator_message: 'na',
                     priority_charge_indicator_status: 'NA',
+                    priority_charge_indicator_status_color: null,
                     priority_charge_status: false,
                     priority_charge_status_message: 'na',
-                    priority_charge_status_status: 'NA'
+                    priority_charge_status_status: 'NA',
+                    priority_charge_status_status_color: null
                     //ev_charge_state: false,
                     //priority_charge_indicator: false,
                     //priority_charge_status: false
@@ -541,23 +548,30 @@ describe('MQTT', () => {
                     fuel_amount_gal: 5.3,
                     fuel_amount_gal_message: "na",
                     fuel_amount_gal_status: "NA",
+                    fuel_amount_gal_status_color: null,
                     fuel_amount_message: "na",
                     fuel_amount_status: "NA",
+                    fuel_amount_status_color: null,
                     fuel_capacity: 60,
                     fuel_capacity_gal: 15.9,
                     fuel_capacity_gal_message: "na",
                     fuel_capacity_gal_status: "NA",
+                    fuel_capacity_gal_status_color: null,
                     fuel_capacity_message: "na",
                     fuel_capacity_status: "NA",
+                    fuel_capacity_status_color: null,
                     fuel_level: 33.3,
                     fuel_level_in_gal: 19.98,
                     fuel_level_in_gal_gal: 5.3,
                     fuel_level_in_gal_gal_message: "na",
                     fuel_level_in_gal_gal_status: "NA",
+                    fuel_level_in_gal_gal_status_color: null,
                     fuel_level_in_gal_message: "na",
                     fuel_level_in_gal_status: "NA",
+                    fuel_level_in_gal_status_color: null,
                     fuel_level_message: "na",
-                    fuel_level_status: "NA"
+                    fuel_level_status: "NA",
+                    fuel_level_status_color: null
                 });
             });
         });
@@ -597,7 +611,9 @@ describe('MQTT', () => {
                     lifetime_fuel_econ_mpg: 27.9,
                     lifetime_fuel_econ_mpg_message: "na",
                     lifetime_fuel_econ_mpg_status: "NA",
-                    lifetime_fuel_econ_status: "NA"
+                    lifetime_fuel_econ_mpg_status_color: null,
+                    lifetime_fuel_econ_status: "NA",
+                    lifetime_fuel_econ_status_color: null
                 });
             });
         });
@@ -636,8 +652,10 @@ describe('MQTT', () => {
                     lifetime_fuel_used_gal: 1182.7,
                     lifetime_fuel_used_gal_message: "na",
                     lifetime_fuel_used_gal_status: "NA",
+                    lifetime_fuel_used_gal_status_color: null,
                     lifetime_fuel_used_message: "na",
-                    lifetime_fuel_used_status: "NA"
+                    lifetime_fuel_used_status: "NA",
+                    lifetime_fuel_used_status_color: null
                 });
             });
         });
@@ -675,7 +693,8 @@ describe('MQTT', () => {
                 assert.deepStrictEqual(mqtt.getStatePayload(d), {
                     ev_plug_state: true,
                     ev_plug_state_message: "plugged",
-                    ev_plug_state_status: "NA"
+                    ev_plug_state_status: "NA",
+                    ev_plug_state_status_color: null
                 });
             });
         });
@@ -712,7 +731,8 @@ describe('MQTT', () => {
                 assert.deepStrictEqual(mqtt.getStatePayload(d), {
                     charger_power_level: 'NO_REDUCTION',
                     charger_power_level_message: 'na',
-                    charger_power_level_status: 'NA'
+                    charger_power_level_status: 'NA',
+                    charger_power_level_status_color: null
                 });
             });
         });
@@ -750,21 +770,27 @@ describe('MQTT', () => {
                     electric_economy: 21.85,
                     electric_economy_message: "na",
                     electric_economy_status: "NA",
+                    electric_economy_status_color: null,
                     lifetime_efficiency: 21.85,
                     lifetime_efficiency_message: "na",
                     lifetime_efficiency_status: "NA",
+                    lifetime_efficiency_status_color: null,
                     lifetime_mpge: 40.73,
                     lifetime_mpge_message: "na",
                     lifetime_mpge_mpge: 95.8,
                     lifetime_mpge_mpge_message: "na",
                     lifetime_mpge_mpge_status: "NA",
+                    lifetime_mpge_mpge_status_color: null,
                     lifetime_mpge_status: "NA",
+                    lifetime_mpge_status_color: null,
                     odometer: 6013.8,
                     odometer_message: "na",
                     odometer_mi: 3736.8,
                     odometer_mi_message: "na",
                     odometer_mi_status: "NA",
+                    odometer_mi_status_color: null,
                     odometer_status: "NA",
+                    odometer_status_color: null,
                 });
             });
         });
@@ -804,7 +830,9 @@ describe('MQTT', () => {
                     ev_range_mi: 211.9,
                     ev_range_mi_message: 'na',
                     ev_range_mi_status: 'NA',
+                    ev_range_mi_status_color: null,
                     ev_range_status: 'NA',
+                    ev_range_status_color: null,
                 });
             });
         });
@@ -843,12 +871,70 @@ describe('MQTT', () => {
                     ev_charge_state: false,
                     ev_charge_state_message: "charging_complete",
                     ev_charge_state_status: "NA",
+                    ev_charge_state_status_color: null,
                     priority_charge_indicator: false,
                     priority_charge_indicator_message: "na",
                     priority_charge_indicator_status: "NA",
+                    priority_charge_indicator_status_color: null,
                     priority_charge_status: false,
                     priority_charge_status_message: "na",
                     priority_charge_status_status: "NA",
+                    priority_charge_status_status_color: null,
+                });
+            });
+        });
+
+        // Regression: GM's API v3 omits `status`/`statusColor` entirely for some fuel
+        // elements (capacity/range/used/remaining) while the discovery config references
+        // those keys unconditionally. When absent from the state payload they render as
+        // Undefined and fail `tojson` in Home Assistant. See issue #1965.
+        describe('fuel group with omitted element status (#1965)', () => {
+            let d;
+            beforeEach(() => {
+                d = new Diagnostic({
+                    name: 'FUEL_LEVEL_STATUS',
+                    displayName: 'Fuel Level Status',
+                    status: 'GOOD',
+                    statusColor: 'GREEN',
+                    cts: '2026-09-28T15:36:44.258Z',
+                    diagnosticElements: [
+                        { name: 'FUEL_CAPACITY', value: '60.00000', uom: 'L', cts: '2026-09-28T15:36:00.008Z' },
+                        { name: 'FUEL_REMAINING', value: '27.24', uom: 'L', cts: '2026-09-28T15:41:18.091Z' },
+                        { name: 'FUEL_RANGE', value: '284.85', uom: 'KM', cts: '2026-09-28T13:58:52.012Z' },
+                        { name: 'FUEL_LEVEL', status: 'GOOD', statusColor: 'GREEN', value: '45.4', uom: '%', cts: '2026-09-28T15:34:16.027Z' },
+                        { name: 'FUEL_USED', value: '10433.37500', uom: 'L', cts: '2026-09-28T13:58:46.002Z' }
+                    ]
+                });
+            });
+
+            it('writes status/status_color as null for elements the API omits them on', () => {
+                const state = mqtt.getStatePayload(d);
+                // Elements without status still publish the keys (null), so templates resolve
+                assert.strictEqual(state.fuel_capacity_status, null);
+                assert.strictEqual(state.fuel_capacity_status_color, null);
+                assert.strictEqual(state.fuel_range_status, null);
+                assert.strictEqual(state.fuel_range_status_color, null);
+                assert.strictEqual(state.fuel_used_status, null);
+                assert.strictEqual(state.fuel_remaining_status, null);
+                // Converted (_gal/_mi) elements inherit the same null status
+                assert.strictEqual(state.fuel_capacity_gal_status, null);
+                assert.strictEqual(state.fuel_range_mi_status, null);
+                // Elements that do carry status keep their real value
+                assert.strictEqual(state.fuel_level_status, 'GOOD');
+                assert.strictEqual(state.fuel_level_status_color, 'GREEN');
+            });
+
+            it('publishes every status key referenced by its discovery config', () => {
+                const state = mqtt.getStatePayload(d);
+                // For each sensor, every value_json.<key> in the attributes template must
+                // exist in the state payload — otherwise HA hits Undefined and tojson fails.
+                d.diagnosticElements.forEach(el => {
+                    const config = mqtt.getConfigPayload(d, el);
+                    const template = config.json_attributes_template || '';
+                    const referenced = [...template.matchAll(/value_json\.([a-z0-9_]+)/g)].map(m => m[1]);
+                    referenced.forEach(key => {
+                        assert.ok(key in state, `state payload is missing "${key}" referenced by ${el.name} attributes template`);
+                    });
                 });
             });
         });

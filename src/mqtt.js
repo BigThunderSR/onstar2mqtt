@@ -1693,15 +1693,13 @@ class MQTT {
                 state[`${MQTT.convertName(e.name)}_message`] = e.message;
             }
             // API CHANGE: Add element-level status and statusColor from API v3
-            // These appear on individual diagnostic elements (e.g., LEFT_FRONT_TIRE_PRESSURE)
-            // Include even if null, so json_attributes_template can reference them consistently
-            if (e.status !== undefined) {
-                state[`${MQTT.convertName(e.name)}_status`] = e.status;
-            }
-            // Include status_color even if null, so templates can reference it consistently
-            if (e.statusColor !== undefined) {
-                state[`${MQTT.convertName(e.name)}_status_color`] = e.statusColor;
-            }
+            // These appear on individual diagnostic elements (e.g., LEFT_FRONT_TIRE_PRESSURE).
+            // Always write both keys, coercing a missing value to null: GM omits status
+            // entirely for some elements (e.g. fuel_capacity/range/used/remaining), and the
+            // config's json_attributes_template references them unconditionally — an absent
+            // key renders as Undefined and fails `tojson` in Home Assistant.
+            state[`${MQTT.convertName(e.name)}_status`] = e.status ?? null;
+            state[`${MQTT.convertName(e.name)}_status_color`] = e.statusColor ?? null;
             // Add cts (timestamp) field as "last_updated" attribute for each sensor
             if (e.cts !== undefined && e.cts !== null) {
                 state[`${MQTT.convertName(e.name)}_last_updated`] = e.cts;

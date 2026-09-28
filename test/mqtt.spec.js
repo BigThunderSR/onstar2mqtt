@@ -3394,6 +3394,10 @@ describe('MQTT', () => {
             'v3-ev-1': require('./diagnostic-sample-v3-ev-1.json'),
             'v3-ev-2': require('./diagnostic-sample-v3-ev-2.json'),
             'v3-ice-3': require('./diagnostic-sample-v3-ice-3.json'),
+            // Captured after GM's API v3 began omitting status/statusColor on some
+            // elements (e.g. fuel_capacity/range/used/remaining) — see issue #1965.
+            'v3-ice-4': require('./diagnostic-sample-v3-ice-4.json'),
+            'v3-ice-5': require('./diagnostic-sample-v3-ice-5.json'),
         };
         let mqtt;
         let vehicle;
@@ -3431,6 +3435,19 @@ describe('MQTT', () => {
                             const state = mqtt.getStatePayload(d);
                             assert.ok(state, `state payload should exist for ${diagData.name}`);
                             assert.strictEqual(typeof state, 'object');
+                        });
+
+                        it('should publish every status/attribute key its config references (#1965)', () => {
+                            const d = new Diagnostic(diagData);
+                            const state = mqtt.getStatePayload(d);
+                            d.diagnosticElements.forEach((el) => {
+                                const config = mqtt.getConfigPayload(d, el);
+                                const template = config.json_attributes_template || '';
+                                const referenced = [...template.matchAll(/value_json\.([a-z0-9_]+)/g)].map(m => m[1]);
+                                referenced.forEach((key) => {
+                                    assert.ok(key in state, `${diagData.name}/${el.name}: state payload is missing "${key}" referenced by attributes template`);
+                                });
+                            });
                         });
                     });
                 });

@@ -1227,6 +1227,11 @@ TypeError: Object of type LoggingUndefined is not JSON serializable rendering te
 
 This is caused by the OnStar API v3 returning **partial data** on some refresh cycles - not all sensor fields are included in every API response.
 
+> **Note — two different causes:**
+>
+> - **Missing `status` / `status_color` attributes** (the `LoggingUndefined … not JSON serializable` error, e.g. on the fuel sensors): this is now handled in the add-on itself. These attributes are always published — `null` when the OnStar API omits them — so the template always renders and **no configuration change is needed**.
+> - **Missing sensor value fields** (e.g. the `lifetime_fuel_economy` warning above): this is genuine partial data where the API leaves an entire value out of a refresh cycle. The state cache below addresses this case.
+
 #### Solution: Enable State Caching
 
 Add the following environment variable to your configuration:

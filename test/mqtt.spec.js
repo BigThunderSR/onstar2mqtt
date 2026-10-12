@@ -1440,7 +1440,7 @@ describe('MQTT', () => {
                         "command_topic": 'homeassistant/XXX/command',
                         "payload_press": JSON.stringify({ "command": MQTT.CONSTANTS.BUTTONS[button.name].Name }),
                         "qos": 2,
-                        "enabled_by_default": false,
+                        "enabled_by_default": MQTT.CONSTANTS.BUTTONS[button.name].EnabledByDefault === true,
                     });
 
                     expectedButtonConfigs.push(buttonConfig);
@@ -1451,6 +1451,23 @@ describe('MQTT', () => {
                 assert.deepStrictEqual(result.buttonInstances, expectedButtonInstances);
                 assert.deepStrictEqual(result.buttonConfigs, expectedButtonConfigs);
                 assert.deepStrictEqual(result.configPayloads, expectedConfigPayloads);
+            });
+
+            it('enables Dump Diagnostics by default while action buttons stay disabled', () => {
+                const vehicle = {
+                    make: 'Chevrolet', model: 'Bolt', year: 2022, vin: '1G1FY6S07N4100000',
+                    toString: () => '2022 Chevrolet Bolt',
+                };
+                const { configPayloads } = mqtt.createButtonConfigPayload(vehicle);
+                const byName = Object.fromEntries(configPayloads.map(p => [p.name, p]));
+                assert.strictEqual(byName['Command DumpDiagnostics'].enabled_by_default, true);
+                assert.strictEqual(byName['Command Diagnostics'].enabled_by_default, false);
+                assert.strictEqual(byName['Command LockDoor'].enabled_by_default, false);
+            });
+
+            it('Dump Diagnostics button maps to the dumpDiagnostics command', () => {
+                assert.strictEqual(MQTT.CONSTANTS.BUTTONS.DumpDiagnostics.Name, 'dumpDiagnostics');
+                assert.doesNotThrow(() => MQTT.validateButtonNames());
             });
         });
 

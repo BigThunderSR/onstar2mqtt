@@ -62,7 +62,6 @@ After upgrading to v2.0.0, you will need to **manually remove deprecated sensors
 First, delete the related retained MQTT topics from your MQTT broker to prevent deprecated sensors from being recreated. **Both config and state topics must be removed:**
 
 - **Using MQTT Explorer or similar tool:**
-
   - Connect to your MQTT broker
   - Navigate to `homeassistant/sensor/YOUR_VIN/` and `homeassistant/binary_sensor/YOUR_VIN/`
   - For each deprecated sensor, delete **both**:
@@ -173,6 +172,24 @@ MQTT auto discovery is enabled. For further integrations and screenshots see [HA
 
 **NEW** - OnStar password/pin and MQTT password are masked by default in the console log output. To see these values in the console log output, set `--env LOG_LEVEL=debug`
 
+### Redacted Logging & Raw Diagnostics Dump
+
+**NEW** - Two independent tools to help capture troubleshooting data safely: **(1)** `LOG_REDACT` scrubs your normal logs, and **(2)** the **Dump Diagnostics** button captures a one-off raw diagnostics payload on demand.
+
+#### (1) Redact ongoing logs
+
+- **`LOG_REDACT`** (Default: `false`) - When set to `true`, all log output is automatically scrubbed of PII — VIN, device ID, OnStar/MQTT credentials, account number, vehicle ID, email, phone number, and GPS coordinates — so logs can be shared for support without manual redaction. VIN-bearing MQTT topics stay readable (shown as `<VIN>`). Works at any `LOG_LEVEL`, and is independent of the Dump Diagnostics button below.
+
+#### (2) Dump Diagnostics button
+
+A "Command DumpDiagnostics" button is auto-added to Home Assistant and **enabled by default**. Pressing it runs a fresh diagnostics request, publishes the updated sensor values (exactly like Get Diagnostics), and dumps the raw response for troubleshooting or for contributing test fixtures. Nothing dumps automatically — only the button. The settings below apply only to it:
+
+- **`ONSTAR_DUMP_BUTTON_REDACT`** (Default: `true`) - Redacts the button's dump so it is safe to share. Set to `false` for a raw (unredacted) dump. Note: if `LOG_REDACT=true`, the dump is redacted regardless of this setting — global redaction always wins, so you never get less redaction than you asked for.
+- **`ONSTAR_DIAGNOSTIC_DUMP`** (Default: `log`) - Where the button writes: `log` (console only), or `file`/`both` to **also** save a copy to disk.
+- **`ONSTAR_DIAGNOSTIC_DUMP_DIR`** (Optional) - Directory for the on-disk copy when `ONSTAR_DIAGNOSTIC_DUMP` is `file`/`both`. Defaults to `UNIT_CACHE_DIR`, then `TOKEN_LOCATION`, then the current directory. Files are named `onstar-diagnostics-<timestamp>.json` (one per button press).
+
+> **Note:** `LOG_REDACT` scrubs onstar2mqtt's own log output. During a login or token refresh (startup, or roughly every 60 days), the underlying OnStarJS authentication flow may print short-lived auth codes directly to the console, which this option does not cover. These codes expire quickly, but if you capture a log that spans a re-authentication, review those lines before sharing.
+
 ### MQTTS/TLS Security Options
 
 **NEW** - New env options for securing connectivity for MQTTS using TLS
@@ -195,6 +212,7 @@ MQTT auto discovery is enabled. For further integrations and screenshots see [HA
 
 - Send commands to the command topic in the format:
   - `{"command": "diagnostics"}` (API v3 returns all diagnostic data - no filtering options available)
+  - `{"command": "dumpDiagnostics"}` (fresh diagnostics request + raw dump for troubleshooting; redacted by default, see `ONSTAR_DUMP_BUTTON_REDACT`)
   - ~~`{"command": "setChargingProfile","options": {"chargeMode": "RATE_BASED","rateType": "OFFPEAK"}}`~~ (deprecated - use `setChargeLevelTarget` instead)
   - `{"command": "setChargeLevelTarget","options": 80}` (set target charge level to 80%)
   - `{"command": "stopCharging"}` (stop active charging session)
@@ -210,6 +228,7 @@ MQTT auto discovery is enabled. For further integrations and screenshots see [HA
 **NEW** - MQTT Button Auto-Discovery for HA Added Starting at v1.14.0
 
 - **⚠️ IMPORTANT DISCLAIMER:** Buttons are added **disabled by default** because it's easy to accidentally press the wrong button and trigger an action at an inopportune time. **Enable at your own risk and you assume all responsibility for your actions.**
+  - **Exception:** the **Dump Diagnostics** button is **enabled by default** — it is read-only (runs a diagnostics request and dumps the result for troubleshooting) and its dump is redacted by default, so it is safe to press.
 - All available buttons for all vehicles are included for now, so only enable the buttons you need and/or work for your vehicle.
 - **How to Enable Buttons in Home Assistant:**
   1. Go to `Settings` → `Devices & Services` → `MQTT`

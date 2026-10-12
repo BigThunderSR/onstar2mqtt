@@ -13,6 +13,8 @@ All diagnostic-related PRs **must** use real data from the OnStar API. Specifica
 
 **Proof of authenticity**: PRs adding new diagnostic groups must include an attached diagnostic file or a link to a gist containing the raw API response from your vehicle. This is the only way to verify element names and data types are real. Redact sensitive fields (VIN, location, GPS) but preserve the structure.
 
+**Capturing a diagnostic response**: Press the **Dump Diagnostics** button in Home Assistant (auto-added, enabled by default). It runs a fresh diagnostics request and writes the raw response to the add-on/container log, **redacted by default** — PII (VIN, account/vehicle IDs, email, phone, GPS) is masked while the diagnostic structure, field names, and values are preserved, which is exactly what fixtures need. To also save it as a file, set `ONSTAR_DIAGNOSTIC_DUMP=file` (see `ONSTAR_DIAGNOSTIC_DUMP_DIR`).
+
 If you don't have access to a vehicle with the relevant diagnostic group, open an issue requesting it and someone with access can provide sanitized data.
 
 ### Review Process

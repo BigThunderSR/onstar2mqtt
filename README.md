@@ -176,6 +176,12 @@ MQTT auto discovery is enabled. For further integrations and screenshots see [HA
 
 **NEW** - Two independent tools to help capture troubleshooting data safely: **(1)** `LOG_REDACT` scrubs your normal logs, and **(2)** the **Dump Diagnostics** button captures a one-off raw diagnostics payload on demand.
 
+**Which do I use?**
+
+- **Sharing a full/ongoing console log** (startup, polling, an error trace) → set **`LOG_REDACT=true`**. It scrubs every log line.
+- **Contributing a fixture or sharing one raw diagnostics snapshot** → just press **Dump Diagnostics**. The dumped file is redacted by default (`ONSTAR_DUMP_BUTTON_REDACT`), so the file is safe on its own — you don't need `LOG_REDACT` for the file.
+- **Gotcha:** the button only redacts the dump payload. If you paste the *whole console* around a button press (not just the saved file), the VIN and other PII in the surrounding log lines are only masked when `LOG_REDACT=true`.
+
 #### (1) Redact ongoing logs
 
 - **`LOG_REDACT`** (Default: `false`) - When set to `true`, all log output is automatically scrubbed of PII — VIN, device ID, OnStar/MQTT credentials, account number, vehicle ID, email, phone number, and GPS coordinates — so logs can be shared for support without manual redaction. VIN-bearing MQTT topics stay readable (shown as `<VIN>`). Works at any `LOG_LEVEL`, and is independent of the Dump Diagnostics button below.

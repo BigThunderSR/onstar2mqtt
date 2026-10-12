@@ -50,5 +50,9 @@
     "eslint": "^10.12.0",
     "globals": "^17.12.0",
     "mocha": "^12.0.1"
+  },
+  "allowScripts": {
+    "onstarjs2@2.16.6": true,
+    "sleep@6.1.0": true
   }
 }

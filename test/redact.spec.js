@@ -72,6 +72,12 @@ describe('redact', () => {
             const out = redactString('homeassistant/sensor/1G1FW6S07N4123456/state', secrets);
             assert.strictEqual(out, 'homeassistant/sensor/<VIN>/state');
         });
+
+        it('redacts the VIN even when lowercased (e.g. HA unique_id)', () => {
+            const out = redactString('unique_id: 1g1fw6s07n4123456-odo_read', secrets);
+            assert.ok(out.includes('<VIN>'));
+            assert.ok(!out.toLowerCase().includes('1g1fw6s07n4123456'));
+        });
     });
 
     describe('redact (deep)', () => {
@@ -88,6 +94,13 @@ describe('redact', () => {
             const out = redact({ latitude: 42.1, longitude: -71.2 }, secrets);
             assert.strictEqual(out.latitude, '<REDACTED>');
             assert.strictEqual(out.longitude, '<REDACTED>');
+        });
+
+        it('masks geohash and squishVin by key', () => {
+            const out = redact({ geohash: 'u4pruyd', squishVin: '1G1FW6SKU', keep: 'ok' }, secrets);
+            assert.strictEqual(out.geohash, '<REDACTED>');
+            assert.strictEqual(out.squishVin, '<REDACTED>');
+            assert.strictEqual(out.keep, 'ok');
         });
 
         it('recurses into nested objects and arrays', () => {

@@ -78,6 +78,12 @@ describe('redact', () => {
             assert.ok(out.includes('<VIN>'));
             assert.ok(!out.toLowerCase().includes('1g1fw6s07n4123456'));
         });
+
+        it('redacts a VIN embedded in a cache filename (underscore-adjacent, no secrets)', () => {
+            const out = redactString('Loaded cache (/ssl/vehicle1/.unit_cache_1G1FW6S07N4123456.json)', []);
+            assert.ok(out.includes('<VIN>'));
+            assert.ok(!out.includes('1G1FW6S07N4123456'));
+        });
     });
 
     describe('redact (deep)', () => {

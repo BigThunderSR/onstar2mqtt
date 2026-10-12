@@ -3542,6 +3542,19 @@ describe('MQTT', () => {
                 assert.strictEqual(config.payload.state_topic, 'homeassistant/TEST123/adv_diag/state');
             });
 
+            it('should guard json_attributes_template against a missing *_attr key', () => {
+                // Regression: GM omits some systems intermittently, so their *_attr key is absent
+                // from adv_diag/state. The template must default to {} instead of rendering
+                // Undefined and failing tojson in Home Assistant.
+                const system = advDiag.diagnosticSystems[0]; // Engine and Transmission
+                const config = mqtt.getAdvancedDiagnosticConfig(system, advDiag.cts);
+
+                assert.strictEqual(
+                    config.payload.json_attributes_template,
+                    '{{ (value_json.engine_and_transmission_system_attr if value_json.engine_and_transmission_system_attr is defined else {}) | tojson }}'
+                );
+            });
+
             it('should set correct icons for each system type', () => {
                 const expectedIcons = {
                     'ENGINE_AND_TRANSMISSION_SYSTEM': 'mdi:engine',

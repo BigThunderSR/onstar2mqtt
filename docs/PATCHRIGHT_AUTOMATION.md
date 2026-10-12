@@ -86,3 +86,16 @@ docker build -t onstar2mqtt-test .
 docker run --rm --entrypoint="" onstar2mqtt-test ls -la /root/.cache/ms-playwright/
 # Should show: chromium-1169/ (or whatever version onstarjs2 expects)
 ```
+
+## Install-Script Allowlist (`allowScripts`)
+
+npm's install-scripts allowlist (RFC [npm/rfcs#868](https://github.com/npm/rfcs/pull/868), enforced in npm 12) blocks package lifecycle scripts unless they are explicitly allowed. `onstarjs2` needs its install script to run (it triggers the `patchright install chromium` step), so it is allowlisted in `package.json`:
+
+```json
+"allowScripts": {
+  "onstarjs2": true,
+  "sleep": true
+}
+```
+
+**Use bare package names, not `name@version`.** A bare name trusts the package's install scripts across all versions, so the entry never drifts when Renovate/Dependabot bump `onstarjs2`. An exact pin like `onstarjs2@2.16.6` only matches that single version and would silently block the Chromium install after the next bump. npm rejects semver ranges (`^`, `~`) and dist-tags (`@latest`); only bare names or exact versions joined with `||` are valid. Because bare names never go stale, no sync automation is required for this field.

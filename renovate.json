@@ -21,6 +21,12 @@
             ]
         },
         {
+            "matchPackageNames": [
+                "onstarjs2"
+            ],
+            "minimumReleaseAge": "0 days"
+        },
+        {
             "matchCategories": [
                 "js"
             ],

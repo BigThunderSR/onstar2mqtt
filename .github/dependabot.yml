@@ -16,3 +16,7 @@ updates:
     schedule:
       interval: "daily"
     open-pull-requests-limit: 50
+    # Exempt onstarjs2 from the default cooldown; all other deps keep the default
+    cooldown:
+      exclude:
+        - "onstarjs2"

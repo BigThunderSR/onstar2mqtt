@@ -155,6 +155,19 @@ describe('Commands', () => {
         assert.strictEqual(result, undefined);
     });
 
+    it('should call dumpDiagnostics method', async () => {
+        const result = await commands.dumpDiagnostics();
+        assert.strictEqual(result, undefined);
+    });
+
+    it('dumpDiagnostics should delegate to onstar.diagnostics', async () => {
+        let called = false;
+        const cmds = new Commands({ diagnostics: () => { called = true; return Promise.resolve('RAW'); } });
+        const result = await cmds.dumpDiagnostics();
+        assert.strictEqual(called, true);
+        assert.strictEqual(result, 'RAW');
+    });
+
     // it('should call enginerpm method', async () => {
     //     const result = await commands.enginerpm({});
     //     assert.strictEqual(result, undefined);

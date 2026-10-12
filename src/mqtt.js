@@ -102,6 +102,11 @@ class MQTT {
                 Name: 'diagnostics',
                 Icon: 'mdi:car-info',
             },
+            DumpDiagnostics: {
+                Name: 'dumpDiagnostics',
+                Icon: 'mdi:bug-outline',
+                EnabledByDefault: true,
+            },
             // EngineRPM: {
             //     Name: 'enginerpm',
             //     Icon: 'mdi:speedometer',
@@ -400,7 +405,7 @@ class MQTT {
                 "command_topic": this.getCommandTopic(),
                 "payload_press": JSON.stringify({ "command": MQTT.CONSTANTS.BUTTONS[button.name].Name }),
                 "qos": 2,
-                "enabled_by_default": false,
+                "enabled_by_default": MQTT.CONSTANTS.BUTTONS[button.name].EnabledByDefault === true,
             });
 
             buttonConfigs.push(buttonConfig);

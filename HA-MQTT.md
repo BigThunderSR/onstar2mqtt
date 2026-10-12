@@ -641,6 +641,8 @@ mode: single
 
 Buttons are added **disabled by default** because it's easy to accidentally press the wrong button and trigger an action at an inopportune time. **Enable at your own risk and you assume all responsibility for your actions.** Only enable the buttons you need and/or that work for your specific vehicle.
 
+**Exception:** the **Dump Diagnostics** button is **enabled by default** — it is read-only (runs a diagnostics request and dumps the result for troubleshooting) and its dump is redacted by default, so it is safe to press.
+
 **Steps to Enable Buttons:**
 
 1. Navigate to **Settings → Devices & Services → MQTT** in Home Assistant
@@ -702,6 +704,7 @@ _Data Retrieval:_
 
 - Get Location
 - Get Diagnostics
+- **Dump Diagnostics** (fresh diagnostics request + raw dump for troubleshooting / fixtures; **enabled by default**, redacted by default)
 - **Get Vehicle Details** (new in OnStarJS 2.12.0)
 - **Get OnStar Plan** (new in OnStarJS 2.12.0 - plan details are **only populated for primary account holders**; shared accounts will receive `onstarInfo` with active status but plan details will be empty or trigger partial errors that are handled gracefully)
 - **Get EV Charging Metrics** (new in OnStarJS 2.12.0)
@@ -770,6 +773,8 @@ icon: "mdi:car-electric"
   - `{"command": "getLocation"}`
 - Get Diagnostics (retrieve all diagnostic data - API v3 returns comprehensive data automatically)
   - `{"command": "diagnostics"}`
+- Dump Diagnostics (fresh diagnostics request that dumps the raw response for troubleshooting / fixtures; redacted by default, see `ONSTAR_DUMP_BUTTON_REDACT`)
+  - `{"command": "dumpDiagnostics"}`
 - Get Vehicle Details (get comprehensive vehicle information including specifications)
   - `{"command": "getVehicleDetails"}`
 - Get OnStar Plan (get OnStar service plan details and status — plan details are **only populated for primary account holders**; shared accounts will receive `onstarInfo` with active status but plan details will be empty or trigger partial errors that are handled gracefully)

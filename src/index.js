@@ -1768,6 +1768,7 @@ logger.info('!-- Starting OnStar2MQTT Polling --!');
         }, 5000);
 
         let refreshInterval;
+        let currentRefreshInterval = onstarConfig.refreshInterval;
         const refreshIntervalTopic = mqttHA.getRefreshIntervalTopic();
         const refreshIntervalCurrentValTopic = mqttHA.getRefreshIntervalCurrentValTopic();
         logger.info(`refreshIntervalTopic: ${refreshIntervalTopic}`);
@@ -1830,9 +1831,22 @@ logger.info('!-- Starting OnStar2MQTT Polling --!');
                 clearInterval(refreshInterval);
                 // Start new interval with updated refresh interval
                 refreshInterval = setInterval(main, newRefreshInterval);
+                currentRefreshInterval = newRefreshInterval;
                 logger.info(`Updated refreshInterval to ${newRefreshInterval}`);
                 client.publish(refreshIntervalCurrentValTopic, newRefreshInterval.toString(), { retain: true });
             }
+        });
+
+        // A broker without persistence loses retained discovery configs; republish them after a reconnect.
+        client.on('connect', () => {
+            logger.info('MQTT reconnected, republishing discovery configs');
+            buttonConfigsPublished = '';
+            for (const config of configurations.values()) {
+                config.configured = false;
+            }
+            const pollingRefreshIntervalPayload = mqttHA.createPollingRefreshIntervalSensorConfigPayload(refreshIntervalCurrentValTopic, mqttConfig.listAllSensorsTogether);
+            client.publish(pollingRefreshIntervalPayload.topic, JSON.stringify(pollingRefreshIntervalPayload.payload), { retain: true });
+            client.publish(refreshIntervalCurrentValTopic, currentRefreshInterval.toString(), { retain: true });
         });
 
     } catch (e) {

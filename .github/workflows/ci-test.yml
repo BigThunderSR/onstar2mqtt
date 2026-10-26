@@ -20,7 +20,7 @@ concurrency:
 jobs:
   test_build_push:
     name: ci - test, build, push
-    runs-on: ubuntu-latest
+    runs-on: ubuntu-24.04
 
     strategy:
       matrix:

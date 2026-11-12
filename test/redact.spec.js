@@ -102,6 +102,28 @@ describe('redact', () => {
             assert.strictEqual(out.longitude, '<REDACTED>');
         });
 
+        it('masks EV charging metrics location fields by key', () => {
+            const out = redact({
+                results: [{
+                    loc: '12.34567,-76.54321',
+                    lat: 12.34567,
+                    lng: -76.54321,
+                    clocLoc: '12.34567,-76.54321',
+                    clocSet: true,
+                    clocAt: false,
+                    soc: 70,
+                }],
+            }, secrets);
+            const r = out.results[0];
+            assert.strictEqual(r.loc, '<REDACTED>');
+            assert.strictEqual(r.lat, '<REDACTED>');
+            assert.strictEqual(r.lng, '<REDACTED>');
+            assert.strictEqual(r.clocLoc, '<REDACTED>');
+            assert.strictEqual(r.clocSet, true);
+            assert.strictEqual(r.clocAt, false);
+            assert.strictEqual(r.soc, 70);
+        });
+
         it('masks geohash and squishVin by key', () => {
             const out = redact({ geohash: 'u4pruyd', squishVin: '1G1FW6SKU', keep: 'ok' }, secrets);
             assert.strictEqual(out.geohash, '<REDACTED>');
@@ -182,6 +204,20 @@ describe('redact', () => {
             assert.ok(out.message.includes('<VIN>'));
             assert.strictEqual(out.meta.password, '<REDACTED>');
             assert.strictEqual(out.meta.ok, 'keep');
+        });
+
+        it('redacts EV location in command response data logged as metadata', () => {
+            process.env.LOG_REDACT = 'true';
+            const fmt = redactFormat();
+            const out = fmt.transform({
+                level: 'warn',
+                message: 'Command response data:',
+                responseData: { results: [{ loc: '12.34567,-76.54321', clocLoc: '12.34567,-76.54321', soc: 70 }] },
+            });
+            assert.strictEqual(out.responseData.results[0].loc, '<REDACTED>');
+            assert.strictEqual(out.responseData.results[0].clocLoc, '<REDACTED>');
+            assert.strictEqual(out.responseData.results[0].soc, 70);
+            assert.ok(!JSON.stringify(out).includes('12.34567'));
         });
     });
 });

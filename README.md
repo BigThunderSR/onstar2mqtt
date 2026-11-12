@@ -184,7 +184,7 @@ MQTT auto discovery is enabled. For further integrations and screenshots see [HA
 
 #### (1) Redact ongoing logs
 
-- **`LOG_REDACT`** (Default: `false`) - When set to `true`, all log output is automatically scrubbed of PII — VIN, device ID, OnStar/MQTT credentials, account number, vehicle ID, email, phone number, and GPS coordinates — so logs can be shared for support without manual redaction. VIN-bearing MQTT topics stay readable (shown as `<VIN>`). Works at any `LOG_LEVEL`, and is independent of the Dump Diagnostics button below.
+- **`LOG_REDACT`** (Default: `false`) - When set to `true`, all log output is automatically scrubbed of PII — VIN, device ID, OnStar/MQTT credentials, account number, vehicle ID, email, phone number, and GPS coordinates (including EV charging location) — so logs can be shared for support without manual redaction. VIN-bearing MQTT topics stay readable (shown as `<VIN>`). Works at any `LOG_LEVEL`, and is independent of the Dump Diagnostics button below.
 
 #### (2) Dump Diagnostics button
 

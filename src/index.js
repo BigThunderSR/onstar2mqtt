@@ -9,6 +9,7 @@ const Commands = require('./commands');
 const logger = require('./logger');
 const { normalizeError } = require('./error-utils');
 const { buildSecrets, setSecrets, isEnabled: isRedactionEnabled, redactAlways } = require('./redact');
+const { createPullRefresher, pullRefreshConfigFromEnv } = require('./pull-refresh');
 const fs = require('fs');
 const path = require('path');
 //const CircularJSON = require('circular-json');
@@ -1345,6 +1346,15 @@ logger.info('!-- Starting OnStar2MQTT Polling --!');
         await configureMQTT(commands, client, mqttHA);
 
         const configurations = new Map();
+        const pullRefreshConfig = pullRefreshConfigFromEnv();
+        const pullRefresher = createPullRefresher({
+            ...pullRefreshConfig,
+            refresh: () => commands.refreshEVChargingMetrics(),
+            logger,
+        });
+        if (pullRefresher.enabled) {
+            logger.info('Pull refresh before diagnostics enabled', pullRefreshConfig);
+        }
         const run = async () => {
             let topicArray;
             if (!mqttConfig.pollingStatusTopic) {
@@ -1401,6 +1411,7 @@ logger.info('!-- Starting OnStar2MQTT Polling --!');
 
             const states = new Map();
             const v = vehicle;
+            await pullRefresher.maybeRefresh();
             logger.info('Requesting diagnostics');
             logger.debug(`GetSupported: ${v.getSupported()}`);
 
